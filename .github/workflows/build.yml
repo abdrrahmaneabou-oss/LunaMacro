@@ -2,7 +2,8 @@ name: Android CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, arabic-localization ]
+  workflow_dispatch:
   pull_request:
     branches: [ main, master ]
 
