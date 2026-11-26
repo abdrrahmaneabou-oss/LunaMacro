@@ -2562,7 +2562,7 @@ private fun HabitConsentDialog(onDismiss: () -> Unit, onAgree: () -> Unit) {
                         .verticalScroll(rememberScrollState())
                 ) {
                     Text(
-                        HabitTerms.TEXT,
+                        ArabicHabitTerms.TEXT,
                         style = MaterialTheme.typography.bodySmall,
                         lineHeight = 19.sp
                     )
@@ -2592,7 +2592,7 @@ private fun HabitTermsDialog(onDismiss: () -> Unit) {
                     .verticalScroll(rememberScrollState())
             ) {
                 Text(
-                    HabitTerms.TEXT,
+                    ArabicHabitTerms.TEXT,
                     style = MaterialTheme.typography.bodySmall,
                     lineHeight = 19.sp
                 )
@@ -2636,7 +2636,7 @@ private fun PresetSection(context: android.content.Context) {
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            "当前键盘校准：${if (calib.value > 0) "${calib.value} px" else "自动（还没量过）"}",
+            "معايرة لوحة المفاتيح الحالية: ${if (calib.value > 0) "${calib.value} px" else "تلقائية (لم تُقَس بعد)"}",
             fontSize = 12.sp,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

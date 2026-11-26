@@ -130,7 +130,7 @@ fun StellarSetupGuide(onClose: () -> Unit) {
         // 第 5 步的验证结果显示
         verifyResult?.let {
             Spacer(Modifier.height(12.dp))
-            Text(it, style = MaterialTheme.typography.bodyMedium, color = if (it.contains("نجاح")) Color(0xFF69F0AE) else Color(0xFFFF8A80))
+            Text(arabicStellarResult(it), style = MaterialTheme.typography.bodyMedium, color = if (it.contains("成功")) Color(0xFF69F0AE) else Color(0xFFFF8A80))
             if (it.contains("成功")) {
                 Spacer(Modifier.height(8.dp))
                 Button(onClick = onClose) { Text("تم") }

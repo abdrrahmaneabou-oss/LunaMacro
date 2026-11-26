@@ -216,9 +216,9 @@ private fun TaskRow(
                 )
                 Text(
                     if (task.enabled) {
-                        "${task.repeatText()} · التالي ${formatNext(task.nextTriggerAt())}"
+                        "${arabicRepeatText(task)} · التالي ${formatNext(task.nextTriggerAt())}"
                     } else {
-                        "${task.repeatText()} · معطلة"
+                        "${arabicRepeatText(task)} · معطلة"
                     },
                     style = MaterialTheme.typography.labelSmall,
                     color = LunaOnSurfaceVariant
@@ -339,7 +339,7 @@ private fun ScheduleEditDialog(
                                 onClick = {
                                     days = if (days.contains(d)) days - d else (days + d).sorted()
                                 },
-                                label = { Text(ScheduledTask.WEEK_CN[d - 1], fontSize = 12.sp) }
+                                label = { Text(ARABIC_WEEK[d - 1], fontSize = 12.sp) }
                             )
                         }
                     }
@@ -496,8 +496,8 @@ private fun formatNext(ts: Long): String {
     return when (dayDiff) {
         0 -> "اليوم $hm"
         1 -> "غداً $hm"
-        else -> "周${ScheduledTask.WEEK_CN[ScheduledTask.isoDayOfWeek(c) - 1]} $hm" +
-            "（${c.get(Calendar.MONTH) + 1}月${c.get(Calendar.DAY_OF_MONTH)}日）"
+        else -> "${ARABIC_WEEK[ScheduledTask.isoDayOfWeek(c) - 1]} $hm" +
+            " (${c.get(Calendar.DAY_OF_MONTH)}/${c.get(Calendar.MONTH) + 1})"
     }
 }
 
@@ -509,7 +509,7 @@ private fun formatDateTime(ts: Long): String {
 
 private fun formatDate(ts: Long): String {
     val c = Calendar.getInstance().apply { timeInMillis = ts }
-    return "${c.get(Calendar.MONTH) + 1}月${c.get(Calendar.DAY_OF_MONTH)}日"
+    return "${c.get(Calendar.DAY_OF_MONTH)}/${c.get(Calendar.MONTH) + 1}"
 }
 
 private fun formatClock(ts: Long): String {

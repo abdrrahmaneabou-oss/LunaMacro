@@ -178,7 +178,7 @@ fun KeyboardRulerOverlay(
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    "键盘顶距屏幕底部：$calibPx px（${"%.1f".format(pct)}%）",
+                    "المسافة من أعلى لوحة المفاتيح إلى أسفل الشاشة: $calibPx px (${ "%.1f".format(pct)}%)",
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = LunaPrimary

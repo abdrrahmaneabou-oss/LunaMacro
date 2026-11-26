@@ -250,7 +250,7 @@ fun PersonaSettingsScreen(
             )
             Spacer(modifier = Modifier.height(14.dp))
             Text(
-                "当前性格会被描述为：${PersonaEngine.traitsSentence(extroversion.toInt(), sensibility.toInt(), rebelliousness.toInt())}",
+                "الوصف الذي سيُرسل إلى النموذج: ${PersonaEngine.traitsSentence(extroversion.toInt(), sensibility.toInt(), rebelliousness.toInt())}",
                 fontSize = 12.sp,
                 lineHeight = 18.sp,
                 color = LunaOnSurfaceVariant

@@ -100,7 +100,7 @@ fun DatasetAnnotatorScreen(onBack: () -> Unit) {
             SCREEN_TYPES.forEach { t ->
                 val sel = screenType == t
                 LunaOutlinedButton(onClick = { screenType = t }, modifier = Modifier.weight(1f)) {
-                    Text(t, fontSize = 11.sp, color = if (sel) Color(0xFF8AB4F8) else Color.Unspecified)
+                    Text(arabicScreenType(t), fontSize = 11.sp, color = if (sel) Color(0xFF8AB4F8) else Color.Unspecified)
                 }
             }
         }
@@ -171,7 +171,7 @@ fun DatasetAnnotatorScreen(onBack: () -> Unit) {
             title = { Text("وسم زر") },
             text = {
                 Column {
-                    Text("坐标 (${"%.2f".format(pendingX)}, ${"%.2f".format(pendingY)})", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                    Text("الإحداثيات (${"%.2f".format(pendingX)}, ${"%.2f".format(pendingY)})", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
                     Spacer(Modifier.height(8.dp))
                     OutlinedTextField(btnText, { btnText = it }, label = { Text("نص الزر") }, singleLine = true)
                 }

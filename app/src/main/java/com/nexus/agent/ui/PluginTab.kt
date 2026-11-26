@@ -374,7 +374,7 @@ fun PluginTab() {
                 LunaCard(modifier = Modifier.fillMaxWidth()) {
                     Box(modifier = Modifier.fillMaxWidth()) {
                         Column {
-                            Text(game.gameName, style = MaterialTheme.typography.titleMedium)
+                            Text(arabicGameName(game.gameName), style = MaterialTheme.typography.titleMedium)
                             Text(game.packageName, style = MaterialTheme.typography.bodySmall, color = Color.Gray)
                         }
                         CrossStarDecoration(modifier = Modifier.align(Alignment.TopEnd))
@@ -573,7 +573,7 @@ private fun GameProfileEditor(
                                 Text("حذف", color = Color(0xFFFF8A80), fontSize = 12.sp)
                             }
                         }
-                        Text("条件：${rule.condition.ifBlank { "无（总是触发）" }}", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                        Text("الشرط: ${rule.condition.ifBlank { "لا يوجد (يعمل دائماً)" }}", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
                     }
                 }
                 Spacer(modifier = Modifier.height(6.dp))

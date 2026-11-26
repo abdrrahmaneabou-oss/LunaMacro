@@ -1414,7 +1414,7 @@ private fun HomeTab(
                                 WakeWordConfig.setCustomWakeWord(context, w, r.keywords)
                                 wakeWord = w
                                 customWakeMsg =
-                                    "✅ 已设为「$w」：${r.syllables.joinToString(" ")}\n重新开启唤醒后生效"
+                                    "✅ تم ضبط «$w»: ${r.syllables.joinToString(" ")}\nأعد تفعيل التنشيط لتطبيق التغيير"
                             }
 
                             is PinyinConverter.Result.Err -> customWakeMsg = "⚠️ ${r.message}"
@@ -1447,7 +1447,7 @@ private fun HomeTab(
                     }
                 )
                 Text(
-                    "当前阈值 ${"%.2f".format(wakeThreshold)}",
+                    "العتبة الحالية ${"%.2f".format(wakeThreshold)}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1649,7 +1649,7 @@ private fun TaskArchiveScreen(onBack: () -> Unit) {
                     Column(modifier = Modifier.padding(12.dp)) {
                         Text(t.userCommand, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, maxLines = 1)
                         Text(
-                            "${auditStatusLabel(t.status)} · ${t.stepCount} 步 · ${t.gameName ?: "通用任务"}",
+                            "${auditStatusLabel(t.status)} · ${t.stepCount} خطوات · ${t.gameName ?: "مهمة عامة"}",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -1668,7 +1668,7 @@ private fun TaskArchiveScreen(onBack: () -> Unit) {
                 title = { Text(task.userCommand, fontSize = 16.sp) },
                 text = {
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                        Text("状态：${task.status} · 规划 ${task.plannedSteps.size} 步 · 动作 ${task.entries.size} 个")
+                        Text("الحالة: ${auditStatusLabel(task.status)} · التخطيط ${task.plannedSteps.size} خطوات · الإجراءات ${task.entries.size}")
                         Spacer(modifier = Modifier.height(8.dp))
                         if (task.plannedSteps.isNotEmpty()) {
                             Text("خطوات التخطيط:", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)

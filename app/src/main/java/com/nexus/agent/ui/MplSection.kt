@@ -106,7 +106,7 @@ internal fun MplSection(context: Context) {
             Spacer(Modifier.height(3.dp))
             Text(
                 if (enabled) {
-                    if (running) "监听中：${bound.joinToString(", ")} 端口 ${MplServer.currentPort()}"
+                    if (running) "جارٍ الاستماع: ${bound.joinToString(", ")} · المنفذ ${MplServer.currentPort()}"
                     else "مفعل لكن تعذر الاستماع (قد يكون المنفذ مشغولاً)"
                 } else {
                     "معطل: لا خدمة على المنفذ 18080"
