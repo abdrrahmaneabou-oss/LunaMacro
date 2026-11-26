@@ -208,7 +208,7 @@ internal fun SettingsTab(
                 nameError = if (clean.trim().isEmpty()) {
                     "" // 空 = 恢复默认，不算错误
                 } else if (!CopilotConfig.setAssistantName(context, clean)) {
-                    "名字最长 12 个字"
+                    "الحد الأقصى للاسم 12 حرفاً"
                 } else {
                     ""
                 }
@@ -224,7 +224,7 @@ internal fun SettingsTab(
         } else {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                "留空 = 恢复默认「${CopilotConfig.DEFAULT_ASSISTANT_NAME}」",
+                "اتركه فارغاً لاستعادة الاسم الافتراضي «${CopilotConfig.DEFAULT_ASSISTANT_NAME}»",
                 style = MaterialTheme.typography.bodySmall,
                 color = LunaOnSurfaceVariant
             )
@@ -290,14 +290,14 @@ internal fun SettingsTab(
         SettingSwitchRow(
             title = "السماح للمساعد بالتحكم في الهاتف",
             desc = "عند الإيقاف يبقى الحوار فقط، دون تنفيذ اللمسات أو تشغيل الأدوات." +
-                "只想把它当数字生命养的时候关掉它。",
+                "أوقف الخيار إذا كنت تريد المحادثة فقط.",
             checked = automationEnabled,
             onCheckedChange = { on ->
                 automationEnabled = on
                 AutomationPolicy.setEnabled(context, on)
                 Toast.makeText(
                     context,
-                    if (on) "已开启：它可以帮你点点按按了" else "已切换到纯对话模式（只能聊天）",
+                    if (on) "مفعل: يستطيع المساعد تنفيذ اللمسات" else "تم التبديل إلى وضع المحادثة فقط",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -308,8 +308,8 @@ internal fun SettingsTab(
         if (RomProfile.isMimu()) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                "检测到 ${RomProfile.label()}：这类系统会掐后台，建议把自启动、锁后台、" +
-                    "电池无限制都打开，否则读屏会时好时坏。",
+                "تم اكتشاف ${RomProfile.label()}: قد يوقف هذا النظام خدمات الخلفية، فعّل التشغيل التلقائي وقفل التطبيق، " +
+                    "واستثنه من قيود البطارية لضمان استقرار قراءة الشاشة.",
                 style = MaterialTheme.typography.bodySmall,
                 color = LunaOnSurfaceVariant,
                 lineHeight = 17.sp
@@ -319,22 +319,22 @@ internal fun SettingsTab(
             if (showMimuTips) {
                 AlertDialog(
                     onDismissRequest = { showMimuTips = false },
-                    title = { Text("${RomProfile.label()}保活三步") },
+                    title = { Text("ثلاث خطوات لإبقاء الخدمة على ${RomProfile.label()}") },
                     text = {
                         Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                            Text("① 应用信息 → 自启动：打开", style = MaterialTheme.typography.bodyMedium)
+                            Text("① معلومات التطبيق ← تفعيل التشغيل التلقائي", style = MaterialTheme.typography.bodyMedium)
                             Text(
-                                "② 最近任务卡片下拉 → 锁定（别被一键清理掉）",
+                                "② التطبيقات الأخيرة ← قفل بطاقة التطبيق",
                                 style = MaterialTheme.typography.bodyMedium
                             )
                             Text(
-                                "③ 电池 → 后台耗电管理 → 允许后台高耗电 / 无限制",
+                                "③ البطارية ← السماح بالاستهلاك في الخلفية دون قيود",
                                 style = MaterialTheme.typography.bodyMedium
                             )
                             Spacer(modifier = Modifier.height(10.dp))
                             Text(
-                                "三步都做完还是唤不醒 Shizuku 的话，上面的「允许它操作手机」会被" +
-                                    "自动关掉 —— 它只陪聊，不再反复弹失败提示。",
+                                "إذا لم يعمل Shizuku بعد الخطوات الثلاث، فسيتم تعطيل خيار التحكم في الهاتف " +
+                                    "تلقائياً، وسيقتصر المساعد على المحادثة دون تكرار رسائل الفشل.",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = LunaOnSurfaceVariant,
                                 lineHeight = 18.sp
@@ -350,8 +350,8 @@ internal fun SettingsTab(
 
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            "隐私熔断：前台是银行 / 支付 / 证券 / 密码类应用时自动停止截屏，离开后恢复；" +
-                "截图只在内存里分析，不上传。",
+            "حماية الخصوصية: يتوقف التقاط الشاشة عند فتح تطبيقات المصارف أو الدفع أو الأوراق المالية أو كلمات المرور، ويستأنف عند مغادرتها. " +
+                "تُحلل اللقطات في الذاكرة دون رفعها.",
             style = MaterialTheme.typography.bodySmall,
             color = LunaOnSurfaceVariant,
             lineHeight = 17.sp
@@ -395,8 +395,8 @@ internal fun SettingsTab(
         }
         Spacer(modifier = Modifier.height(6.dp))
         Text(
-            "当前路由：${routing.provider} · ${routing.model}" +
-                if (routing.hasKey) " · Key 尾号 ${routing.keyTail}" else " · 未填 Key",
+            "المسار الحالي: ${routing.provider} · ${routing.model}" +
+                if (routing.hasKey) " · نهاية المفتاح ${routing.keyTail}" else " · لم يُدخل المفتاح",
             style = MaterialTheme.typography.labelSmall,
             color = LunaOnSurfaceVariant,
             lineHeight = 16.sp
@@ -439,8 +439,8 @@ internal fun SettingsTab(
                         if (!report.ok) {
                             Spacer(modifier = Modifier.height(10.dp))
                             Text(
-                                "修好之后点「测试连通性 & 查余额」再验一次；" +
-                                    "还不行就把上面这段原文发我。",
+                                "بعد الإصلاح، أعد اختبار الاتصال والتحقق من الرصيد. " +
+                                    "إذا استمر الخطأ، شارك نص التشخيص مع المطور.",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = LunaOnSurfaceVariant,
                                 lineHeight = 16.sp
@@ -475,16 +475,16 @@ internal fun SettingsTab(
             onClick = {
                 if (!warming) {
                     warming = true
-                    warmResult = "正在装载模型并看一屏，请稍等…"
+                    warmResult = "جارٍ تحميل النموذج وتحليل الشاشة…"
                     scope.launch {
                         warmResult = runCatching { VisionHub.diagnose(context) }
-                            .getOrElse { "自检没跑起来：${it.javaClass.simpleName} ${it.message}" }
+                            .getOrElse { "تعذر بدء الفحص: ${it.javaClass.simpleName} ${it.message}" }
                         warming = false
                     }
                 }
             },
             enabled = !warming
-        ) { Text(if (warming) "装载 + 看屏中…（首次约 1.3GB）" else "预热并看一屏（端到端自检）") }
+        ) { Text(if (warming) "جارٍ التحميل وقراءة الشاشة… (1.3GB أول مرة)" else "تهيئة النموذج وفحص قراءة الشاشة") }
         warmResult?.let { msg ->
             Spacer(modifier = Modifier.height(4.dp))
             Text(
@@ -509,14 +509,14 @@ internal fun SettingsTab(
                         visionInferResult = when (outcome) {
                             is VisionWorkerClient.Outcome.Done -> outcome.text
                             is VisionWorkerClient.Outcome.ProcessDied -> buildString {
-                                appendLine("❌ 视觉子进程被终止")
-                                appendLine("原因：${outcome.reason}")
+                                appendLine("❌ توقفت العملية الفرعية للرؤية")
+                                appendLine("السبب: ${outcome.reason}")
                                 appendLine()
-                                appendLine("宏月主体这次没有崩——视觉这段是故意关在独立进程里跑的。")
-                                append("下一步：设置 → 读屏自检，看「上次 native 调用」写的是什么，")
-                                append("或导出模型初始化日志发我。")
+                                appendLine("لم يتعطل LunaMacro نفسه لأن الرؤية تعمل في عملية منفصلة.")
+                                append("الخطوة التالية: افتح فحص قراءة الشاشة وتحقق من آخر استدعاء native، ")
+                                append("أو صدّر سجل تهيئة النموذج.")
                             }
-                            null -> "测试没跑起来（看日志 VisionWorker）"
+                            null -> "تعذر بدء الاختبار (راجع سجل VisionWorker)"
                         }
                     }
                 }
@@ -525,8 +525,8 @@ internal fun SettingsTab(
         ) { Text(if (visionTesting) "جارٍ الاختبار… (تحميل النموذج أول مرة)" else "اختبار نموذج الرؤية (لقطة ووصف)") }
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            "截一张当前屏幕直接喂给本地视觉模型，把模型原文原样给你看；" +
-                "首次会装载 1.3GB 模型，可能等 10~60 秒。",
+            "تُرسل لقطة الشاشة إلى نموذج الرؤية المحلي ويُعرض ناتجه الأصلي. " +
+                "قد يستغرق تحميل نموذج 1.3GB أول مرة من 10 إلى 60 ثانية.",
             style = MaterialTheme.typography.labelSmall,
             color = LunaOnSurfaceVariant,
             lineHeight = 16.sp
@@ -565,7 +565,7 @@ internal fun SettingsTab(
                     onDismissRequest = { visionMenu = false }
                 ) {
                     DropdownMenuItem(
-                        text = { Text("跟随主模型（${LlmClientFactory.getProvider(context)}）") },
+                        text = { Text("اتباع النموذج الرئيسي (${LlmClientFactory.getProvider(context)})") },
                         onClick = {
                             LlmClientFactory.clearVisionProvider(context)
                             visionProvider = LlmClientFactory.getEffectiveVisionProvider(context)
@@ -586,7 +586,7 @@ internal fun SettingsTab(
             }
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                if (visionCapable) "● 可读屏" else "○ 纯文本",
+                if (visionCapable) "● يدعم قراءة الشاشة" else "○ نص فقط",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -595,7 +595,7 @@ internal fun SettingsTab(
             if (visionCapable) {
                 "تتضمن إجابات المساعد لقطة الشاشة الحالية"
             } else {
-                "该模型不支持图片，副驾驶会以纯文本回答（不读屏）"
+                "هذا النموذج لا يدعم الصور؛ ستقتصر الإجابات على النص."
             },
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -607,8 +607,8 @@ internal fun SettingsTab(
         Text("نموذج الرؤية السحابي (اختياري)", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            "主模型是纯文本（如 deepseek-chat）时，你发图它看不来。这里配一个能看图的云端模型" +
-                "（如 qwen-vl-max），发图时会先把图片转成文字描述，再交给主模型。不配则回退本地视觉。",
+            "عند استخدام نموذج نصي مثل deepseek-chat، يمكن إعداد نموذج سحابي يدعم الصور " +
+                "مثل qwen-vl-max لوصف الصور للنموذج الرئيسي. وإلا تُستخدم الرؤية المحلية.",
             style = MaterialTheme.typography.bodySmall,
             color = LunaOnSurfaceVariant,
             lineHeight = 17.sp
@@ -630,8 +630,8 @@ internal fun SettingsTab(
                         .padding(horizontal = 12.dp, vertical = 10.dp)
                 ) {
                     Text(
-                        "💡 提示：主模型若为 DeepSeek，必须在此处配置通义千问的 Key 才能看图。" +
-                            "（当前主模型：$mainProvider / $mainModel，纯文本）",
+                        "ملاحظة: عند استخدام DeepSeek كنموذج رئيسي، يلزم مفتاح Qwen هنا لتحليل الصور." +
+                            "(النموذج الرئيسي الحالي: $mainProvider / $mainModel، نص فقط)",
                         fontSize = 12.sp,
                         color = LunaErrFg,
                         lineHeight = 17.sp
@@ -648,11 +648,11 @@ internal fun SettingsTab(
             Text(
                 when {
                     visionKeyConfigured ->
-                        "${LlmClientFactory.getVisionModel(context)} · Key 尾号 " +
+                        "${LlmClientFactory.getVisionModel(context)} · نهاية المفتاح " +
                             LlmClientFactory.getVisionApiKey(context).takeLast(4)
                     LlmClientFactory.hasUsableVision(context) ->
-                        "复用主模型视觉 · ${LlmClientFactory.getProvider(context)}"
-                    else -> "未配置（发图回退本地视觉）"
+                        "استخدام رؤية النموذج الرئيسي · ${LlmClientFactory.getProvider(context)}"
+                    else -> "غير معدّ (تُستخدم الرؤية المحلية للصور)"
                 },
                 style = MaterialTheme.typography.labelSmall,
                 color = LunaOnSurfaceVariant,
@@ -667,8 +667,8 @@ internal fun SettingsTab(
         Text("الاتصال عبر الأجهزة", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            "在同一 WiFi 下给手表、鸿蒙 NEXT、PC 用一个极小的 HTTP 接口。" +
-                "只有两个接口：POST /api/chat 说话，GET /api/status 看状态。",
+            "واجهة HTTP للأجهزة المتصلة بشبكة Wi-Fi نفسها، مثل الساعة والكمبيوتر وHarmonyOS NEXT." +
+                "واجهتان: POST /api/chat للمحادثة وGET /api/status لعرض الحالة.",
             style = MaterialTheme.typography.bodySmall,
             color = LunaOnSurfaceVariant,
             lineHeight = 17.sp
@@ -686,16 +686,16 @@ internal fun SettingsTab(
                 crossEnabled = LocalAgentServer.isEnabled(context)
                 crossToken = LocalAgentServer.token(context)
                 crossResult = when {
-                    !on -> "已停止监听"
-                    ok -> "监听中：http://${LocalAgentServer.localIp()}:${LocalAgentServer.port(context)}"
-                    else -> "端口 ${LocalAgentServer.port(context)} 被占用，换个端口再试"
+                    !on -> "توقف الاستماع"
+                    ok -> "جارٍ الاستماع: http://${LocalAgentServer.localIp()}:${LocalAgentServer.port(context)}"
+                    else -> "المنفذ ${LocalAgentServer.port(context)} مشغول، جرّب منفذاً آخر"
                 }
             }
         )
         if (crossEnabled) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                "地址：http://${LocalAgentServer.localIp()}:${LocalAgentServer.port(context)}",
+                "العنوان: http://${LocalAgentServer.localIp()}:${LocalAgentServer.port(context)}",
                 style = MaterialTheme.typography.bodySmall,
                 fontFamily = FontFamily.Monospace
             )
@@ -711,13 +711,13 @@ internal fun SettingsTab(
                         android.content.Context.CLIPBOARD_SERVICE
                     ) as? android.content.ClipboardManager
                     cm?.setPrimaryClip(
-                        android.content.ClipData.newPlainText("宏月 Token", crossToken)
+                        android.content.ClipData.newPlainText("LunaMacro Token", crossToken)
                     )
                     Toast.makeText(context, "تم نسخ Token", Toast.LENGTH_SHORT).show()
                 }) { Text("نسخ Token") }
                 LunaTextButton(onClick = {
                     crossToken = LocalAgentServer.regenerateToken(context)
-                    Toast.makeText(context, "已换新 Token，旧设备需重新填", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "تم تجديد Token؛ يلزم تحديثه في الأجهزة السابقة", Toast.LENGTH_LONG).show()
                 }) { Text("إعادة تعيين Token") }
             }
             Text(
@@ -747,7 +747,7 @@ internal fun SettingsTab(
             LunaOutlinedButton(onClick = { showAsrDialog = true }) { Text("إعداد مفتاح ASR") }
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                if (asrKeyConfigured) "✅ 已配置" else "⚠️ 未配置（回退 qwen Key）",
+                if (asrKeyConfigured) "✅ تم الإعداد" else "⚠️ غير معدّ (استخدام مفتاح Qwen)",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -789,7 +789,7 @@ internal fun SettingsTab(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                if (safetyEnabled) "危险操作拦截已开启" else "危险操作拦截已关闭",
+                if (safetyEnabled) "حظر العمليات الخطرة مفعل" else "حظر العمليات الخطرة معطل",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -836,7 +836,7 @@ internal fun SettingsTab(
             // logcat 里只有一行 Log.e，真机排障时根本看不出缺什么。
             LunaOutlinedButton(onClick = {
                 if (!LogExporter.exportVisionInit(context)) {
-                    Toast.makeText(context, "模型初始化日志生成失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "تعذر إنشاء سجل تهيئة النموذج", Toast.LENGTH_SHORT).show()
                 }
             }) { Text("تصدير سجل تهيئة النموذج") }
         }
@@ -854,7 +854,7 @@ internal fun SettingsTab(
                             val report = runCatching { VisionSelfCheck.run(context) }.getOrNull()
                             checking = false
                             visionCheck = report?.toText()
-                                ?: "自检没跑起来（看日志 VisionSelfCheck）"
+                                ?: "تعذر بدء الفحص (راجع سجل VisionSelfCheck)"
                         }
                     }
                 },
@@ -862,7 +862,7 @@ internal fun SettingsTab(
             ) { Text(if (checking) "جارٍ الفحص…" else "الفحص الذاتي لقراءة الشاشة") }
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                "查无障碍 / 截图 / 视觉模型，一条结论说明为什么读不了屏",
+                "يفحص إمكانية الوصول والتقاط الشاشة ونموذج الرؤية لتحديد سبب المشكلة.",
                 style = MaterialTheme.typography.labelSmall,
                 color = LunaOnSurfaceVariant
             )
@@ -908,20 +908,20 @@ internal fun SettingsTab(
             LunaOutlinedButton(onClick = {
                 val ok = CrashHandler.share(context)
                 if (!ok) Toast.makeText(context, "لا توجد سجلات أعطال", Toast.LENGTH_SHORT).show()
-            }) { Text("导出崩溃日志（$crashCount）") }
+            }) { Text("تصدير سجلات الأعطال ($crashCount)") }
             Spacer(modifier = Modifier.width(12.dp))
             LunaTextButton(onClick = {
                 val n = CrashHandler.clear(context)
                 crashCount = 0
                 Toast.makeText(
                     context,
-                    if (n > 0) "已清空 $n 份崩溃记录" else "暂无崩溃记录",
+                    if (n > 0) "تم مسح $n من سجلات الأعطال" else "لا توجد سجلات أعطال",
                     Toast.LENGTH_SHORT
                 ).show()
             }) { Text("مسح الكل") }
         }
         Text(
-            if (crashCount > 0) "上次崩溃现场已保存，反馈闪退时请点上面按钮导出" else "暂无崩溃记录",
+            if (crashCount > 0) "تم حفظ تفاصيل آخر عطل، صدّرها عند الإبلاغ عن المشكلة" else "لا توجد سجلات أعطال",
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -939,7 +939,7 @@ internal fun SettingsTab(
         val versionName = try {
             context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "0.3.1"
         } catch (e: Throwable) { "0.3.1" }
-        Text("宏月 v$versionName\n系统级 AI 助手 · 本地离线", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text("LunaMacro v$versionName\nمساعد ذكاء اصطناعي على مستوى النظام · دعم التشغيل المحلي", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
         Spacer(modifier = Modifier.height(8.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -954,7 +954,7 @@ internal fun SettingsTab(
             Spacer(modifier = Modifier.height(6.dp))
             LunaTextButton(onClick = { onInstallUpdate(exp) }) {
                 Text(
-                    "● 实验版 v${exp.version} · 点这里安装",
+                    "● إصدار تجريبي v${exp.version} · اضغط للتثبيت",
                     style = MaterialTheme.typography.labelMedium,
                     color = Color(0xFFE53935)
                 )
@@ -1010,7 +1010,7 @@ internal fun SettingsTab(
             onDismissRequest = { showSafetyConfirm = false },
             title = { Text("تعطيل سياسة الأمان؟") },
             text = {
-                Text("关闭后，危险操作（卸载/删除/格式化/转账/打开银行、支付、证券类应用等）将不再拦截。\n仅建议高级用户关闭。")
+                Text("عند التعطيل لن تُحظر العمليات الخطرة (إلغاء التثبيت أو الحذف أو التهيئة أو تحويل الأموال أو فتح تطبيقات المصارف والدفع والأوراق المالية).\nيوصى بذلك للمستخدمين المتقدمين فقط.")
             },
             confirmButton = {
                 LunaTextButton(onClick = {
@@ -1099,7 +1099,7 @@ private fun ModelDownloadSection() {
         scope.launch {
             busy = true
             fraction = -1f
-            progress = "准备导入…"
+            progress = "جارٍ التحضير للاستيراد…"
             val ok = ModelManager.importZip(context, uri) { p, stage ->
                 fraction = p
                 progress = stage
@@ -1107,7 +1107,7 @@ private fun ModelDownloadSection() {
             busy = false
             refresh()
             fraction = if (ok) 1f else -1f
-            if (ok) progress = "● 导入完成，本地模型已就绪"
+            if (ok) progress = "● اكتمل الاستيراد، النموذج المحلي جاهز"
             Toast.makeText(context, if (ok) "تم استيراد النموذج" else progress, Toast.LENGTH_SHORT).show()
         }
     }
@@ -1119,7 +1119,7 @@ private fun ModelDownloadSection() {
         scope.launch {
             busy = true
             fraction = -1f
-            progress = "准备导入…"
+            progress = "جارٍ التحضير للاستيراد…"
             val ok = ModelManager.importFolder(context, uri) { p, stage ->
                 fraction = p
                 progress = stage
@@ -1127,7 +1127,7 @@ private fun ModelDownloadSection() {
             busy = false
             refresh()
             fraction = if (ok) 1f else -1f
-            if (ok) progress = "● 导入完成，本地模型已就绪"
+            if (ok) progress = "● اكتمل الاستيراد، النموذج المحلي جاهز"
             Toast.makeText(context, if (ok) "تم استيراد النموذج" else progress, Toast.LENGTH_SHORT).show()
         }
     }
@@ -1135,24 +1135,24 @@ private fun ModelDownloadSection() {
     Column {
         // ---------------- 现状 ----------------
         Text(
-            "视觉模型：" + when {
-                !visionReady -> "○ 未下载"
-                bundle == ModelManager.VisionBundle.MODELSCOPE -> "● 已就绪（魔搭官方包）"
-                bundle == ModelManager.VisionBundle.LUNAR -> "● 文件齐全（LunaMacro 包，版本不配套）"
-                bundle == ModelManager.VisionBundle.MIXED -> "● 文件齐全（两套混装，会崩）"
-                else -> "● 文件齐全（来源未知）"
+            "نموذج الرؤية: " + when {
+                !visionReady -> "○ غير منزّل"
+                bundle == ModelManager.VisionBundle.MODELSCOPE -> "● جاهز (حزمة ModelScope الرسمية)"
+                bundle == ModelManager.VisionBundle.LUNAR -> "● الملفات مكتملة (حزمة LunaMacro غير متوافقة)"
+                bundle == ModelManager.VisionBundle.MIXED -> "● الملفات مكتملة (حزم مختلطة تسبب الأعطال)"
+                else -> "● الملفات مكتملة (مصدر غير معروف)"
             },
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Text(
-            "语音模型：" + (if (senseVoiceReady) "● 已就绪" else "○ 未下载"),
+            "نموذج الصوت: " + (if (senseVoiceReady) "● جاهز" else "○ غير منزّل"),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Spacer(modifier = Modifier.height(6.dp))
         Text(
-            "模型来源：" + bundle.label,
+            "مصدر النموذج: " + bundle.label,
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -1189,13 +1189,13 @@ private fun ModelDownloadSection() {
                 Spacer(modifier = Modifier.height(6.dp))
             }
             Text(
-                progress.ifEmpty { "准备中…" },
+                progress.ifEmpty { "جارٍ التحضير…" },
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                "下载/导入期间请保持应用在前台",
+                "أبقِ التطبيق في الواجهة أثناء التنزيل أو الاستيراد.",
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -1204,7 +1204,7 @@ private fun ModelDownloadSection() {
         // ---------------- ① 选方案 ----------------
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            "① 选择一个方案",
+            "① اختر طريقة",
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -1222,7 +1222,7 @@ private fun ModelDownloadSection() {
         // ---------------- ② 产出 ----------------
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            "② 产出（下载到暂存区，不动正式目录）",
+            "② تنزيل إلى المجلد المؤقت دون تغيير المجلد الرئيسي",
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -1231,12 +1231,12 @@ private fun ModelDownloadSection() {
         Text(
             when (val s = staged) {
                 is ModelManager.Staged.Ready ->
-                    "✓ 已产出 " + s.fileCount + " 个文件 / " + (s.bytes / 1024 / 1024) + "MB，可以安装了"
+                    "✓ تم تجهيز " + s.fileCount + " ملفات / " + (s.bytes / 1024 / 1024) + "MB، جاهز للتثبيت"
                 is ModelManager.Staged.Empty ->
                     if (s.partialBytes > 0) {
-                        "下了一半（" + (s.partialBytes / 1024 / 1024) + "MB），点下面的按钮可续传"
+                        "تنزيل جزئي (" + (s.partialBytes / 1024 / 1024) + "MB)، اضغط أدناه للاستئناف"
                     } else {
-                        "还没下载"
+                        "لم يتم التنزيل بعد"
                     }
             },
             style = MaterialTheme.typography.labelSmall,
@@ -1261,22 +1261,22 @@ private fun ModelDownloadSection() {
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                if (stagedReady) "重新下载（" + plan.title + "）"
-                else "下载到暂存区（" + plan.title + "）"
+                if (stagedReady) "إعادة التنزيل (" + plan.title + "）"
+                else "التنزيل إلى المجلد المؤقت (" + plan.title + "）"
             )
         }
 
         // ---------------- ③ 安装 ----------------
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            "③ 安装（覆盖正式目录，旧文件先备份）",
+            "③ التثبيت (استبدال الملفات بعد نسخها احتياطياً)",
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            "会替换 " + (plan.webFiles?.size ?: 7) + " 个文件；先备份旧的，装失败自动回滚，" +
-                "不会再出现半新半旧的混装包。",
+            "سيتم استبدال " + (plan.webFiles?.size ?: 7) + " ملفات، مع النسخ الاحتياطي والتراجع تلقائياً عند الفشل، " +
+                "لتجنب خلط ملفات إصدارات مختلفة.",
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -1295,12 +1295,12 @@ private fun ModelDownloadSection() {
                     when (r) {
                         is ModelManager.InstallResult.Ok -> {
                             fraction = 1f
-                            progress = "● 安装完成（" + r.replaced + " 个文件），去点「测试视觉模型」"
+                            progress = "● اكتمل التثبيت (" + r.replaced + " ملفات)، اضغط اختبار نموذج الرؤية"
                             Toast.makeText(context, "تم تثبيت النموذج", Toast.LENGTH_SHORT).show()
                         }
                         is ModelManager.InstallResult.Failed -> {
                             fraction = -1f
-                            progress = "安装失败：" + r.reason
+                            progress = "فشل التثبيت: " + r.reason
                         }
                     }
                 }
@@ -1320,24 +1320,24 @@ private fun ModelDownloadSection() {
                         busy = false
                         refresh()
                         fraction = -1f
-                        progress = if (ok) "● 已回滚到备份 " + name else "没有可回滚的备份"
+                        progress = if (ok) "● تمت الاستعادة من النسخة الاحتياطية " + name else "لا توجد نسخة احتياطية"
                         Toast.makeText(
                             context,
-                            if (ok) "已回滚到 " + name else "没有备份",
+                            if (ok) "تمت الاستعادة إلى " + name else "لا توجد نسخة احتياطية",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                 },
                 enabled = !busy
             ) {
-                Text("回滚到上一次备份（" + name + "）")
+                Text("استعادة آخر نسخة احتياطية (" + name + "）")
             }
         }
 
         // ---------------- 语音模型 / 手动导入 ----------------
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            "语音模型 / 手动导入",
+            "نموذج الصوت / الاستيراد اليدوي",
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -1367,7 +1367,7 @@ private fun ModelDownloadSection() {
                         scope.launch {
                             busy = true
                             fraction = -1f
-                            progress = "连接下载源…"
+                            progress = "جارٍ الاتصال بمصدر التنزيل…"
                             val ok = ModelManager.ensureModels(context) { p, stage ->
                                 fraction = p
                                 progress = stage
@@ -1375,7 +1375,7 @@ private fun ModelDownloadSection() {
                             busy = false
                             refresh()
                             fraction = if (ok) 1f else -1f
-                            progress = if (ok) "● 语音模型已就绪" else progress
+                            progress = if (ok) "● نموذج الصوت جاهز" else progress
                         }
                     },
                     enabled = !busy
@@ -1399,18 +1399,18 @@ private fun ModelDownloadSection() {
         if (showLinks) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                "用 IDM / 迅雷 / aria2 / 浏览器下好 zip，回到本页点「导入 zip」即可，不用连 App 的网络。",
+                "نزّل ZIP باستخدام متصفح أو مدير تنزيلات، ثم ارجع واضغط استيراد ZIP.",
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(modifier = Modifier.height(6.dp))
             ManualLinkGroup(
-                title = "视觉模型 models.zip（约 1.3GB）",
+                title = "نموذج الرؤية models.zip (نحو 1.3GB)",
                 zipName = ModelManager.VISION_ZIP_NAME
             )
             Spacer(modifier = Modifier.height(6.dp))
             ManualLinkGroup(
-                title = "语音模型 sensevoice.zip（约 229MB）",
+                title = "نموذج الصوت sensevoice.zip (نحو 229MB)",
                 zipName = ModelManager.SENSEVOICE_ZIP_NAME
             )
         }
@@ -1490,7 +1490,7 @@ private fun ManualLinkGroup(title: String, zipName: String) {
             color = MaterialTheme.colorScheme.onSurface
         )
         ModelManager.manualUrls(zipName).forEachIndexed { i, url ->
-            val label = if (i == 0) "推荐" else if (i == ModelManager.manualUrls(zipName).lastIndex) "官方" else "备用"
+            val label = if (i == 0) "موصى به" else if (i == ModelManager.manualUrls(zipName).lastIndex) "رسمي" else "بديل"
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -1626,7 +1626,7 @@ fun AsrConfigDialog(
                 OutlinedTextField(
                     value = apiKey,
                     onValueChange = { v -> apiKey = v },
-                    label = { Text("ASR API Key（留空则用 qwen Key）") },
+                    label = { Text("مفتاح ASR API (اتركه فارغاً لاستخدام مفتاح Qwen)") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -1678,7 +1678,7 @@ fun VisionConfigDialog(
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Box {
                     LunaOutlinedButton(onClick = { modelMenu = true }) {
-                        Text("模型：$model")
+                        Text("النموذج: $model")
                     }
                     DropdownMenu(
                         expanded = modelMenu,
@@ -1703,13 +1703,13 @@ fun VisionConfigDialog(
                 OutlinedTextField(
                     value = apiKey,
                     onValueChange = { v -> apiKey = v },
-                    label = { Text("视觉 API Key（留空则回退本地视觉）") },
+                    label = { Text("مفتاح API للرؤية (فارغ لاستخدام الرؤية المحلية)") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
-                    "qwen-vl-max / qwen-vl-plus 用通义千问（DashScope）的 Key；" +
-                        "gpt-4o 用 OpenAI 的 Key。留空则发图时只走本地视觉模型。",
+                    "يستخدم qwen-vl-max / qwen-vl-plus مفتاح Qwen (DashScope)، " +
+                        "ويستخدم gpt-4o مفتاح OpenAI. اتركه فارغاً لاستخدام نموذج الرؤية المحلي.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
