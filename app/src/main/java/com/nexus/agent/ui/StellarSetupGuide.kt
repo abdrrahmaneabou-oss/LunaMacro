@@ -68,8 +68,8 @@ fun StellarSetupGuide(onClose: () -> Unit) {
         when (step) {
             0 -> GuideCard(
                 title = "① استثناءات البطارية",
-                desc = "vivo 需要在电池设置中允许 Stellar「后台高耗电」，否则系统会反复杀掉它。",
-                button = "打开电池设置"
+                desc = "على أجهزة vivo، اسمح باستهلاك الطاقة في الخلفية لـ Stellar لمنع النظام من إيقافه.",
+                button = "فتح إعدادات البطارية"
             ) {
                 try {
                     context.startActivity(
@@ -77,24 +77,24 @@ fun StellarSetupGuide(onClose: () -> Unit) {
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     )
                 } catch (e: Throwable) {
-                    Toast.makeText(context, "请手动到 设置→电池→后台耗电管理 设置", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "افتح إعدادات البطارية وإدارة استهلاك الخلفية يدوياً", Toast.LENGTH_LONG).show()
                 }
             }
             1 -> GuideCard(
                 title = "② السماح بالتشغيل التلقائي",
-                desc = "允许 Stellar 自启动，否则重启/杀进程后无法自动拉起。自动识别你的手机品牌并跳转到对应自启动管理页。",
-                button = "打开自启动管理"
+                desc = "اسمح بالتشغيل التلقائي لـ Stellar حتى يبدأ بعد إعادة تشغيل الجهاز أو إيقاف العملية.",
+                button = "فتح إدارة التشغيل التلقائي"
             ) {
                 // 自动探测厂商跳转（vivo/iQOO/小米/OPPO/华为/一加/三星等）
                 val ok = StabilityHelper.openAutoStartByVendor(context)
                 if (!ok) {
-                    Toast.makeText(context, "请手动到 设置→应用管理→自启动 设置", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "افتح إعدادات التطبيقات والتشغيل التلقائي يدوياً", Toast.LENGTH_LONG).show()
                 }
             }
             2 -> GuideCard(
                 title = "③ استثناءات وضع السكون",
-                desc = "把 Stellar 加入睡眠模式白名单，避免息屏后被强制休眠。",
-                button = "打开电池更多设置"
+                desc = "أضف Stellar إلى استثناءات وضع السكون لمنع إيقافه عند إطفاء الشاشة.",
+                button = "فتح إعدادات البطارية الإضافية"
             ) {
                 try {
                     context.startActivity(
@@ -102,13 +102,13 @@ fun StellarSetupGuide(onClose: () -> Unit) {
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     )
                 } catch (e: Throwable) {
-                    Toast.makeText(context, "请手动到 设置→电池→更多电池设置", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "افتح إعدادات البطارية الإضافية يدوياً", Toast.LENGTH_LONG).show()
                 }
             }
             3 -> GuideCard(
                 title = "④ مفاتيح Stellar",
-                desc = "打开 Stellar，确保 Watchdog、Start on Boot、Follow Startup 三个开关都是开着的。",
-                button = "打开 Stellar"
+                desc = "افتح Stellar وتأكد من تفعيل Watchdog وStart on Boot وFollow Startup.",
+                button = "فتح Stellar"
             ) {
                 val launch = context.packageManager.getLaunchIntentForPackage(STELLAR_PKG)
                 if (launch != null) {
@@ -120,8 +120,8 @@ fun StellarSetupGuide(onClose: () -> Unit) {
             }
             4 -> GuideCard(
                 title = "⑤ التحقق",
-                desc = "配置完成，点击验证检查 Stellar 是否真正可用。",
-                button = "验证"
+                desc = "بعد اكتمال الإعداد اضغط التحقق لاختبار عمل Stellar.",
+                button = "تحقق"
             ) {
                 verifyResult = verifyStellar(context)
             }

@@ -94,7 +94,7 @@ fun PersonaSettingsScreen(
         val clean = name.trim().ifBlank { CopilotConfig.DEFAULT_ASSISTANT_NAME }
         // 名字长度校验交给 CopilotConfig：两边规则只留一份，避免不同步
         if (!CopilotConfig.setAssistantName(context, clean)) {
-            nameError = "名字最长 12 个字"
+            nameError = "الحد الأقصى للاسم 12 حرفاً"
             return
         }
         nameError = ""
@@ -110,7 +110,7 @@ fun PersonaSettingsScreen(
                 rebelliousness = rebelliousness.toInt()
             )
         )
-        Toast.makeText(context, "人格已保存，下一句话就生效", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "تم حفظ الشخصية، ستُطبق في الرد التالي", Toast.LENGTH_SHORT).show()
         onSaved()
     }
 
@@ -126,7 +126,7 @@ fun PersonaSettingsScreen(
                 Text("‹ رجوع", fontSize = 14.sp, color = LunaOnSurfaceVariant)
             }
             Text(
-                "人格设置",
+                "إعدادات الشخصية",
                 modifier = Modifier.weight(1f),
                 style = MaterialTheme.typography.titleMedium,
                 color = LunaOnBackground
@@ -149,7 +149,7 @@ fun PersonaSettingsScreen(
                 .padding(horizontal = 20.dp)
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            SectionTitle("预设模板", "先挑一个顺眼的，下面会自动填好，再按自己口味微调")
+            SectionTitle("قوالب جاهزة", "اختر قالباً لتعبئة الإعدادات ثم عدّلها حسب رغبتك")
             Spacer(modifier = Modifier.height(10.dp))
             TemplateRow(
                 PersonaTemplates.take(2),
@@ -164,7 +164,7 @@ fun PersonaSettingsScreen(
             )
 
             Spacer(modifier = Modifier.height(22.dp))
-            SectionTitle("基本信息", "名字会显示在聊天页顶部；身份设定和口癖会进提示词")
+            SectionTitle("المعلومات الأساسية", "يظهر الاسم أعلى المحادثة؛ وتدخل الهوية والعبارة المميزة في تعليمات النموذج")
             Spacer(modifier = Modifier.height(10.dp))
             OutlinedTextField(
                 value = name,
@@ -186,7 +186,7 @@ fun PersonaSettingsScreen(
                 value = identity,
                 onValueChange = { if (it.length <= IDENTITY_MAX) identity = it },
                 label = { Text("إعداد الهوية", fontSize = 12.sp) },
-                placeholder = { Text("例：赛博黑客 / 青梅竹马 / 私人管家", fontSize = 13.sp) },
+                placeholder = { Text("مثال: خبير تقني / صديق طفولة / مساعد شخصي", fontSize = 13.sp) },
                 minLines = 2,
                 maxLines = 3,
                 modifier = Modifier.fillMaxWidth()
@@ -200,50 +200,50 @@ fun PersonaSettingsScreen(
                         .take(PersonaProfile.CATCHPHRASE_MAX)
                 },
                 label = { Text("عبارة مميزة", fontSize = 12.sp) },
-                placeholder = { Text("例：喵 / 哼 / ……（可留空）", fontSize = 13.sp) },
+                placeholder = { Text("مثال: عبارة مميزة (اختياري)", fontSize = 13.sp) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
             if (soul.isNotBlank()) {
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(
-                    "性格底色：$soul（选模板时自动带入）",
+                    "طابع الشخصية: $soul (يُملأ تلقائياً عند اختيار القالب)",
                     fontSize = 12.sp,
                     color = LunaOnSurfaceVariant
                 )
             }
 
             Spacer(modifier = Modifier.height(22.dp))
-            SectionTitle("性格", "拖动滑块，数值会变成提示词里的一句自然语言")
+            SectionTitle("الشخصية", "حرّك المؤشرات لتحويل القيم إلى وصف طبيعي في تعليمات النموذج")
             Spacer(modifier = Modifier.height(6.dp))
             TraitSlider(
                 title = "انطوائي · اجتماعي",
                 value = extroversion,
                 onValueChange = { extroversion = it },
-                leftLabel = "内向",
-                rightLabel = "外向",
+                leftLabel = "انطوائي",
+                rightLabel = "اجتماعي",
                 describe = PersonaEngine.describeExtroversion(extroversion.toInt())
             )
             TraitSlider(
                 title = "عقلاني · عاطفي",
                 value = sensibility,
                 onValueChange = { sensibility = it },
-                leftLabel = "理性",
-                rightLabel = "感性",
+                leftLabel = "عقلاني",
+                rightLabel = "عاطفي",
                 describe = PersonaEngine.describeSensibility(sensibility.toInt())
             )
             TraitSlider(
                 title = "مطيع · متمرد",
                 value = rebelliousness,
                 onValueChange = { rebelliousness = it },
-                leftLabel = "顺从",
-                rightLabel = "叛逆",
+                leftLabel = "مطيع",
+                rightLabel = "متمرد",
                 describe = PersonaEngine.describeRebelliousness(rebelliousness.toInt())
             )
 
             Spacer(modifier = Modifier.height(18.dp))
             Text(
-                "⚠️ 过度修改身份设定或性格，可能导致 AI 出现幻觉或逻辑混乱，建议微调。",
+                "⚠️ قد تؤدي المبالغة في تغيير الهوية أو الشخصية إلى أخطاء في منطق المساعد؛ يوصى بتعديلات بسيطة.",
                 fontSize = 12.sp,
                 lineHeight = 18.sp,
                 color = LunaOnSurfaceVariant
@@ -372,8 +372,8 @@ private val PersonaTemplates = listOf(
     PersonaTemplate(
         key = "gentle",
         emoji = "🌙",
-        title = "温柔知心",
-        desc = "会先接住你情绪的人，不太争辩",
+        title = "لطيف ومتفهّم",
+        desc = "يتفهم المشاعر أولاً ولا يكثر الجدال",
         identity = "一直陪在你身边、懂你情绪的人",
         soul = "耐心、共情，先接住情绪再谈事情；不评判、不急着给建议",
         catchphrase = "",
@@ -384,8 +384,8 @@ private val PersonaTemplates = listOf(
     PersonaTemplate(
         key = "tsundere",
         emoji = "😼",
-        title = "傲娇毒舌",
-        desc = "嘴上不饶人，正事上绝不含糊",
+        title = "ساخر ومشاكس",
+        desc = "صريح في الكلام ودقيق في العمل",
         identity = "嘴上不饶人但心里在乎你的老相识",
         soul = "嘴硬、爱怼人，损完会悄悄把事办了；被夸会别扭地转移话题",
         catchphrase = "哼",
@@ -396,8 +396,8 @@ private val PersonaTemplates = listOf(
     PersonaTemplate(
         key = "genki",
         emoji = "⚡",
-        title = "元气活泼",
-        desc = "语速快、爱玩梗、一直在给你打气",
+        title = "نشيط ومرح",
+        desc = "سريع الكلام ويحب المزاح والتشجيع",
         identity = "精力过剩的同桌兼搭档",
         soul = "欢快、爱玩梗、热衷于给你打气；坏消息也能说出点盼头",
         catchphrase = "冲！",
@@ -408,8 +408,8 @@ private val PersonaTemplates = listOf(
     PersonaTemplate(
         key = "kuudere",
         emoji = "❄️",
-        title = "高冷三无",
-        desc = "话少、效率至上、没有情绪波动",
+        title = "هادئ ومقتضب",
+        desc = "قليل الكلام ويركز على الكفاءة",
         identity = "话少、效率至上的执行终端",
         soul = "冷静、极简、不说废话；不寒暄、不安慰，只给结论",
         catchphrase = "……",

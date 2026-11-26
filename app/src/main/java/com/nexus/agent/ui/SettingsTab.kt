@@ -721,7 +721,7 @@ internal fun SettingsTab(
                 }) { Text("إعادة تعيين Token") }
             }
             Text(
-                "调用示例：curl -H \"X-Auth-Token: $crossToken\" " +
+                "مثال الاستدعاء: curl -H \"X-Auth-Token: $crossToken\" " +
                     "-d '{\"message\":\"在吗\"}' " +
                     "http://${LocalAgentServer.localIp()}:${LocalAgentServer.port(context)}/api/chat",
                 style = MaterialTheme.typography.labelSmall,
@@ -1573,10 +1573,10 @@ fun LlmConfigDialog(
                 // 本地 AI 服务的填写指引（0.7.12）：HTTP 已被 network_security_config 放行，
                 // 但地址/端口/API Key 三处任何一处填错，用户看到的都只是「连不上」，很难自查。
                 Text(
-                    text = "若使用本地 Ollama，请填写 http://127.0.0.1:11434/v1，" +
-                        "并确保 PC 端已设置 OLLAMA_HOST=0.0.0.0。\n" +
-                        "手机与电脑不在同一台机器时，127.0.0.1 要换成电脑的局域网 IP" +
-                        "（本机实测 http://192.168.31.46:11434/v1）；API Key 随便填，本地服务不校验。",
+                    text = "إذا كنت تستخدم Ollama محلياً، أدخل http://127.0.0.1:11434/v1، " +
+                        "وتأكد من إعداد OLLAMA_HOST=0.0.0.0 على الكمبيوتر.\n" +
+                        "إذا كان الهاتف والكمبيوتر جهازين منفصلين، استبدل 127.0.0.1 بعنوان الكمبيوتر المحلي " +
+                        "(مثال: http://192.168.31.46:11434/v1). لا يتحقق الخادم المحلي من مفتاح API.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1820,9 +1820,9 @@ private fun HabitLearningSection(context: Context) {
     Text("التعلم الذاتي", style = MaterialTheme.typography.titleMedium)
     Spacer(modifier = Modifier.height(8.dp))
     Text(
-        "让她自己留意你怎么用手机（打开过哪些应用、点了哪个按钮、大概几点），" +
-            "慢慢把你的习惯记下来；同一条操作她走熟之后，会归纳成「她会做的动作」。" +
-            "默认关闭；密码、验证码、输入内容、支付与金融类界面一律不采，学会的动作也要你逐条收下才算数。",
+        "يتابع المساعد طريقة استخدامك للهاتف، مثل التطبيقات المفتوحة والأزرار المضغوطة وأوقاتها التقريبية، " +
+            "ويتعلّم عاداتك تدريجياً ويستخلص منها إجراءات قابلة للتنفيذ عند تكرارها. " +
+            "معطل افتراضياً؛ لا يجمع كلمات المرور أو رموز التحقق أو النصوص المدخلة أو بيانات الدفع والمال، ويجب قبول كل إجراء متعلم على حدة.",
         style = MaterialTheme.typography.bodySmall,
         color = LunaOnSurfaceVariant,
         lineHeight = 17.sp
@@ -1848,7 +1848,7 @@ private fun HabitLearningSection(context: Context) {
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            if (enabled) "正在学习" else "已关闭",
+            if (enabled) "جارٍ التعلم" else "معطل",
             style = MaterialTheme.typography.bodySmall,
             color = if (enabled) LunaOkFg else LunaOnSurfaceVariant
         )
@@ -1857,7 +1857,7 @@ private fun HabitLearningSection(context: Context) {
     if (enabled) {
         Spacer(modifier = Modifier.height(6.dp))
         Text(
-            "已采集 $dayCount 天 · 今天 $todayCount 条 · 占用 ${sizeKb} KB（原始记录最多留 7 天）",
+            "تم الجمع خلال $dayCount أيام · اليوم $todayCount سجل · الحجم ${sizeKb} KB (تُحفظ السجلات الأصلية 7 أيام كحد أقصى)",
             style = MaterialTheme.typography.labelSmall,
             color = LunaOnSurfaceVariant
         )
@@ -1872,7 +1872,7 @@ private fun HabitLearningSection(context: Context) {
     Row {
         LunaTextButton(onClick = {
             if (brief.isBlank()) {
-                Toast.makeText(context, "她还没学到东西，先让她多看几天，或者点「现在学一下」", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "لم يتعلم المساعد شيئاً بعد. انتظر بضعة أيام أو اضغط «التعلم الآن»", Toast.LENGTH_SHORT).show()
             } else {
                 showLearned = true
             }
@@ -1890,7 +1890,7 @@ private fun HabitLearningSection(context: Context) {
                     refresh()
                     Toast.makeText(
                         context,
-                        if (p.isEmpty) "记录还太少，先让她多看几天" else "学完了，去跟她聊聊看",
+                        if (p.isEmpty) "السجلات قليلة، اترك المساعد يتابع بضعة أيام أخرى" else "اكتمل التعلم، جرّب المحادثة معه",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -1901,7 +1901,7 @@ private fun HabitLearningSection(context: Context) {
         LunaTextButton(onClick = { showTerms = true }) { Text("عرض إخلاء المسؤولية") }
         LunaTextButton(onClick = {
             if (dayCount == 0 && brief.isBlank()) {
-                Toast.makeText(context, "本来就没有学习数据", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "لا توجد بيانات تعلم", Toast.LENGTH_SHORT).show()
             } else {
                 showClear = true
             }
@@ -1918,7 +1918,7 @@ private fun HabitLearningSection(context: Context) {
                 enabled = true
                 showConsent = false
                 refresh()
-                Toast.makeText(context, "已开启，她会慢慢开始留意", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "تم التفعيل، سيبدأ المساعد التعلم تدريجياً", Toast.LENGTH_SHORT).show()
             }
         )
     }
@@ -1938,7 +1938,7 @@ private fun HabitLearningSection(context: Context) {
                     Text(brief, style = MaterialTheme.typography.bodySmall, lineHeight = 20.sp)
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
-                        "这些是纯本地的统计结论，你可以随时清除。",
+                        "هذه إحصاءات محلية بالكامل ويمكنك مسحها في أي وقت.",
                         style = MaterialTheme.typography.labelSmall,
                         color = LunaOnSurfaceVariant
                     )
@@ -1955,8 +1955,8 @@ private fun HabitLearningSection(context: Context) {
             title = { Text("مسح بيانات التعلم؟") },
             text = {
                 Text(
-                    "已经采集的操作记录和她总结出来的习惯会一起删掉，无法恢复。" +
-                        "开关状态不变，之后会从头开始重新学。"
+                    "ستُحذف سجلات العمليات والعادات المستخلصة نهائياً. " +
+                        "تبقى حالة المفتاح كما هي، ويبدأ التعلم من جديد."
                 )
             },
             confirmButton = {
@@ -1968,7 +1968,7 @@ private fun HabitLearningSection(context: Context) {
                         }
                         HabitMemory.clear()
                         refresh()
-                        Toast.makeText(context, "已清除，什么都没有留下", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "تم مسح جميع البيانات", Toast.LENGTH_SHORT).show()
                     }
                 }) { Text("تأكيد المسح", color = LunaErrFg) }
             },
@@ -2023,8 +2023,8 @@ private fun HabitSkillSection(context: Context) {
     Text("الحركات التي تعلمها المساعد", style = MaterialTheme.typography.titleMedium)
     Spacer(modifier = Modifier.height(4.dp))
     Text(
-        "她把你反复走的同一条路径记了下来。现在这些还只是候选——她一个都不会做。" +
-            "你点「收下」之后她才算会，而且每次动手前都会先问过你。",
+        "يتذكر المساعد المسارات التي تكررها. هذه مجرد إجراءات مرشحة، ولا ينفذها بعد. " +
+            "لا يتعلم الإجراء إلا بعد قبوله، ويطلب موافقتك قبل تنفيذه في كل مرة.",
         style = MaterialTheme.typography.bodySmall,
         color = LunaOnSurfaceVariant,
         lineHeight = 17.sp
@@ -2033,7 +2033,7 @@ private fun HabitSkillSection(context: Context) {
 
     if (loaded && candidates.isEmpty() && actives.isEmpty()) {
         Text(
-            "还没学到。同一条操作重复 3 次以上、并且跨 2 天才算数——一次两次只是随手点。",
+            "لم يتعلم شيئاً بعد. يجب تكرار الإجراء 3 مرات على الأقل وعلى مدار يومين.",
             style = MaterialTheme.typography.labelSmall,
             color = LunaOnSurfaceVariant,
             lineHeight = 16.sp
@@ -2042,7 +2042,7 @@ private fun HabitSkillSection(context: Context) {
 
     if (candidates.isNotEmpty()) {
         Text(
-            "候选（${candidates.size}）",
+            "المرشحة (${candidates.size})",
             style = MaterialTheme.typography.labelMedium,
             color = LunaOnSurfaceVariant
         )
@@ -2051,9 +2051,9 @@ private fun HabitSkillSection(context: Context) {
             SkillRow(
                 skill = sk,
                 running = runningId == sk.id,
-                primaryLabel = "收下",
+                primaryLabel = "قبول",
                 onPrimary = { setState(sk, HabitSkill.STATE_ACTIVE) },
-                secondaryLabel = "不要",
+                secondaryLabel = "رفض",
                 onSecondary = { setState(sk, HabitSkill.STATE_REJECTED) }
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -2063,7 +2063,7 @@ private fun HabitSkillSection(context: Context) {
     if (actives.isNotEmpty()) {
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            "已收下（${actives.size}）",
+            "المقبولة (${actives.size})",
             style = MaterialTheme.typography.labelMedium,
             color = LunaOkFg
         )
@@ -2072,19 +2072,19 @@ private fun HabitSkillSection(context: Context) {
             SkillRow(
                 skill = sk,
                 running = runningId == sk.id,
-                primaryLabel = if (runningId == sk.id) "正在做…" else "让她做",
+                primaryLabel = if (runningId == sk.id) "جارٍ التنفيذ…" else "تنفيذ",
                 onPrimary = {
                     if (NexusAccessibilityService.getInstance() == null) {
                         Toast.makeText(
                             context,
-                            "得先打开无障碍服务，她才点得动",
+                            "فعّل خدمة إمكانية الوصول أولاً لتنفيذ اللمسات",
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
                         confirming = sk
                     }
                 },
-                secondaryLabel = "忘记",
+                secondaryLabel = "نسيان",
                 onSecondary = { setState(sk, HabitSkill.STATE_REJECTED) }
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -2094,7 +2094,7 @@ private fun HabitSkillSection(context: Context) {
     if (loaded && all.any { it.isRejected }) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                "已忽略 ${all.count { it.isRejected }} 条",
+                "تم تجاهل ${all.count { it.isRejected }} إجراء",
                 style = MaterialTheme.typography.labelSmall,
                 color = LunaOnSurfaceVariant
             )
@@ -2123,7 +2123,7 @@ private fun HabitSkillSection(context: Context) {
                     Text(pending.describe(), style = MaterialTheme.typography.bodyMedium, lineHeight = 21.sp)
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "我会按文字找按钮，找不到就停下，不会乱点。你现在可以看着屏幕，随时让我停。",
+                        "سأبحث عن الأزرار بالنص، وأتوقف إذا لم أجدها. يمكنك مراقبة الشاشة وإيقافي في أي وقت.",
                         style = MaterialTheme.typography.bodySmall,
                         color = LunaOnSurfaceVariant,
                         lineHeight = 18.sp
@@ -2131,7 +2131,7 @@ private fun HabitSkillSection(context: Context) {
                     if (pending.risk == HabitTrace.RISK_CAUTION) {
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            "⚠ 这条里有点下去就会改动内容的步骤，请确认后再说。",
+                            "⚠ تتضمن هذه المهمة خطوات تعدّل المحتوى، يرجى التأكيد قبل التنفيذ.",
                             style = MaterialTheme.typography.bodySmall,
                             color = LunaErrFg,
                             lineHeight = 18.sp
@@ -2150,7 +2150,7 @@ private fun HabitSkillSection(context: Context) {
                             val r = HabitSkillBridge.runIfActive(context, sk)
                             runningId = null
                             resultText = if (r == null) {
-                                "她被拦下了：开关已关闭，或者这个动作还没被收下。"
+                                "تم منع التنفيذ: الخيار معطل أو لم يتم قبول هذا الإجراء."
                             } else {
                                 HabitSkillBridge.resultText(sk, r)
                             }
@@ -2197,7 +2197,7 @@ private fun SkillRow(
         Text(skill.name, style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.height(2.dp))
         Text(
-            "重复 ${skill.occurrences} 次 · ${skill.days} 天 · ${skill.steps.size} 步",
+            "تكرر ${skill.occurrences} مرات · ${skill.days} أيام · ${skill.steps.size} خطوات",
             style = MaterialTheme.typography.labelSmall,
             color = LunaOnSurfaceVariant
         )
@@ -2211,7 +2211,7 @@ private fun SkillRow(
         if (skill.risk == HabitTrace.RISK_CAUTION) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                "⚠ 会改动内容（发送 / 删除 / 关注之类），做之前一定问过你",
+                "⚠ يعدّل المحتوى (إرسال أو حذف أو متابعة)، ويلزم تأكيدك قبل التنفيذ",
                 style = MaterialTheme.typography.labelSmall,
                 color = LunaErrFg
             )
@@ -2269,9 +2269,9 @@ private fun EmotionSection(context: Context) {
     Text("المشاعر", style = MaterialTheme.typography.titleMedium)
     Spacer(modifier = Modifier.height(4.dp))
     Text(
-        "她的情绪不是「开心/难过」两个标签，而是一个连续的三维坐标（愉悦、唤醒、支配）。" +
-            "快变量每轮对话剧烈波动，20 分钟衰减一半；底色是长期基调，只挪一点点。" +
-            "情绪稳定的记忆老得更慢，检索时也会偏向和她此刻心情相近的事。",
+        "المشاعر ليست مجرد تصنيف للسعادة أو الحزن؛ بل تمثل ثلاثة أبعاد مستمرة: المتعة والاستثارة والسيطرة. " +
+            "تتغير القيم السريعة مع كل محادثة وتتراجع للنصف خلال 20 دقيقة، بينما يتغير المزاج العام ببطء. " +
+            "تدوم الذكريات المستقرة عاطفياً أطول، ويُفضّل الاسترجاع المتوافق مع المزاج الحالي.",
         style = MaterialTheme.typography.bodySmall,
         color = LunaOnSurfaceVariant,
         lineHeight = 17.sp
@@ -2281,9 +2281,9 @@ private fun EmotionSection(context: Context) {
     SettingSwitchRow(
         title = "المشاعر المستمرة (PAD)",
         desc = if (pad) {
-            "开启中：她会有「强颜欢笑」这种表里不一，也会自己慢慢消气"
+            "مفعل: يدعم حالات عاطفية مركبة وتراجع الانفعال تدريجياً"
         } else {
-            "已关闭：只按被夸/被凶/普通写心情标签，行为回到 0.9.14"
+            "معطل: تُسجل المشاعر حسب المدح أو النقد أو الوضع العادي، كما في 0.9.14"
         },
         checked = pad,
         onCheckedChange = { checked ->
@@ -2294,7 +2294,7 @@ private fun EmotionSection(context: Context) {
     )
     Spacer(modifier = Modifier.height(6.dp))
     Text(
-        if (line.isNotBlank()) "${line}（每 2 秒刷新）" else "此刻：—（还没说过话，或已关闭）",
+        if (line.isNotBlank()) "${line} (تحديث كل ثانيتين)" else "الآن: — (لم تبدأ محادثة أو الخيار معطل)",
         style = MaterialTheme.typography.labelMedium,
         color = LunaPrimary,
         lineHeight = 18.sp
@@ -2304,9 +2304,9 @@ private fun EmotionSection(context: Context) {
     SettingSwitchRow(
         title = "استدعاء الذاكرة حسب المشاعر",
         desc = if (recall) {
-            "开启中：开心时更容易想起开心的事；只重排，不会凭空翻出不相干的事"
+            "مفعل: يعيد ترتيب الذكريات حسب المزاج دون استحضار أمور غير مرتبطة"
         } else {
-            "已关闭：按权重取前 10 条，与心情无关（0.9.14 的老行为）"
+            "معطل: يسترجع أعلى 10 ذكريات حسب الوزن بغض النظر عن المزاج (0.9.14)"
         },
         checked = recall,
         onCheckedChange = { checked ->
@@ -2319,9 +2319,9 @@ private fun EmotionSection(context: Context) {
     SettingSwitchRow(
         title = "يوميات المحادثة",
         desc = if (diary) {
-            "开启中：每天凌晨写一句当天的心情，第二天开机只念一次"
+            "مفعل: يسجل شعور اليوم عند الفجر ويقرأه مرة واحدة عند التشغيل التالي"
         } else {
-            "已关闭：不写也不读，开机照常"
+            "معطل: لا كتابة ولا قراءة، والتشغيل طبيعي"
         },
         checked = diary,
         onCheckedChange = { checked ->
@@ -2336,8 +2336,8 @@ private fun EmotionSection(context: Context) {
 
     Spacer(modifier = Modifier.height(8.dp))
     Text(
-        "排障：adb logcat -s PadDebug，搜「召回」看每次挑了哪几条、" +
-            "搜「日记」看她昨晚写了什么。",
+        "للتشخيص: adb logcat -s PadDebug، ابحث عن «召回» لعرض الذكريات المختارة، " +
+            "وعن «日记» لعرض اليوميات.",
         style = MaterialTheme.typography.labelSmall,
         color = LunaOnSurfaceVariant,
         lineHeight = 16.sp
@@ -2399,9 +2399,9 @@ private fun MemorySection(context: Context) {
     Text("الذاكرة الإضافية", style = MaterialTheme.typography.titleMedium)
     Spacer(modifier = Modifier.height(4.dp))
     Text(
-        "白天她只记账：每次任务结束记一行「界面 + 你要的事 + 点了什么 + 成没成」，不分析、不调模型。" +
-            "每天凌晨一次性整理：同一件事成功三次以上才压成一套能重放的动作，" +
-            "同一处反复失败才写成一条避坑经验。",
+        "يسجل المساعد بعد كل مهمة الواجهة والمطلوب والإجراءات والنتيجة، دون تحليل أو استدعاء نموذج. " +
+            "ينظم السجلات عند الفجر؛ ويحوّل الإجراء الناجح ثلاث مرات على الأقل إلى تسلسل قابل لإعادة التنفيذ، " +
+            "ويحفظ أسباب الفشل المتكرر لتجنبها لاحقاً.",
         style = MaterialTheme.typography.bodySmall,
         color = LunaOnSurfaceVariant,
         lineHeight = 17.sp
@@ -2411,7 +2411,7 @@ private fun MemorySection(context: Context) {
         Column(modifier = Modifier.weight(1f)) {
             Text("تفعيل الذاكرة الإضافية", style = MaterialTheme.typography.bodyMedium)
             Text(
-                if (enabled) "开启中：会记录成功/失败轨迹，并在下次复用它" else "已关闭：不采集、不拦截",
+                if (enabled) "مفعل: يسجل مسارات النجاح والفشل ويعيد استخدامها" else "معطل: لا جمع ولا اعتراض",
                 style = MaterialTheme.typography.labelSmall,
                 color = LunaOnSurfaceVariant
             )
@@ -2434,7 +2434,7 @@ private fun MemorySection(context: Context) {
             Column(modifier = Modifier.weight(1f)) {
                 Text("تنظيم تلقائي ليلاً", style = MaterialTheme.typography.bodyMedium)
                 Text(
-                    if (auto) "每天凌晨 3 点后，电量不低时跑一次（攒够 3 条才跑）" else "已关闭：只在你自己点「现在整理」时跑",
+                    if (auto) "يعمل بعد الثالثة فجراً إذا كانت البطارية كافية وتوفرت 3 سجلات على الأقل" else "معطل: يعمل فقط عند الضغط على التنظيم الآن",
                     style = MaterialTheme.typography.labelSmall,
                     color = LunaOnSurfaceVariant
                 )
@@ -2452,15 +2452,15 @@ private fun MemorySection(context: Context) {
     }
     Spacer(modifier = Modifier.height(8.dp))
     Text(
-        "可回放 $activeCount 条 · 学到的动作共 $totalCount 条 · 避坑经验 $tipCount 条\n" +
-            "待整理 $pendingCount 条 · 轨迹池共 $poolCount 条",
+        "قابلة للتشغيل $activeCount · الإجراءات المتعلمة $totalCount · تجارب تجنب الأخطاء $tipCount\n" +
+            "بانتظار التنظيم $pendingCount · إجمالي المسارات $poolCount",
         style = MaterialTheme.typography.labelSmall,
         color = LunaOnSurfaceVariant,
         lineHeight = 16.sp
     )
     Spacer(modifier = Modifier.height(6.dp))
     Text(
-        "上次整理：${memoryAgo(lastAt)}" + if (lastReport.isNotBlank()) "\n$lastReport" else "",
+        "آخر تنظيم: ${memoryAgo(lastAt)}" + if (lastReport.isNotBlank()) "\n$lastReport" else "",
         style = MaterialTheme.typography.labelSmall,
         color = LunaOnSurfaceVariant,
         lineHeight = 16.sp
@@ -2475,7 +2475,7 @@ private fun MemorySection(context: Context) {
                     runCatching { com.nexus.agent.memory.MemoryConsolidator.consolidate(context) }
                         .getOrElse {
                             com.nexus.agent.memory.MemoryConsolidator.Report.skipped(
-                                "出错：${it.javaClass.simpleName}"
+                                "خطأ: ${it.javaClass.simpleName}"
                             )
                         }
                 }
@@ -2491,8 +2491,8 @@ private fun MemorySection(context: Context) {
     }
     Spacer(modifier = Modifier.height(6.dp))
     Text(
-        "连续 30 天没被用到会自动过期（不删除），权重也会随天数往下掉；连续 2 次回放失败立刻停用。" +
-            "支付、转账、密码、验证码这类界面和动作一律不记。整理过 7 天的原始轨迹会被删掉，只留下学到的东西。",
+        "تنتهي صلاحية الإجراءات التي لم تُستخدم 30 يوماً دون حذفها، وينخفض وزنها تدريجياً. تُعطل بعد فشل إعادة التنفيذ مرتين متتاليتين. " +
+            "لا تُسجل بيانات الدفع والتحويل وكلمات المرور ورموز التحقق. تُحذف المسارات الأصلية المنظمة بعد 7 أيام وتبقى النتائج المتعلمة.",
         style = MaterialTheme.typography.labelSmall,
         color = LunaOnSurfaceVariant,
         lineHeight = 16.sp
@@ -2501,13 +2501,13 @@ private fun MemorySection(context: Context) {
 
 /** 「多久以前」的人话版本。设置页只需要这个精度，没必要上时间格式化 */
 private fun memoryAgo(at: Long): String {
-    if (at <= 0L) return "还没跑过"
+    if (at <= 0L) return "لم يُشغّل بعد"
     val d = (System.currentTimeMillis() - at).coerceAtLeast(0L)
     return when {
-        d < 60_000L -> "刚刚"
-        d < 3_600_000L -> "${d / 60_000L} 分钟前"
-        d < 86_400_000L -> "${d / 3_600_000L} 小时前"
-        else -> "${d / 86_400_000L} 天前"
+        d < 60_000L -> "الآن"
+        d < 3_600_000L -> "منذ ${d / 60_000L} دقيقة"
+        d < 86_400_000L -> "منذ ${d / 3_600_000L} ساعة"
+        else -> "منذ ${d / 86_400_000L} يوم"
     }
 }
 
@@ -2540,7 +2540,7 @@ private fun HabitConsentDialog(onDismiss: () -> Unit, onAgree: () -> Unit) {
             Column {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        if (left > 0) "还剩 ${left} 秒可以点同意" else "读完了，可以决定了",
+                        if (left > 0) "متبقٍ ${left} ثانية قبل إتاحة الموافقة" else "انتهت مدة القراءة، يمكنك الاختيار",
                         style = MaterialTheme.typography.labelMedium,
                         color = if (left > 0) LunaOnSurfaceVariant else LunaOkFg
                     )
@@ -2571,7 +2571,7 @@ private fun HabitConsentDialog(onDismiss: () -> Unit, onAgree: () -> Unit) {
         },
         confirmButton = {
             TextButton(onClick = onAgree, enabled = left <= 0) {
-                Text(if (left > 0) "还需阅读 ${left}s" else "قرأت وأوافق")
+                Text(if (left > 0) "متبقٍ ${left}s للقراءة" else "قرأت وأوافق")
             }
         },
         dismissButton = {
@@ -2584,7 +2584,7 @@ private fun HabitConsentDialog(onDismiss: () -> Unit, onAgree: () -> Unit) {
 private fun HabitTermsDialog(onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("自我学习 · 免责声明（v${HabitTerms.VERSION}）") },
+        title = { Text("التعلم الذاتي · إخلاء المسؤولية (v${HabitTerms.VERSION})") },
         text = {
             Column(
                 modifier = Modifier
@@ -2630,7 +2630,7 @@ private fun PresetSection(context: android.content.Context) {
         Text("الإعدادات المسبقة", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            "把名字、几个开关和键盘高度打包成一段文字带走。换手机、重装之后导回来，不用一项项重设。",
+            "صدّر الاسم وبعض المفاتيح وارتفاع لوحة المفاتيح كنص لاستعادتها بعد تغيير الهاتف أو إعادة التثبيت.",
             fontSize = 12.sp,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -2649,7 +2649,7 @@ private fun PresetSection(context: android.content.Context) {
             LunaOutlinedButton(onClick = {
                 importText = PresetIO.readClipboard(context)
                 if (importText.isBlank()) {
-                    resultHint = "剪贴板是空的。先把预设文字复制进来。"
+                    resultHint = "الحافظة فارغة. انسخ نص الإعدادات المسبقة أولاً."
                 } else {
                     showImport = true
                 }
@@ -2660,7 +2660,7 @@ private fun PresetSection(context: android.content.Context) {
             Text(it, fontSize = 12.sp, color = MaterialTheme.colorScheme.primary)
         }
         Text(
-            "导出内容不含任何 API Key，也不含聊天记录和好感度。",
+            "لا يتضمن التصدير مفاتيح API أو المحادثات أو بيانات العلاقة.",
             fontSize = 11.sp,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -2673,7 +2673,7 @@ private fun PresetSection(context: android.content.Context) {
             text = {
                 Column {
                     Text(
-                        "下面是从剪贴板读到的内容，确认后应用。只会改动名字、开关和键盘高度。",
+                        "هذا النص من الحافظة. أكد تطبيقه لتغيير الاسم والمفاتيح وارتفاع لوحة المفاتيح فقط.",
                         fontSize = 12.sp
                     )
                     Spacer(modifier = Modifier.height(8.dp))

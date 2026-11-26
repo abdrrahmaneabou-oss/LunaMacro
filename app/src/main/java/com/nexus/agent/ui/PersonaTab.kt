@@ -229,12 +229,12 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
                 VisionRouter.DEBUG_TAG,
                 "UI层: ${kind}解码失败，没有位图可发（这一轮她什么都不会收到）"
             )
-            Toast.makeText(context, "这个${kind}读不出来，换一个试试", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "تعذرت قراءة الملف، جرّب ملفاً آخر", Toast.LENGTH_SHORT).show()
             return
         }
         if (bitmap.isRecycled) {
             Log.e(VisionRouter.DEBUG_TAG, "UI层: ${kind}位图已被回收，丢弃")
-            Toast.makeText(context, "这个${kind}读不出来了，换一个试试", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "تعذرت قراءة الملف، جرّب ملفاً آخر", Toast.LENGTH_SHORT).show()
             return
         }
         Log.d(
@@ -255,7 +255,7 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
                 Log.e(VisionRouter.DEBUG_TAG, "UI层: ${kind}落盘失败，未传给Engine（她看不到这张图）")
                 bitmap.recycle()
                 busy = false
-                Toast.makeText(context, "这个${kind}没能存下来", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "تعذر حفظ الملف", Toast.LENGTH_SHORT).show()
                 return@launch
             }
             Log.d(
@@ -397,7 +397,7 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
             )
         } catch (e: Throwable) {
             busy = false
-            Toast.makeText(context, "发送失败：${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "فشل الإرسال: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -449,7 +449,7 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
                 HeartbeatScheduler.setEnabled(context, on)
                 Toast.makeText(
                     context,
-                    if (on) "她会在你沉默一天后主动找你" else "已关掉主动问候",
+                    if (on) "سيبادر المساعد بالمحادثة بعد يوم من الصمت" else "تم إيقاف التحية التلقائية",
                     Toast.LENGTH_SHORT
                 ).show()
             },
@@ -457,12 +457,12 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
                 // 手动触发走 force 分支：跳过时间窗与冷却，用户点了就一定要有结果，
                 // 不然「点了没反应」比不发还糟
                 HeartbeatScheduler.runNow(context)
-                Toast.makeText(context, "正在让她想一句话，几秒后看通知栏", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "جارٍ إعداد عبارة، ستظهر في الإشعارات", Toast.LENGTH_SHORT).show()
             },
             onThinkNow = {
                 // 心智引擎通常两小时才转一次，手动触发只为验证它在不在跑
                 InnerMonologueEngine.runNow(context)
-                Toast.makeText(context, "她正在一个人想事情，几秒后这里会出现", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "المساعد يفكر، وستظهر النتيجة هنا", Toast.LENGTH_SHORT).show()
             }
         )
         Spacer(modifier = Modifier.height(4.dp))
@@ -619,7 +619,7 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
                     CopilotConfig.setKeyboardCalibrationPx(context, px)
                     calibPx = px
                     showRuler = false
-                    Toast.makeText(context, "键盘高度已设为 $px px", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "تم ضبط ارتفاع لوحة المفاتيح على $px px", Toast.LENGTH_SHORT).show()
                 }
             )
         }
@@ -640,7 +640,7 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
             text = {
                 Column {
                     Text(
-                        "⚠️ 当前未配置视觉模型 Key，且本地视觉未下载，AI 将无法看图。请前往设置配置。",
+                        "⚠️ لم يُضبط مفتاح نموذج الرؤية ولم يُنزّل النموذج المحلي، لذا لا يستطيع المساعد تحليل الصور. افتح الإعدادات.",
                         fontSize = 13.sp,
                         color = LunaOnBackground
                     )
@@ -652,9 +652,9 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "两条路任选一条：\n" +
-                            "① 设置 → LLM 配置 → 云端视觉模型，填通义千问 Key（推荐，快且准）\n" +
-                            "② 设置 → 下载模型，装本地视觉（6 个文件，离线可用）",
+                        "اختر إحدى الطريقتين:\n" +
+                            "① الإعدادات ← LLM ← نموذج الرؤية السحابي، أدخل مفتاح Qwen (موصى به)\n" +
+                            "② الإعدادات ← تنزيل النماذج، ثبّت نموذج الرؤية المحلي (6 ملفات، يعمل دون اتصال)",
                         fontSize = 12.sp,
                         color = LunaOnSurfaceVariant
                     )
@@ -702,7 +702,7 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
                     cameraUri = uri
                     takePhoto.launch(uri)
                 }.onFailure {
-                    Toast.makeText(context, "打不开相机：${it.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "تعذر فتح الكاميرا: ${it.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         )
@@ -727,11 +727,11 @@ private fun AttachSheet(
         title = { Text("أرسل شيئاً للمساعد", fontSize = 15.sp, color = LunaOnBackground) },
         text = {
             Column {
-                AttachRow("🖼", "从相册选图片", "她能看懂画面里是什么", onPickImage)
+                AttachRow("🖼", "اختيار صورة من المعرض", "يستطيع المساعد فهم محتوى الصورة", onPickImage)
                 Spacer(modifier = Modifier.height(10.dp))
-                AttachRow("🎬", "从相册选视频", "她只看首帧，我会告诉你", onPickVideo)
+                AttachRow("🎬", "اختيار فيديو من المعرض", "يحلل المساعد الإطار الأول فقط", onPickVideo)
                 Spacer(modifier = Modifier.height(10.dp))
-                AttachRow("📷", "现拍一张", "拍完直接发给她", onTakePhoto)
+                AttachRow("📷", "التقاط صورة", "إرسالها مباشرة إلى المساعد", onTakePhoto)
             }
         },
         confirmButton = {
@@ -767,15 +767,15 @@ private fun AttachRow(emoji: String, title: String, hint: String, onClick: () ->
 private fun EmptyHint() {
     LunaCard(modifier = Modifier.fillMaxWidth()) {
         Text(
-            "这里是对话",
+            "هذه صفحة المحادثة",
             style = MaterialTheme.typography.titleMedium,
             color = LunaOnBackground
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            "问它「我现在在什么软件里」，或者直接说「帮我打开设置」——" +
-                "它能看屏幕，也能真的替你点。\n" +
-                "要它干活时，动作会单独显示成一条系统气泡，不会和聊天混在一起。",
+            "اسأل المساعد عن التطبيق المفتوح أو اطلب منه فتح الإعدادات، " +
+                "فهو يستطيع قراءة الشاشة وتنفيذ اللمسات.\n" +
+                "عند تنفيذ مهمة تظهر الإجراءات في فقاعة نظام منفصلة عن المحادثة.",
             style = MaterialTheme.typography.bodySmall,
             color = LunaOnSurfaceVariant,
             lineHeight = 19.sp
@@ -833,7 +833,7 @@ private fun ChatImage(path: String) {
     } else {
         Image(
             bitmap = loaded.asImageBitmap(),
-            contentDescription = "发给她的图片",
+            contentDescription = "الصورة المرسلة إلى المساعد",
             modifier = Modifier
                 .widthIn(max = 210.dp)
                 .heightIn(max = 280.dp)
@@ -926,7 +926,7 @@ private fun ActionBubble(item: PersonaEngine.ChatItem.Action) {
             }
             // 状态角标
             Text(
-                if (item.ok) "已执行" else "未完成",
+                if (item.ok) "تم التنفيذ" else "لم يكتمل",
                 fontSize = 10.sp,
                 color = if (item.ok) LunaPrimary.copy(alpha = 0.55f) else LunaErrFg,
                 fontWeight = FontWeight.Medium

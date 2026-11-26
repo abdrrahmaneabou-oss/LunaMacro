@@ -80,7 +80,7 @@ fun ScheduleSection(modifier: Modifier = Modifier) {
     LunaCard(modifier = modifier.fillMaxWidth()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                "⏰ 定时任务",
+                "⏰ المهام المجدولة",
                 style = MaterialTheme.typography.titleMedium,
                 color = LunaOnBackground,
                 modifier = Modifier.weight(1f)
@@ -90,7 +90,7 @@ fun ScheduleSection(modifier: Modifier = Modifier) {
             }
         }
         Text(
-            "到点自动替你干一件事，比如早上签到、晚上清后台",
+            "نفّذ مهمة تلقائياً في موعدها، مثل تسجيل الدخول اليومي",
             style = MaterialTheme.typography.bodySmall,
             color = LunaOnSurfaceVariant
         )
@@ -99,7 +99,7 @@ fun ScheduleSection(modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(8.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    "未授予精确闹钟，触发可能晚几分钟",
+                    "لم يُمنح إذن المنبه الدقيق، قد يتأخر التنفيذ دقائق",
                     style = MaterialTheme.typography.bodySmall,
                     color = LunaWarnFg,
                     modifier = Modifier.weight(1f)
@@ -114,7 +114,7 @@ fun ScheduleSection(modifier: Modifier = Modifier) {
 
         if (tasks.isEmpty()) {
             Text(
-                "还没有定时任务。点右上角「+ 新建」加一条。",
+                "لا توجد مهام مجدولة. اضغط «+ جديد» لإضافة مهمة.",
                 style = MaterialTheme.typography.bodySmall,
                 color = LunaOnSurfaceVariant
             )
@@ -132,9 +132,9 @@ fun ScheduleSection(modifier: Modifier = Modifier) {
                     onEdit = { editing = task },
                     onRunNow = {
                         if (ScheduleRunner.isRunning) {
-                            Toast.makeText(context, "已有任务在跑，稍后再试", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "مهمة أخرى قيد التشغيل، حاول لاحقاً", Toast.LENGTH_SHORT).show()
                         } else {
-                            Toast.makeText(context, "开始执行：${task.title}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "بدأ تنفيذ: ${task.title}", Toast.LENGTH_SHORT).show()
                             ScheduleRunner.trigger(context, task.id, manual = true)
                         }
                     },
@@ -143,7 +143,7 @@ fun ScheduleSection(modifier: Modifier = Modifier) {
             }
             Spacer(modifier = Modifier.height(2.dp))
             Text(
-                "任务执行时手机需解锁、屏幕可亮；锁屏或无障碍断开会自动跳过并通知你。",
+                "يلزم فتح قفل الهاتف وإمكانية تشغيل الشاشة أثناء المهمة؛ إذا كان مقفلاً أو انقطعت خدمة إمكانية الوصول، تُتخطى المهمة ويُرسل إشعار.",
                 style = MaterialTheme.typography.labelSmall,
                 color = LunaOnSurfaceVariant
             )
@@ -181,7 +181,7 @@ fun ScheduleSection(modifier: Modifier = Modifier) {
         AlertDialog(
             onDismissRequest = { pendingDelete = null },
             title = { Text("حذف مهمة مجدولة") },
-            text = { Text("「${task.title}」会被删掉，之后不会再自动执行。") },
+            text = { Text("سيتم حذف «${task.title}» ولن تُنفّذ تلقائياً بعد ذلك.") },
             confirmButton = {
                 LunaTextButton(onClick = {
                     ScheduleScheduler.cancel(context, task.id)
@@ -216,9 +216,9 @@ private fun TaskRow(
                 )
                 Text(
                     if (task.enabled) {
-                        "${task.repeatText()} · 下次 ${formatNext(task.nextTriggerAt())}"
+                        "${task.repeatText()} · التالي ${formatNext(task.nextTriggerAt())}"
                     } else {
-                        "${task.repeatText()} · 已关闭"
+                        "${task.repeatText()} · معطلة"
                     },
                     style = MaterialTheme.typography.labelSmall,
                     color = LunaOnSurfaceVariant
@@ -229,13 +229,13 @@ private fun TaskRow(
 
         if (task.lastRunAt > 0L) {
             val statusText = when (task.lastStatus) {
-                "ok" -> "成功"
-                "skip" -> "跳过"
-                "fail" -> "失败"
+                "ok" -> "نجاح"
+                "skip" -> "تخطي"
+                "fail" -> "فشل"
                 else -> ""
             }
             Text(
-                "上次 ${formatDateTime(task.lastRunAt)} $statusText" +
+                "آخر تنفيذ ${formatDateTime(task.lastRunAt)} $statusText" +
                     if (task.lastSummary.isNotBlank()) "：${task.lastSummary.take(40)}" else "",
                 style = MaterialTheme.typography.labelSmall,
                 color = if (task.lastStatus == "ok") LunaOnSurfaceVariant else LunaWarnFg
@@ -297,7 +297,7 @@ private fun ScheduleEditDialog(
                     onValueChange = { prompt = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text("ما المطلوب تنفيذه؟", fontSize = 13.sp) },
-                    placeholder = { Text("比如：打开微信签到领每日奖励", fontSize = 12.sp) },
+                    placeholder = { Text("مثال: افتح WeChat ونفّذ تسجيل الدخول اليومي", fontSize = 12.sp) },
                     minLines = 2,
                     maxLines = 4
                 )
@@ -348,7 +348,7 @@ private fun ScheduleEditDialog(
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        if (repeat == ScheduledTask.Repeat.ONCE) "执行时间" else "每天时刻",
+                        if (repeat == ScheduledTask.Repeat.ONCE) "وقت التنفيذ" else "الوقت اليومي",
                         style = MaterialTheme.typography.labelMedium,
                         color = LunaOnSurfaceVariant,
                         modifier = Modifier.weight(1f)
@@ -392,15 +392,15 @@ private fun ScheduleEditDialog(
             LunaButton(onClick = {
                 val text = prompt.trim()
                 if (text.isEmpty()) {
-                    error = "先写清楚要做什么"
+                    error = "اكتب ما تريد تنفيذه أولاً"
                     return@LunaButton
                 }
                 if (repeat == ScheduledTask.Repeat.WEEKLY && days.isEmpty()) {
-                    error = "至少选一个星期几"
+                    error = "اختر يوماً واحداً على الأقل"
                     return@LunaButton
                 }
                 if (repeat == ScheduledTask.Repeat.ONCE && onceAt <= System.currentTimeMillis()) {
-                    error = "这个时间已经过去了，换个将来的时间"
+                    error = "هذا الوقت مضى، اختر وقتاً مستقبلياً"
                     return@LunaButton
                 }
                 val finalTitle = title.trim().ifBlank { text.take(12) }
@@ -473,7 +473,7 @@ private fun openExactAlarmSettings(context: Context) {
 
 /** 「今天 08:00」「明天 08:00」「周三 20:00（11月4日）」 */
 private fun formatNext(ts: Long): String {
-    if (ts <= 0L) return "未排程"
+    if (ts <= 0L) return "غير مجدولة"
     val c = Calendar.getInstance().apply { timeInMillis = ts }
     val hm = "%02d:%02d".format(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE))
     // 按「自然日」算差几天，不能直接拿毫秒数除——差 12 小时也跨不了天
@@ -494,8 +494,8 @@ private fun formatNext(ts: Long): String {
         (targetDay.timeInMillis - today.timeInMillis).toDouble() / (24 * 60 * 60 * 1000.0)
     ).toInt()
     return when (dayDiff) {
-        0 -> "今天 $hm"
-        1 -> "明天 $hm"
+        0 -> "اليوم $hm"
+        1 -> "غداً $hm"
         else -> "周${ScheduledTask.WEEK_CN[ScheduledTask.isoDayOfWeek(c) - 1]} $hm" +
             "（${c.get(Calendar.MONTH) + 1}月${c.get(Calendar.DAY_OF_MONTH)}日）"
     }

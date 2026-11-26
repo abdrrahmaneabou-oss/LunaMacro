@@ -116,8 +116,8 @@ fun BondCard(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                "已记住最近 $memoryTurns 轮" +
-                    if (memoryFacts > 0) " · 长期记忆 $memoryFacts 条" else "",
+                "تم تذكر آخر $memoryTurns محادثات" +
+                    if (memoryFacts > 0) " · الذاكرة طويلة الأمد: $memoryFacts عناصر" else "",
                 fontSize = 10.sp,
                 color = LunaOnSurfaceVariant
             )
@@ -156,7 +156,7 @@ fun BondCard(
                     .padding(horizontal = 10.dp, vertical = 7.dp)
             ) {
                 Column {
-                    Text("她刚一个人在想", fontSize = 9.sp, color = LunaOnSurfaceVariant)
+                    Text("كان المساعد يفكر بمفرده", fontSize = 9.sp, color = LunaOnSurfaceVariant)
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
                         EmojiTag.expand("「$innerThought」"),
@@ -173,7 +173,7 @@ fun BondCard(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("她这会儿没在想事情", fontSize = 10.sp, color = LunaOnSurfaceVariant)
+                Text("المساعد لا يفكر حالياً", fontSize = 10.sp, color = LunaOnSurfaceVariant)
                 Spacer(modifier = Modifier.weight(1f))
                 LunaTextButton(onClick = onThinkNow) {
                     Text("دع المساعد يفكر", fontSize = 11.sp, color = LunaOnSurfaceVariant)
@@ -196,14 +196,14 @@ fun BondCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text("她会主动找你", fontSize = 12.sp, color = LunaOnBackground)
+                Text("المساعد يبادر بالمحادثة", fontSize = 12.sp, color = LunaOnBackground)
                 Text(
                     if (heartbeatEnabled) {
                         // 0.9.3：频率从「一天一条」放到 15 分钟一个机会，文案必须跟着改，
                         // 否则用户按旧描述以为一天只会响一次，实际一天几十条会当成 bug
-                        "你安静 15 分钟，她就可能开口；夜里不吵"
+                        "قد يبادر بعد 15 دقيقة من الصمت، ولا يزعجك ليلاً"
                     } else {
-                        "关掉之后只在你想说话时出现"
+                        "عند التعطيل يظهر فقط عندما ترغب في المحادثة"
                     },
                     fontSize = 10.sp,
                     color = LunaOnSurfaceVariant

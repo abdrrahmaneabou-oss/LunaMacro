@@ -74,7 +74,7 @@ import java.util.UUID
  */
 private fun ensureOverlayForCollect(context: android.content.Context): Boolean {
     if (ThinkingOverlay.hasPermission(context)) return true
-    Toast.makeText(context, "需要悬浮窗权限才能显示采集面板", Toast.LENGTH_LONG).show()
+    Toast.makeText(context, "يلزم إذن النافذة العائمة لإظهار لوحة الجمع", Toast.LENGTH_LONG).show()
     try {
         context.startActivity(
             Intent(
@@ -146,7 +146,7 @@ fun PluginTab() {
         // 检测采集断点
         if (TouchDatasetCollector.hasUnfinishedProgress()) {
             val p = TouchDatasetCollector.getProgressInfo()
-            touchResumeInfo = "上次采到第 ${p.stepIndex + 1} 步，共 ${p.totalCount} 张"
+            touchResumeInfo = "توقف الجمع السابق عند الخطوة ${p.stepIndex + 1}، بإجمالي ${p.totalCount} صور"
         }
         batches = TouchDatasetCollector.listBatches()
         DatasetCollector.onCountChanged = { c ->
@@ -164,7 +164,7 @@ fun PluginTab() {
                 touchCollecting = false
                 touchStepText = ""
                 touchStepProgress = ""
-                touchResult = "已采集 ${r.collected} 张"
+                touchResult = "تم جمع ${r.collected} صور"
             }
         }
         TouchDatasetCollector.onCountChanged = { c ->
@@ -173,20 +173,20 @@ fun PluginTab() {
         }
         TouchDatasetCollector.onStepReady = { stepIndex, totalSteps, title, hint ->
             ThinkingOverlay.updateCollectStepReady(stepIndex, totalSteps, title, hint)
-            touchStepText = "第 ${stepIndex + 1}/$totalSteps 步 · $title"
-            touchStepProgress = "准备好点「开始」"
+            touchStepText = "الخطوة ${stepIndex + 1}/$totalSteps · $title"
+            touchStepProgress = "اضغط «بدء» عندما تكون جاهزاً"
         }
         TouchDatasetCollector.onStepProgress = { stepIndex, totalSteps, title, hint, collected, target ->
             ThinkingOverlay.updateCollectStep(stepIndex, totalSteps, title, hint, collected, target)
-            touchStepText = "第 ${stepIndex + 1}/$totalSteps 步 · $title"
-            touchStepProgress = "$collected/$target 张"
+            touchStepText = "الخطوة ${stepIndex + 1}/$totalSteps · $title"
+            touchStepProgress = "$collected/$target صور"
         }
         TouchDatasetCollector.onFlowComplete = {
             touchCollecting = false
             touchStepText = ""
             touchStepProgress = ""
             ThinkingOverlay.hide()
-            touchResult = "全部步骤采集完成，共 $touchCount 张"
+            touchResult = "اكتمل جمع جميع الخطوات، بإجمالي $touchCount صور"
             batches = TouchDatasetCollector.listBatches()
         }
         while (true) {
@@ -295,7 +295,7 @@ fun PluginTab() {
                         val s = CollectFlow.STEPS[idx]
                         ThinkingOverlay.updateCollectStepReady(idx, CollectFlow.STEPS.size, s.title, s.hint)
                     } else {
-                        Toast.makeText(context, "采集启动失败（需开启无障碍服务）", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "فشل بدء الجمع (فعّل خدمة إمكانية الوصول)", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -312,7 +312,7 @@ fun PluginTab() {
                     }
                 } else {
                     Text("● $touchStepText", color = Color(0xFF8AB4F8), style = MaterialTheme.typography.bodySmall)
-                    Text("已采集 $touchCount 张 · 本步 $touchStepProgress", color = Color(0xFF8AB4F8), style = MaterialTheme.typography.bodySmall)
+                    Text("تم جمع $touchCount صور · الخطوة الحالية $touchStepProgress", color = Color(0xFF8AB4F8), style = MaterialTheme.typography.bodySmall)
                     Spacer(modifier = Modifier.height(8.dp))
                     LunaOutlinedButton(onClick = {
                         touchCollecting = false
@@ -320,10 +320,10 @@ fun PluginTab() {
                         ThinkingOverlay.hide()
                         touchStepText = ""
                         touchStepProgress = ""
-                        touchResult = "已采集 ${r.collected} 张（可继续）"
+                        touchResult = "تم جمع ${r.collected} صور (يمكن المتابعة)"
                         if (r.collected > 0) {
                             val p = TouchDatasetCollector.getProgressInfo()
-                            touchResumeInfo = "上次采到第 ${p.stepIndex + 1} 步，共 ${p.totalCount} 张"
+                            touchResumeInfo = "توقف الجمع السابق عند الخطوة ${p.stepIndex + 1}، بإجمالي ${p.totalCount} صور"
                         }
                     }) { Text("إيقاف الجمع") }
                 }
@@ -345,7 +345,7 @@ fun PluginTab() {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("${formatBatchTime(batch.time)} · ${batch.count} 张", style = MaterialTheme.typography.bodySmall)
+                                Text("${formatBatchTime(batch.time)} · ${batch.count} صور", style = MaterialTheme.typography.bodySmall)
                             }
                             LunaOutlinedButton(onClick = { exportTouchDataset(context, batch.id) }) { Text("تصدير") }
                             Spacer(modifier = Modifier.width(8.dp))
@@ -405,7 +405,7 @@ fun PluginTab() {
                 )
             }
             if (isCollecting) {
-                Text("已采集 $collectCount/1000 张", color = Color(0xFF8AB4F8), style = MaterialTheme.typography.bodySmall)
+                Text("تم جمع $collectCount/1000 صور", color = Color(0xFF8AB4F8), style = MaterialTheme.typography.bodySmall)
             }
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -423,14 +423,14 @@ fun PluginTab() {
                 LunaOutlinedButton(onClick = {
                     val zip = DatasetExporter.export(context)
                     if (zip != null) DatasetExporter.share(context, zip)
-                    else Toast.makeText(context, "暂无已标注数据，先采集并标注", Toast.LENGTH_SHORT).show()
+                    else Toast.makeText(context, "لا توجد بيانات موسومة؛ اجمع البيانات ووسّمها أولاً", Toast.LENGTH_SHORT).show()
                 }) { Text("تصدير مجموعة البيانات") }
             }
 
             Spacer(modifier = Modifier.height(12.dp))
 
             if (profiles.isEmpty()) {
-                Text("暂无游戏配置。点「新建 Profile」创建。", color = Color.Gray)
+                Text("لا توجد إعدادات لعبة. اضغط إنشاء ملف تعريف.", color = Color.Gray)
             } else {
                 profiles.forEach { p ->
                     GameProfileCard(
@@ -438,11 +438,11 @@ fun PluginTab() {
                         onStart = {
                             GameRuleRunner.setGameProfile(p)
                             GameRuleRunner.start()
-                            status = "已启动 ${p.name}"
+                            status = "تم تشغيل ${p.name}"
                         },
                         onStop = {
                             GameRuleRunner.stop()
-                            status = "已停止"
+                            status = "تم الإيقاف"
                         },
                         onEdit = {
                             editId = p.id
@@ -475,7 +475,7 @@ private fun exportTouchDataset(context: android.content.Context, batchId: String
             putExtra(Intent.EXTRA_STREAM, uri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
-        context.startActivity(Intent.createChooser(intent, "提交原神采集数据"))
+        context.startActivity(Intent.createChooser(intent, "مشاركة بيانات Genshin Impact"))
     } else {
         Toast.makeText(context, "لا توجد بيانات مجمعة", Toast.LENGTH_SHORT).show()
     }
@@ -502,7 +502,7 @@ private fun GameProfileCard(
                 Text(profile.packageName, style = MaterialTheme.typography.bodySmall, color = Color.Gray)
             }
             Text(
-                "${profile.rules.size} 条规则 · ${profile.perceptionFps} FPS",
+                "${profile.rules.size} قواعد · ${profile.perceptionFps} FPS",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color(0xFF8AB4F8)
             )
@@ -551,14 +551,14 @@ private fun GameProfileEditor(
 
         Spacer(modifier = Modifier.height(12.dp))
         Row {
-            Text("规则（${rules.size}）", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            Text("القواعد (${rules.size})", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             LunaButton(onClick = { showAddRule = true }) { Text("+ إضافة قاعدة") }
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
         if (rules.isEmpty()) {
-            Text("暂无规则。规则示例：条件「healthPercent < 30」，动作 TAP，参数 {\"x\":540,\"y\":1200}", color = Color.Gray, style = MaterialTheme.typography.bodySmall)
+            Text("لا توجد قواعد. مثال: الشرط healthPercent < 30، الإجراء TAP، المعلمات {\"x\":540,\"y\":1200}", color = Color.Gray, style = MaterialTheme.typography.bodySmall)
         } else {
             rules.forEachIndexed { i, rule ->
                 Card(modifier = Modifier.fillMaxWidth()) {
@@ -612,7 +612,7 @@ private fun AddRuleDialog(onDismiss: () -> Unit, onAdd: (GameRule) -> Unit) {
             Column {
                 OutlinedTextField(ruleName, { ruleName = it }, label = { Text("اسم القاعدة (اختياري)") }, singleLine = true)
                 Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(condition, { condition = it }, label = { Text("条件，如 healthPercent < 30") }, singleLine = true)
+                OutlinedTextField(condition, { condition = it }, label = { Text("الشرط، مثل healthPercent < 30") }, singleLine = true)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("نوع الإجراء", style = MaterialTheme.typography.bodySmall)
                 Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -627,7 +627,7 @@ private fun AddRuleDialog(onDismiss: () -> Unit, onAdd: (GameRule) -> Unit) {
                 OutlinedTextField(
                     paramsJson,
                     { paramsJson = it },
-                    label = { Text("参数 JSON（如 {\"x\":540,\"y\":1200}）") },
+                    label = { Text("معلمات JSON (مثل {\"x\":540,\"y\":1200})") },
                     singleLine = true
                 )
             }

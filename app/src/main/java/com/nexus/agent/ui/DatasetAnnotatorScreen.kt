@@ -82,7 +82,7 @@ fun DatasetAnnotatorScreen(onBack: () -> Unit) {
         Column(Modifier.fillMaxSize().padding(16.dp)) {
             Text("لا توجد لقطات غير موسومة", style = MaterialTheme.typography.titleMedium)
             Spacer(Modifier.height(8.dp))
-            Text("先开启「训练数据采集」跑一会儿采集截图，再来标注。", color = Color.Gray, style = MaterialTheme.typography.bodySmall)
+            Text("ابدأ جمع بيانات التدريب لالتقاط صور، ثم عد لوسمها.", color = Color.Gray, style = MaterialTheme.typography.bodySmall)
             Spacer(Modifier.height(12.dp))
             Button(onClick = onBack) { Text("رجوع") }
         }
@@ -91,7 +91,7 @@ fun DatasetAnnotatorScreen(onBack: () -> Unit) {
 
     Column(Modifier.fillMaxSize().padding(12.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("标注 ${index + 1}/${images.size}", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            Text("الوسم ${index + 1}/${images.size}", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             LunaTextButton(onClick = onBack) { Text("رجوع") }
         }
 
@@ -134,7 +134,7 @@ fun DatasetAnnotatorScreen(onBack: () -> Unit) {
 
         Spacer(Modifier.height(8.dp))
 
-        Text("已标记按钮（${buttons.size}）· 点图上标记", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+        Text("الأزرار الموسومة (${buttons.size}) · اضغط على الصورة للوسم", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
         Column(Modifier.height(120.dp).verticalScroll(rememberScrollState())) {
             buttons.forEachIndexed { i, b ->
                 Row(verticalAlignment = Alignment.CenterVertically) {

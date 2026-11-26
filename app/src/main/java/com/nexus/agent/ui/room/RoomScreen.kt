@@ -561,7 +561,7 @@ fun RoomScreen(onExit: () -> Unit) {
                         onTap = {
                             val target = tvItem
                             if (target == null) {
-                                Toast.makeText(context, "电视还没连上网", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "التلفاز غير متصل بالإنترنت", Toast.LENGTH_SHORT).show()
                             } else {
                                 // 点屏幕 = 把这条发出去。QQ 能用就走 QQ，
                                 // 不能用就落回聊天流（0.9.26 追加）—— 无论哪种，
@@ -572,19 +572,19 @@ fun RoomScreen(onExit: () -> Unit) {
                                         CyberSharer.Destination.QQ ->
                                             Toast.makeText(
                                                 context,
-                                                "发到 QQ 了：${target.title.take(14)}",
+                                                "تمت المشاركة في QQ: ${target.title.take(14)}",
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         CyberSharer.Destination.IN_APP ->
                                             Toast.makeText(
                                                 context,
-                                                "QQ 没连上，已经放到你的对话里了",
+                                                "QQ غير متصل، تمت إضافة المحتوى إلى محادثتك",
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         else ->
                                             Toast.makeText(
                                                 context,
-                                                "分享失败，看日志 CyberShare",
+                                                "فشلت المشاركة، راجع سجل CyberShare",
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                     }
@@ -896,7 +896,7 @@ private fun RoomDecorBar(
         Crossfade(targetState = hint, animationSpec = tween(220), label = "roomHint") { msg ->
             if (msg != null) {
                 Text(
-                    text = if (busy) "她正在摆放…" else msg,
+                    text = if (busy) "جارٍ ترتيب الأثاث…" else msg,
                     color = Color(0xFFEDE6DA),
                     fontSize = 12.sp,
                     modifier = Modifier
@@ -922,7 +922,7 @@ private fun RoomDecorBar(
             Box(modifier = Modifier.weight(1f)) {
                 if (draft.isEmpty()) {
                     Text(
-                        text = "跟她说怎么改：加个红沙发 / 墙换深蓝 / 床挪到窗边",
+                        text = "اطلب تغيير الغرفة: أضف أريكة حمراء / اجعل الحائط أزرق / انقل السرير قرب النافذة",
                         color = Color(0x66FFFFFF),
                         fontSize = 12.sp,
                         maxLines = 1
@@ -1587,7 +1587,7 @@ private fun CyberTvPanel(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    "正在连网…",
+                    "جارٍ الاتصال…",
                     color = Color(0xFF4E6A8A),
                     fontSize = 9.sp
                 )

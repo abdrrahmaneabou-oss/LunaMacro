@@ -73,9 +73,9 @@ internal fun MplSection(context: Context) {
     Text("جسر MPL", style = MaterialTheme.typography.titleMedium)
     Spacer(Modifier.height(4.dp))
     Text(
-        "让同一台手机上的 MPL 把「手」交给宏月：她读屏、开应用，都由宏月执行。" +
-            "只监听 127.0.0.1，局域网上的设备连不上；配对码只认请求头，不走网址。" +
-            "这一版只开两个只读动作（读屏、打开应用），会点的动作还没放开。",
+        "يسمح لمكوّن MPL على الهاتف نفسه بتفويض قراءة الشاشة وفتح التطبيقات إلى LunaMacro. " +
+            "يستمع فقط على 127.0.0.1، ولا يسمح باتصالات الشبكة المحلية. يُقبل رمز الاقتران في ترويسة الطلب فقط. " +
+            "يدعم هذا الإصدار قراءة الشاشة وفتح التطبيقات فقط، ولا يسمح بتنفيذ اللمسات.",
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         lineHeight = 17.sp
@@ -87,11 +87,11 @@ internal fun MplSection(context: Context) {
     // 无障碍掉了 / 前台服务没起，这两行能一眼看出来，不用回首页看弹窗。
     Text(
         buildString {
-            append(if (accessibilityOk) "✅" else "❌").append(" 无障碍")
-            append(if (accessibilityOk) "（能读屏）" else "（掉了：读屏会失败，去首页按提示重开）")
+            append(if (accessibilityOk) "✅" else "❌").append(" إمكانية الوصول")
+            append(if (accessibilityOk) " (يمكن قراءة الشاشة)" else " (منقطع: أعد تفعيل الخدمة من الرئيسية)")
             append("\n")
-            append(if (residentOk) "✅" else "❌").append(" 前台服务")
-            append(if (residentOk) "（后台不易被冻）" else "（没在跑：后台可能被冻住，端口在也不回包）")
+            append(if (residentOk) "✅" else "❌").append(" الخدمة الأمامية")
+            append(if (residentOk) " (تعمل في الخلفية)" else " (متوقفة: قد تُجمّد الخدمة ولا تستجيب)")
         },
         style = MaterialTheme.typography.bodySmall,
         color = if (accessibilityOk && residentOk) MaterialTheme.colorScheme.primary
@@ -107,9 +107,9 @@ internal fun MplSection(context: Context) {
             Text(
                 if (enabled) {
                     if (running) "监听中：${bound.joinToString(", ")} 端口 ${MplServer.currentPort()}"
-                    else "已开启但没监听成功（端口被占用？换一个）"
+                    else "مفعل لكن تعذر الاستماع (قد يكون المنفذ مشغولاً)"
                 } else {
-                    "已关闭：端口 18080 上没有服务"
+                    "معطل: لا خدمة على المنفذ 18080"
                 },
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -123,7 +123,7 @@ internal fun MplSection(context: Context) {
                 running = MplServer.isRunning()
                 bound = MplServer.boundAddresses()
                 batteryOk = StabilityHelper.isIgnoringBatteryOptimizations(context)
-                hint = if (on && !ok) "启动失败：端口 $portText 被占用，换一个再试" else ""
+                hint = if (on && !ok) "فشل التشغيل: المنفذ $portText مشغول" else ""
             }
         )
     }
@@ -133,8 +133,8 @@ internal fun MplSection(context: Context) {
     if (enabled && !batteryOk) {
         Spacer(Modifier.height(8.dp))
         Text(
-            "⚠️ 系统还允许「优化」本应用的电池。那样宏月一进后台就可能被冻住：端口还在、但不回包，" +
-                "MPL 会一直等到超时。点下面的按钮选「不限制 / 允许后台运行」。",
+            "⚠️ يسمح النظام بتحسين بطارية التطبيق، ما قد يجمّد LunaMacro في الخلفية رغم بقاء المنفذ مفتوحاً. " +
+                "سينتهي طلب MPL دون استجابة. اختر السماح بالتشغيل في الخلفية دون قيود.",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.error,
             lineHeight = 17.sp
@@ -143,7 +143,7 @@ internal fun MplSection(context: Context) {
         Button(
             onClick = {
                 runCatching { StabilityHelper.requestIgnoreBatteryOptimizations(context) }
-                    .onFailure { hint = "打不开系统设置，去手机设置里手动允许后台运行" }
+                    .onFailure { hint = "تعذر فتح إعدادات النظام، اسمح بالتشغيل في الخلفية يدوياً" }
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.errorContainer,
@@ -160,7 +160,7 @@ internal fun MplSection(context: Context) {
         OutlinedTextField(
             value = portText,
             onValueChange = { s -> portText = s.filter { it.isDigit() }.take(5) },
-            label = { Text("端口（默认 ${MplProtocol.PORT}）") },
+            label = { Text("المنفذ (الافتراضي ${MplProtocol.PORT})") },
             singleLine = true,
             modifier = Modifier.weight(1f)
         )
@@ -169,13 +169,13 @@ internal fun MplSection(context: Context) {
             onClick = {
                 val p = portText.toIntOrNull()
                 hint = when {
-                    p == null || p !in 1024..65535 -> "端口要在 1024–65535 之间"
+                    p == null || p !in 1024..65535 -> "يجب أن يكون المنفذ بين 1024 و65535"
                     MplServer.setPort(context, p) -> {
                         running = MplServer.isRunning()
                         bound = MplServer.boundAddresses()
-                        "已切到 $p"
+                        "تم التبديل إلى $p"
                     }
-                    else -> "切换失败：$p 被占用"
+                    else -> "فشل التبديل: $p مشغول"
                 }
             },
             colors = ButtonDefaults.buttonColors()
@@ -187,7 +187,7 @@ internal fun MplSection(context: Context) {
     Text("رمز الاقتران", style = MaterialTheme.typography.titleSmall)
     Spacer(Modifier.height(3.dp))
     Text(
-        "MPL 生成一串 64 位十六进制，复制过来粘在这里。当前：${MplServer.maskedToken(context)}",
+        "يولّد MPL رمزاً سداسي عشرياً من 64 خانة، انسخه هنا. الحالي: ${MplServer.maskedToken(context)}",
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         lineHeight = 17.sp
@@ -207,9 +207,9 @@ internal fun MplSection(context: Context) {
             onClick = {
                 hint = if (MplServer.setToken(context, tokenInput)) {
                     tokenInput = ""
-                    "配对码已保存（重启后仍在）"
+                    "تم حفظ رمز الاقتران (يبقى بعد إعادة التشغيل)"
                 } else {
-                    "格式不对：应该是 32–128 位十六进制"
+                    "صيغة غير صالحة: يلزم 32–128 خانة سداسية عشرية"
                 }
             }
         ) { Text("حفظ") }
@@ -218,7 +218,7 @@ internal fun MplSection(context: Context) {
             onClick = {
                 MplServer.clearToken(context)
                 tokenInput = ""
-                hint = "配对码已清除，MPL 那边需要重新配"
+                hint = "تم مسح رمز الاقتران؛ يلزم إعادة الاقتران في MPL"
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -241,8 +241,8 @@ internal fun MplSection(context: Context) {
     Text("آخر اتصال", style = MaterialTheme.typography.titleSmall)
     Spacer(Modifier.height(3.dp))
     Text(
-        "所有请求都算，包括 ping / health / 配对码不对。用来回答“到底有没有人来敲过门”——" +
-            "「最近调用」只记动作，两者不是一回事。",
+        "يُحتسب كل طلب بما فيه ping وhealth ورموز الاقتران الخاطئة. " +
+            "أما آخر الاستدعاءات فيسجل الإجراءات فقط.",
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         lineHeight = 17.sp
@@ -251,7 +251,7 @@ internal fun MplSection(context: Context) {
     val conn = lastConn
     if (conn == null) {
         Text(
-            "还没有任何连接。如果 MPL 那边点过按钮，这里仍然空着 —— 那就是请求根本没发出来。",
+            "لا توجد اتصالات بعد. إذا ضغطت زر MPL ولم يظهر شيء هنا، لم يُرسل الطلب.",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -274,7 +274,7 @@ internal fun MplSection(context: Context) {
     Spacer(Modifier.height(4.dp))
     if (recent.isEmpty()) {
         Text(
-            "还没有调用。MPL 那边点「试一下」之后，这里会出现 id 前 8 位、动作、耗时。",
+            "لا توجد استدعاءات. بعد اختبار MPL سيظهر هنا أول 8 أحرف من المعرّف والإجراء والمدة.",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

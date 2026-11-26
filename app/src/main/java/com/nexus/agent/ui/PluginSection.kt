@@ -86,14 +86,14 @@ fun PluginSection(
         if (uri == null) return@rememberLauncherForActivityResult
         if (installing) return@rememberLauncherForActivityResult
         installing = true
-        runLog = "正在解压并校验插件…"
+        runLog = "جارٍ فك ضغط الإضافة والتحقق منها…"
         scope.launch {
             val r = PluginManager.installZip(context, uri)
             installing = false
             when (r) {
                 is PluginManager.InstallResult.Ok -> {
                     reload()
-                    runLog = "已安装插件「${r.manifest.name}」" + if (r.overwritten) "（覆盖旧版本）" else ""
+                    runLog = "تم تثبيت الإضافة «${r.manifest.name}»" + if (r.overwritten) " (استبدال الإصدار السابق)" else ""
                     Toast.makeText(context, runLog, Toast.LENGTH_SHORT).show()
                 }
                 is PluginManager.InstallResult.Fail -> {
@@ -112,7 +112,7 @@ fun PluginSection(
         ) {
             Text("الإضافات", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             Text(
-                "${plugins.size} 个",
+                "${plugins.size} إضافات",
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -128,7 +128,7 @@ fun PluginSection(
             ) { Text(if (installing) "جارٍ التثبيت…" else "استيراد إضافة") }
         }
         Text(
-            "插件 = plugin.json 声明 + 参数表单，不含可执行代码；二创只需改 JSON",
+            "الإضافة عبارة عن تعريف plugin.json ونموذج إعدادات دون كود تنفيذي؛ يمكن تعديل JSON لإعادة تخصيصها.",
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(top = 2.dp)
@@ -157,7 +157,7 @@ fun PluginSection(
                 Column(modifier = Modifier.padding(12.dp)) {
                     Text("لا توجد إضافات", style = MaterialTheme.typography.bodyMedium)
                     Text(
-                        "点右上「导入插件」选一个 zip，或把 plugin.json 放进 " +
+                        "اضغط «استيراد إضافة» واختر ملف ZIP، أو ضع plugin.json في " +
                             "Android/data/${context.packageName}/files/plugins/",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -172,10 +172,10 @@ fun PluginSection(
                     running = running,
                     onRun = {
                         if (running) {
-                            Toast.makeText(context, "上一个插件还在跑", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "إضافة أخرى قيد التشغيل", Toast.LENGTH_SHORT).show()
                         } else {
                             running = true
-                            runLog = "正在运行「${p.name}」…"
+                            runLog = "جارٍ تشغيل «${p.name}»…"
                             PluginManager.run(
                                 context = context,
                                 manifest = p,
@@ -188,9 +188,9 @@ fun PluginSection(
                     onDelete = {
                         if (PluginManager.delete(context, p.id)) {
                             reload()
-                            runLog = "已删除「${p.name}」"
+                            runLog = "تم حذف «${p.name}»"
                         } else {
-                            runLog = "删除失败：找不到插件目录"
+                            runLog = "فشل الحذف: لم يُعثر على مجلد الإضافة"
                         }
                     }
                 )
@@ -217,7 +217,7 @@ fun PluginSection(
                 PluginManager.setModel(context, m, model)
                 PluginManager.saveSettings(context, m, values)
                 detail = null
-                runLog = "「${m.name}」配置已保存"
+                runLog = "تم حفظ إعدادات «${m.name}»"
             },
             onSaveAndRun = { model, values ->
                 PluginManager.setModel(context, m, model)
@@ -225,7 +225,7 @@ fun PluginSection(
                 detail = null
                 if (!running) {
                     running = true
-                    runLog = "正在运行「${m.name}」…"
+                    runLog = "جارٍ تشغيل «${m.name}»…"
                     PluginManager.run(
                         context = context,
                         manifest = m,
@@ -272,14 +272,14 @@ private fun PluginCard(
             Spacer(modifier = Modifier.height(4.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    "模型：$modelLabel",
+                    "النموذج: $modelLabel",
                     style = MaterialTheme.typography.labelSmall,
                     color = Color(0xFF8AB4F8)
                 )
                 if (manifest.builtin) {
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        "内置",
+                        "مدمجة",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -287,7 +287,7 @@ private fun PluginCard(
                 if (manifest.settingsSchema.isNotEmpty()) {
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        "${manifest.settingsSchema.size} 项配置",
+                        "${manifest.settingsSchema.size} إعدادات",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -296,7 +296,7 @@ private fun PluginCard(
                 manifest.allowedTools?.let { tools ->
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        if (tools.isEmpty()) "禁用所有动作" else "白名单 ${tools.size} 项",
+                        if (tools.isEmpty()) "تعطيل جميع الإجراءات" else "قائمة السماح: ${tools.size} إجراءات",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -374,9 +374,9 @@ private fun PluginDetailDialog(
                 }
                 Text(
                     when (model) {
-                        PluginManifest.MODEL_CLOUD -> "跳过本地小模型，直接用云端（更准，需联网 + Key）"
-                        PluginManifest.MODEL_LOCAL -> "优先本地 Qwen2-VL（离线、快，但规划能力弱）"
-                        else -> "自动：先本地，答不好再升云端"
+                        PluginManifest.MODEL_CLOUD -> "تجاوز النموذج المحلي واستخدام السحابة مباشرة (أدق، يتطلب الاتصال ومفتاحاً)"
+                        PluginManifest.MODEL_LOCAL -> "تفضيل Qwen2-VL المحلي (سريع ودون اتصال، وقدرته على التخطيط محدودة)"
+                        else -> "تلقائي: المحلي أولاً، ثم السحابي عند الحاجة"
                     },
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -388,7 +388,7 @@ private fun PluginDetailDialog(
                     Text("الأدوات المتاحة", style = MaterialTheme.typography.labelLarge)
                     Text(
                         if (tools.isEmpty()) {
-                            "未授权任何动作（插件只能说话，不能操作手机）"
+                            "لم يُصرح بأي إجراء (المحادثة فقط دون التحكم في الهاتف)"
                         } else {
                             tools.joinToString("、")
                         },

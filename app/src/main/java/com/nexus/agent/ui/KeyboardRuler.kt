@@ -165,14 +165,14 @@ fun KeyboardRulerOverlay(
                     .padding(14.dp)
             ) {
                 Text(
-                    "把红线拖到键盘的上沿",
+                    "اسحب الخط الأحمر إلى الحافة العليا للوحة المفاتيح",
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
                     color = LunaOnBackground
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    "按住屏幕任意位置上下拖。红线贴住键盘顶部时松手，再点保存。",
+                    "اضغط واسحب لأعلى أو لأسفل حتى يلامس الخط الأحمر أعلى لوحة المفاتيح، ثم احفظ.",
                     fontSize = 12.sp,
                     color = LunaOnSurfaceVariant
                 )
@@ -184,7 +184,7 @@ fun KeyboardRulerOverlay(
                     color = LunaPrimary
                 )
                 Text(
-                    "屏幕高 ${safeScreen}px · 内容区 ${contentHeightPx}px",
+                    "ارتفاع الشاشة ${safeScreen}px · مساحة المحتوى ${contentHeightPx}px",
                     fontSize = 11.sp,
                     color = LunaOnSurfaceVariant
                 )
@@ -207,8 +207,8 @@ fun KeyboardRulerOverlay(
                 fraction = (fraction + 1f / contentHeightPx.coerceAtLeast(1)).coerceIn(0f, 1f)
             }
             Spacer(modifier = Modifier.weight(1f))
-            RulerButton("取消", ghost = true) { onCancel() }
-            RulerButton("保存") { onSave(calibPx) }
+            RulerButton("إلغاء", ghost = true) { onCancel() }
+            RulerButton("حفظ") { onSave(calibPx) }
         }
     }
 }

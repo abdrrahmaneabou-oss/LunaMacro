@@ -82,7 +82,7 @@ fun UpdatePromptDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text(if (isExperimental) "发现实验版 v${info.version}" else "发现新版本 v${info.version}")
+            Text(if (isExperimental) "إصدار تجريبي جديد v${info.version}" else "إصدار جديد v${info.version}")
         },
         text = {
             Column(
@@ -91,14 +91,14 @@ fun UpdatePromptDialog(
                     .verticalScroll(rememberScrollState())
             ) {
                 Text(
-                    "当前版本 v$currentVersion → 新版本 v${info.version}",
+                    "الإصدار الحالي v$currentVersion ← الجديد v${info.version}",
                     style = MaterialTheme.typography.bodySmall,
                     color = LunaOnSurfaceVariant
                 )
                 if (isExperimental) {
                     Spacer(modifier = Modifier.height(6.dp))
                     Text(
-                        "实验版是未定型的预发布版本，可能有未知问题。想尝鲜就装，出问题可以随时装回正式版。",
+                        "الإصدار التجريبي قد يحتوي على مشاكل غير معروفة. يمكنك الرجوع إلى الإصدار المستقر عند الحاجة.",
                         style = MaterialTheme.typography.bodySmall,
                         color = Color(0xFFE53935)
                     )
@@ -106,14 +106,14 @@ fun UpdatePromptDialog(
                 if (info.apkSize > 0) {
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        "安装包 ${fmtMb(info.apkSize)} · 应用内下载安装",
+                        "حزمة التثبيت ${fmtMb(info.apkSize)} · التنزيل والتثبيت داخل التطبيق",
                         style = MaterialTheme.typography.bodySmall,
                         color = LunaOnSurfaceVariant
                     )
                 }
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    info.notes.ifBlank { "有新版本可更新，建议升级以获得最新修复。" },
+                    info.notes.ifBlank { "يتوفر إصدار جديد، يوصى بالتحديث للحصول على الإصلاحات." },
                     style = MaterialTheme.typography.bodySmall
                 )
             }
@@ -165,20 +165,20 @@ fun MandatoryUpdateOverlay(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                "需要更新",
+                "يلزم التحديث",
                 style = MaterialTheme.typography.headlineSmall,
                 color = Color(0xFFFF6B6B)
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
-                "为了修复严重问题，请必须更新",
+                "يجب التحديث لإصلاح مشاكل خطيرة",
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color(0xFFEDEFF3),
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                "当前 v$currentVersion → 最新 v${info.version}",
+                "الحالي v$currentVersion ← الأحدث v${info.version}",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color(0xFF9AA3AF)
             )
@@ -209,7 +209,7 @@ fun MandatoryUpdateOverlay(
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(
-                    progress.message.ifBlank { "准备中…" },
+                    progress.message.ifBlank { "جارٍ التحضير…" },
                     style = MaterialTheme.typography.bodySmall,
                     color = Color(0xFF9AA3AF)
                 )
@@ -230,7 +230,7 @@ fun MandatoryUpdateOverlay(
 
             Spacer(modifier = Modifier.height(10.dp))
             Text(
-                "更新完成后本页面会自动消失",
+                "تختفي هذه الصفحة تلقائياً بعد التحديث",
                 style = MaterialTheme.typography.labelSmall,
                 color = Color(0xFF6F7885)
             )
@@ -253,10 +253,10 @@ fun UpdateProgressDialog(
     onRetry: () -> Unit
 ) {
     val title = when (state.phase) {
-        UpdatePhase.DOWNLOADING -> "正在下载 v${state.version}"
-        UpdatePhase.READY -> "v${state.version} 已下载"
-        UpdatePhase.INSTALLING -> "v${state.version} 准备安装"
-        UpdatePhase.ERROR -> "更新失败"
+        UpdatePhase.DOWNLOADING -> "جارٍ تنزيل v${state.version}"
+        UpdatePhase.READY -> "تم تنزيل v${state.version}"
+        UpdatePhase.INSTALLING -> "v${state.version} جاهز للتثبيت"
+        UpdatePhase.ERROR -> "فشل التحديث"
     }
 
     AlertDialog(
@@ -297,7 +297,7 @@ fun UpdateProgressDialog(
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "下载走国内加速镜像，中断了会从断点续传。",
+                        "يستخدم التنزيل مصادر بديلة ويدعم الاستئناف بعد الانقطاع.",
                         style = MaterialTheme.typography.bodySmall,
                         color = LunaOnSurfaceVariant
                     )
@@ -305,7 +305,7 @@ fun UpdateProgressDialog(
                     Text(
                         state.message.ifBlank {
                             if (state.phase == UpdatePhase.READY) {
-                                "点「立即安装」调起系统安装器完成覆盖升级。"
+                                "اضغط التثبيت الآن لفتح مثبت النظام وإكمال التحديث."
                             } else {
                                 ""
                             }
@@ -316,7 +316,7 @@ fun UpdateProgressDialog(
                     if (state.phase == UpdatePhase.READY && apk.exists()) {
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            "安装包：${fmtMb(apk.length())}",
+                            "حزمة التثبيت: ${fmtMb(apk.length())}",
                             style = MaterialTheme.typography.bodySmall,
                             color = LunaOnSurfaceVariant
                         )
