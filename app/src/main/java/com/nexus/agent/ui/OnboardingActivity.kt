@@ -271,7 +271,7 @@ private fun openUrl(context: android.content.Context, url: String) {
         }
         context.startActivity(intent)
     } catch (e: Throwable) {
-        android.widget.Toast.makeText(context, "无法打开浏览器，请手动访问：$url", android.widget.Toast.LENGTH_LONG).show()
+        android.widget.Toast.makeText(context, "تعذر فتح المتصفح، افتح الرابط يدوياً: $url", android.widget.Toast.LENGTH_LONG).show()
     }
 }
 
@@ -300,7 +300,7 @@ private fun openAppInfo(context: android.content.Context) {
     } catch (e: Throwable) {
         android.widget.Toast.makeText(
             context,
-            "打不开应用信息，请手动去 设置 → 应用 → 宏月",
+            "تعذر فتح معلومات التطبيق. انتقل يدوياً إلى الإعدادات ← التطبيقات ← LunaMacro",
             android.widget.Toast.LENGTH_LONG
         ).show()
     }
@@ -317,23 +317,23 @@ private fun openAppInfo(context: android.content.Context) {
 private fun MimTipsDialog(onDismiss: () -> Unit, onOpenAppInfo: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("${RomProfile.label()}要多做三步") },
+        title = { Text("${RomProfile.label()} يتطلب ثلاث خطوات إضافية") },
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 Text(
-                    "这类系统会在息屏后主动掐掉无障碍和前台服务，不做下面三步，" +
-                        "「读屏」和「操作手机」会时好时坏。",
+                    "قد يوقف هذا النظام خدمة إمكانية الوصول والخدمة الأمامية بعد إطفاء الشاشة. دون الخطوات التالية، " +
+                        "قد تصبح قراءة الشاشة والتحكم في الهاتف غير مستقرين.",
                     style = MaterialTheme.typography.bodyMedium,
                     lineHeight = 20.sp
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                Text("① 应用信息 → 自启动：打开", style = MaterialTheme.typography.bodyMedium)
-                Text("② 最近任务卡片下拉 → 锁定（别被一键清理掉）", style = MaterialTheme.typography.bodyMedium)
-                Text("③ 电池 → 后台耗电管理 → 允许后台高耗电 / 无限制", style = MaterialTheme.typography.bodyMedium)
+                Text("① معلومات التطبيق ← تفعيل التشغيل التلقائي", style = MaterialTheme.typography.bodyMedium)
+                Text("② التطبيقات الأخيرة ← قفل بطاقة التطبيق لمنع إغلاقه", style = MaterialTheme.typography.bodyMedium)
+                Text("③ البطارية ← السماح بالاستهلاك في الخلفية دون قيود", style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    "如果这三步做完 Shizuku 还是起不来，宏月会自动切换成「纯数字生命」：" +
-                        "只能陪你聊天，不再尝试操作手机，也不会再反复弹失败提示。",
+                    "إذا لم يعمل Shizuku بعد هذه الخطوات، ينتقل LunaMacro تلقائياً إلى وضع المحادثة فقط: " +
+                        "لن يحاول التحكم في الهاتف أو يكرر إشعارات الفشل.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     lineHeight = 18.sp
@@ -356,7 +356,7 @@ private fun WelcomePage() {
     StepLayout(
         title = "مرحباً",
         icon = "👋",
-        desc = "跟着引导点几下，宏月就能用了。全程无需技术背景。",
+        desc = "اتبع خطوات الإعداد البسيطة لبدء استخدام LunaMacro. لا تتطلب خبرة تقنية.",
         action = null,
         onAction = {}
     )
@@ -367,7 +367,7 @@ private fun StellarInstallPage(ok: Boolean, onInstall: () -> Unit) {
     StepLayout(
         title = "الخطوة الأولى: تثبيت Stellar",
         icon = if (ok) "✅" else "📦",
-        desc = if (ok) "تم تثبيت Stellar" else "Stellar 是获取系统权限的核心组件，已内置于本 App。\n点「一键安装」后，在弹出的系统界面点「安装」即可。",
+        desc = if (ok) "تم تثبيت Stellar" else "Stellar مكوّن أساسي للحصول على صلاحيات النظام، وهو مضمّن في التطبيق.\nاضغط تثبيت Stellar ثم وافق على التثبيت في نافذة النظام.",
         action = if (!ok) "تثبيت Stellar" else null,
         onAction = onInstall
     )
@@ -385,7 +385,7 @@ private fun ActivatePage(ok: Boolean, onOpenStellar: () -> Unit, onOpenWirelessD
         Text("الخطوة الثانية: تفعيل الخدمة", style = MaterialTheme.typography.titleLarge)
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            if (ok) "服务已激活" else "需要输一次 6 位配对码（安卓安全机制，无法自动）。\n\n① 点「开启无线调试」，进去打开「无线调试」开关\n② 点「打开 Stellar」\n③ 在 Stellar 里点「无线调试 → 启动」\n④ 下拉通知栏，在 Stellar 通知里输入屏幕上的 6 位码",
+            if (ok) "تم تفعيل الخدمة" else "يلزم إدخال رمز اقتران من 6 أرقام مرة واحدة (من آليات أمان Android).\n\n① فعّل التصحيح اللاسلكي\n② افتح Stellar\n③ اختر التصحيح اللاسلكي ← تشغيل\n④ افتح الإشعارات وأدخل الرمز المكوّن من 6 أرقام في إشعار Stellar",
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             lineHeight = 22.sp,
@@ -406,7 +406,7 @@ private fun GrantPage(ok: Boolean, onGrant: () -> Unit) {
     StepLayout(
         title = "الخطوة الثالثة: منح الإذن",
         icon = if (ok) "✅" else "🔓",
-        desc = if (ok) "تم منح الإذن لـ LunaMacro" else "让宏月获得操作权限。\n点「授权」，在弹出的界面点「允许」。",
+        desc = if (ok) "تم منح الإذن لـ LunaMacro" else "امنح LunaMacro إذن التحكم.\nاضغط منح الإذن ثم اختر السماح.",
         action = if (!ok) "منح الإذن" else null,
         onAction = onGrant
     )
@@ -417,7 +417,7 @@ private fun AccessibilityPage(ok: Boolean, onOpen: () -> Unit) {
     StepLayout(
         title = "الخطوة الرابعة: تفعيل إمكانية الوصول",
         icon = if (ok) "✅" else "👁",
-        desc = if (ok) "خدمة إمكانية الوصول مفعلة" else "让 Agent 能「看到」屏幕。\n点「去开启」，在列表找到「宏月」并打开开关。",
+        desc = if (ok) "خدمة إمكانية الوصول مفعلة" else "تتيح هذه الخدمة للمساعد قراءة الشاشة.\nاضغط تفعيل وابحث عن LunaMacro في القائمة ثم شغّل الخدمة.",
         action = if (!ok) "تفعيل" else null,
         onAction = onOpen
     )
@@ -428,7 +428,7 @@ private fun OverlayPage(ok: Boolean, onOpen: () -> Unit) {
     StepLayout(
         title = "الخطوة الخامسة: تفعيل النافذة العائمة",
         icon = if (ok) "✅" else "🪟",
-        desc = if (ok) "النافذة العائمة مفعلة" else "让 Agent 能显示思考过程和运行灯。\n点「去开启」，允许「显示在其他应用上层」。",
+        desc = if (ok) "النافذة العائمة مفعلة" else "تتيح للمساعد عرض حالة التفكير والتشغيل.\nاضغط تفعيل واسمح بالظهور فوق التطبيقات الأخرى.",
         action = if (!ok) "تفعيل" else null,
         onAction = onOpen
     )
@@ -439,7 +439,7 @@ private fun RecordPage(ok: Boolean, onRequest: () -> Unit) {
     StepLayout(
         title = "الخطوة السادسة: تفعيل الميكروفون",
         icon = if (ok) "✅" else "🎤",
-        desc = if (ok) "إذن التسجيل مفعل" else "让 Agent 能听「你好高总」唤醒。\n点「去开启」，在弹窗点「允许」。",
+        desc = if (ok) "إذن التسجيل مفعل" else "يتيح للمساعد سماع عبارة التنشيط «你好高总».\nاضغط تفعيل ثم السماح.",
         action = if (!ok) "تفعيل" else null,
         onAction = onRequest
     )
@@ -457,7 +457,7 @@ private fun DonePage(onFinish: () -> Unit, onRegisterDeepSeek: () -> Unit, onReg
         Text("اكتمل الإعداد", style = MaterialTheme.typography.titleLarge)
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            "环境已就绪！\n\n最后还需一个 LLM API Key（让 Agent 思考和看图）：\n· DeepSeek（推荐）\n· 通义千问 DashScope\n\n没账号的话点下面去注册，注册后把 Key 填进 App 的「设置」页即可。",
+            "اكتمل إعداد البيئة!\n\nيلزم مفتاح API لنموذج اللغة حتى يستطيع المساعد التفكير وتحليل الصور:\n· DeepSeek (موصى به)\n· Qwen DashScope\n\nإذا لم يكن لديك حساب، سجّل أدناه ثم أدخل المفتاح في إعدادات التطبيق.",
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             lineHeight = 22.sp,

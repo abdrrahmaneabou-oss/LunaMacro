@@ -1219,7 +1219,7 @@ object CopilotIslandOverlay {
             gravity = Gravity.CENTER_VERTICAL
         }
         val et = EditText(ctx).apply {
-            hint = "跟副驾驶说点什么…"
+            hint = "اكتب شيئاً للمساعد…"
             setHintTextColor(Color.parseColor("#8A8A8A"))
             setTextColor(Color.WHITE)
             textSize = 13f
@@ -1299,11 +1299,11 @@ object CopilotIslandOverlay {
         // 新问题已发出：上一轮暂存回复直接丢弃，交给下面新立起的「思考中」
         exitInputMode(flushPending = false)
         // 先立起「思考中」，再把请求交给引擎；引擎忙/失败时由它自己的状态覆盖
-        showStatus("思考中", StatusKind.THINKING)
+        showStatus("جارٍ التفكير", StatusKind.THINKING)
         val handler = onUserMessage
         if (handler == null) {
             // 没接线（进程被系统拉起来但没走 MainActivity）——如实报，不再走老的纯文本旁路
-            showStatus("副驾驶没接上，重开一次 App", StatusKind.ERROR)
+            showStatus("تعذر اتصال المساعد، أعد فتح التطبيق", StatusKind.ERROR)
             Log.w(TAG, "onUserMessage 未接线，消息被丢弃：$text")
         } else {
             handler(text)

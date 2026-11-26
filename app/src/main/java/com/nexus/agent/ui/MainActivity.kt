@@ -279,7 +279,7 @@ class MainActivity : ComponentActivity() {
         val current = currentVersionName()
         if (info == null) {
             if (manual) {
-                Toast.makeText(this, "检查更新失败，请检查网络", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "فشل التحقق من التحديثات، تحقق من الشبكة", Toast.LENGTH_SHORT).show()
             }
             return
         }
@@ -291,7 +291,7 @@ class MainActivity : ComponentActivity() {
             experimentalUpdate.value = null
             Log.i("MainActivity", "检查更新：已是最新（当前 $current）")
             if (manual) {
-                Toast.makeText(this, "已是最新版本 v$current", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "أنت تستخدم أحدث إصدار v$current", Toast.LENGTH_SHORT).show()
             }
             return
         }
@@ -321,7 +321,7 @@ class MainActivity : ComponentActivity() {
                 Log.i("MainActivity", "发现推荐更新 v${info.version}（当前 $current）")
                 if (info.apkUrl == null) {
                     if (manual) {
-                        Toast.makeText(this, "最新版本缺少安装包，请稍后再试", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "لا يحتوي أحدث إصدار على حزمة تثبيت، حاول لاحقاً", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     updatePrompt.value = info
@@ -340,7 +340,7 @@ class MainActivity : ComponentActivity() {
                 ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             )
         } catch (e: Throwable) {
-            Toast.makeText(this, "打不开浏览器：${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "تعذر فتح المتصفح: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -352,9 +352,9 @@ class MainActivity : ComponentActivity() {
             when (val r = AnnouncementChecker.checkNow()) {
                 is AnnouncementChecker.FetchResult.Has -> manualAnnouncement.value = r.announcement
                 AnnouncementChecker.FetchResult.Empty ->
-                    Toast.makeText(this@MainActivity, "当前没有新公告", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "لا توجد إعلانات جديدة", Toast.LENGTH_SHORT).show()
                 AnnouncementChecker.FetchResult.Failed ->
-                    Toast.makeText(this@MainActivity, "公告拉取失败，请检查网络后重试", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "تعذر جلب الإعلانات، تحقق من الشبكة وأعد المحاولة", Toast.LENGTH_SHORT).show()
             }
             manualAnnouncementLoading.value = false
         }
@@ -363,7 +363,7 @@ class MainActivity : ComponentActivity() {
     /** 用户确认更新 → 应用内下载 → 拉起系统安装器 */
     private fun startUpdate(info: UpdateChecker.UpdateInfo) {
         val apkUrl = info.apkUrl ?: run {
-            Toast.makeText(this, "该版本缺少安装包，请稍后再试", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "لا توجد حزمة تثبيت لهذا الإصدار، حاول لاحقاً", Toast.LENGTH_SHORT).show()
             return
         }
         updatePrompt.value = null
@@ -373,7 +373,7 @@ class MainActivity : ComponentActivity() {
             version = info.version,
             phase = UpdatePhase.DOWNLOADING,
             percent = 0f,
-            message = "准备下载…"
+            message = "جارٍ التحضير للتنزيل…"
         )
         updateJob = lifecycleScope.launch {
             try {
@@ -389,23 +389,23 @@ class MainActivity : ComponentActivity() {
                         downloaded = done,
                         total = total,
                         message = if (total > 0) {
-                            "正在下载 ${fmtMb(done)} / ${fmtMb(total)}"
+                            "جارٍ التنزيل ${fmtMb(done)} / ${fmtMb(total)}"
                         } else {
-                            "正在下载 ${fmtMb(done)}"
+                            "جارٍ التنزيل ${fmtMb(done)}"
                         }
                     )
                 }
                 if (apk == null) {
                     updateUi.value = updateUi.value?.copy(
                         phase = UpdatePhase.ERROR,
-                        message = "下载失败：所有下载源都不通，请稍后重试（已下载部分会续传）"
+                        message = "فشل التنزيل: جميع المصادر غير متاحة. حاول لاحقاً، وسيُستأنف التنزيل السابق."
                     )
                     return@launch
                 }
                 updateUi.value = updateUi.value?.copy(
                     phase = UpdatePhase.READY,
                     percent = 1f,
-                    message = "已下载 ${fmtMb(apk.length())}，点「立即安装」完成更新"
+                    message = "تم تنزيل ${fmtMb(apk.length())}، اضغط التثبيت الآن لإكمال التحديث"
                 )
                 // 顺手清掉旧版本的安装包，别让外部私有目录越攒越大
                 AppUpdater.cleanOldApks(this@MainActivity, keepVersion = info.version)
@@ -419,7 +419,7 @@ class MainActivity : ComponentActivity() {
                 Log.e("MainActivity", "更新下载异常", e)
                 updateUi.value = updateUi.value?.copy(
                     phase = UpdatePhase.ERROR,
-                    message = "下载异常：${e.message ?: e.javaClass.simpleName}"
+                    message = "خطأ أثناء التنزيل: ${e.message ?: e.javaClass.simpleName}"
                 )
             }
         }
@@ -430,7 +430,7 @@ class MainActivity : ComponentActivity() {
         if (err == null) {
             updateUi.value = updateUi.value?.copy(
                 phase = UpdatePhase.INSTALLING,
-                message = "已拉起系统安装器，按提示完成安装即可"
+                message = "تم فتح مثبت النظام، اتبع التعليمات لإكمال التثبيت"
             )
         } else {
             updateUi.value = updateUi.value?.copy(
@@ -495,7 +495,7 @@ class MainActivity : ComponentActivity() {
                         // 播报的是「她说的最后一句」；真的一句都没拿到时才承认没接上，
                         // 不要用「任务结束」这种系统腔盖过去（0.9.10）。
                         VoiceAssistant.reportExecuteResult(
-                            lastReply ?: "我这边没接上，等会儿再跟我说一遍"
+                            lastReply ?: "لم أتمكن من الاتصال، أعد المحاولة لاحقاً"
                         )
                     },
                     chatty = true
@@ -623,7 +623,7 @@ class MainActivity : ComponentActivity() {
                     baseUrl = "",
                     model = "",
                     kind = ApiDiagnostics.Kind.UNKNOWN,
-                    title = "诊断没跑起来：${e.javaClass.simpleName}",
+                    title = "تعذر بدء التشخيص: ${e.javaClass.simpleName}",
                     detail = e.message.orEmpty()
                 )
             }
@@ -634,7 +634,7 @@ class MainActivity : ComponentActivity() {
     private fun saveLlmConfig(provider: String, apiKey: String, baseUrl: String, model: String) {
         LlmClientFactory.saveConfig(this, provider, apiKey, baseUrl, model)
         LlmClientFactory.saveProvider(this, provider)
-        Toast.makeText(this, "已保存 $provider 配置", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "تم حفظ إعدادات $provider", Toast.LENGTH_SHORT).show()
     }
 
     private fun loadLlmConfig(): LlmConfigData {
@@ -655,7 +655,7 @@ class MainActivity : ComponentActivity() {
             )
             startActivity(intent)
         } catch (e: Throwable) {
-            Toast.makeText(this, "无法跳转，请手动到 设置→应用→宏月→悬浮窗 开启", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "تعذر فتح الإعدادات؛ فعّل الظهور فوق التطبيقات يدوياً لـ LunaMacro", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -667,16 +667,16 @@ class MainActivity : ComponentActivity() {
         try {
             startActivity(Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS))
         } catch (e: Throwable) {
-            Toast.makeText(this, "无法跳转，请手动到 设置→无障碍 开启", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "تعذر فتح الإعدادات؛ فعّل خدمة إمكانية الوصول يدوياً", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun permissionStatusText(): String {
         val sb = StringBuilder()
-        sb.append(if (hasOverlayPermission()) "✅" else "❌").append(" 悬浮窗权限\n")
-        sb.append(if (isAccessibilityEnabled()) "✅" else "❌").append(" 无障碍服务\n")
+        sb.append(if (hasOverlayPermission()) "✅" else "❌").append(" إذن النافذة العائمة\n")
+        sb.append(if (isAccessibilityEnabled()) "✅" else "❌").append(" خدمة إمكانية الوصول\n")
         sb.append(if (ShizukuManager.isShizukuAvailable() && ShizukuManager.hasShizukuPermission()) "✅" else "❌").append(" Shizuku\n")
-        sb.append(if (StabilityHelper.isIgnoringBatteryOptimizations(this)) "✅" else "❌").append(" 忽略电池优化")
+        sb.append(if (StabilityHelper.isIgnoringBatteryOptimizations(this)) "✅" else "❌").append(" تجاهل تحسين البطارية")
         return sb.toString()
     }
 
@@ -701,7 +701,7 @@ class MainActivity : ComponentActivity() {
     private fun toggleWakeWord(enable: Boolean, onResult: (Boolean, String) -> Unit) {
         if (enable) {
             if (!recordPermissionStatus()) {
-                onResult(false, "❌ 未授予录音权限\n请先申请录音权限")
+                onResult(false, "❌ لم يُمنح إذن التسجيل\nامنح إذن الميكروفون أولاً")
                 return
             }
             val word = WakeWordConfig.getWakeWord(this)
@@ -709,7 +709,7 @@ class MainActivity : ComponentActivity() {
                 // 唤醒模型在 assets 里，总能起来；但识别模型缺失时必须提前讲清楚
                 onResult(
                     true,
-                    "⚠️ 唤醒已开启（说「$word」）\n但语音识别模型未安装，现在只能唤醒不能识别"
+                    "⚠️ التنشيط مفعل (قل «$word»)\nلكن نموذج التعرف الصوتي غير مثبت، التنشيط فقط متاح حالياً"
                 )
                 VoiceAssistant.start(this)
                 return
@@ -718,18 +718,18 @@ class MainActivity : ComponentActivity() {
             VoiceAssistant.start(this) { ok ->
                 runOnUiThread {
                     if (ok) {
-                        onResult(true, "✅ 语音助手已开启\n说「$word」即可唤醒")
+                        onResult(true, "✅ المساعد الصوتي مفعل\nقل «$word» للتنشيط")
                     } else {
                         onResult(
                             false,
-                            "❌ 唤醒启动失败\n检查录音权限是否被系统静音 / 前台服务是否被限制"
+                            "❌ فشل بدء التنشيط\nتحقق من إذن التسجيل وقيود الخدمة الأمامية"
                         )
                     }
                 }
             }
         } else {
             VoiceAssistant.stop()
-            onResult(false, "已停止语音助手")
+            onResult(false, "تم إيقاف المساعد الصوتي")
         }
     }
 }
@@ -1038,11 +1038,11 @@ private fun HomeTab(
             text = {
                 Text(
                     if (accessibilityLostMode) {
-                        "设置里开关还是亮的，但服务没有运行起来 —— 系统把它停了，或者它自己崩了。\n" +
-                            "这种状态下宏月读不了屏，MPL 那边也会被告知不能动手。\n" +
-                            "去设置里关一次再打开，通常就能恢复。"
+                        "قد يظهر المفتاح مفعلاً في الإعدادات رغم توقف الخدمة بسبب النظام أو عطل.\n" +
+                            "في هذه الحالة لا يستطيع LunaMacro قراءة الشاشة، ويتوقف تنفيذ إجراءات MPL.\n" +
+                            "أوقف الخدمة ثم أعد تفعيلها من الإعدادات لاستعادتها غالباً."
                     } else {
-                        "没有无障碍服务，Agent 就无法读取屏幕内容（会变成\u201C瞎子\u201D乱点）。\n请开启后使用。"
+                        "دون خدمة إمكانية الوصول، لا يستطيع المساعد قراءة محتوى الشاشة وقد ينفذ إجراءات خاطئة.\nفعّل الخدمة قبل الاستخدام."
                     }
                 )
             },
@@ -1070,7 +1070,7 @@ private fun HomeTab(
             onDismissRequest = { showShizukuGuide = false },
             title = { Text("كيفية تفعيل Shizuku يدوياً") },
             text = {
-                Text("1. 手机开启「开发者选项 → 无线调试」\n2. 安装原版 Shizuku（rikka.app）\n3. 打开 Shizuku，选择「无线调试」配对\n4. 完成配对授权\n5. Shizuku 启动后即可使用（重启后需重新激活）")
+                Text("1. فعّل خيارات المطور ← التصحيح اللاسلكي\n2. ثبّت Shizuku الأصلي (rikka.app)\n3. افتح Shizuku واختر الاقتران بالتصحيح اللاسلكي\n4. أكمل الاقتران ومنح الإذن\n5. شغّل Shizuku (أعد تفعيله بعد إعادة تشغيل الهاتف)")
             },
             confirmButton = {
                 LunaTextButton(onClick = {
@@ -1087,7 +1087,7 @@ private fun HomeTab(
     val recordPermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
-        wakeStatusText = if (granted) "✅ 录音权限已授予" else "❌ 录音权限被拒绝"
+        wakeStatusText = if (granted) "✅ تم منح إذن التسجيل" else "❌ تم رفض إذن التسجيل"
     }
 
     Column(
@@ -1110,7 +1110,7 @@ private fun HomeTab(
                 modifier = Modifier.padding(top = 2.dp)
             ) {
                 Text(
-                    if (announcementLoading) "获取中…" else "📢 公告",
+                    if (announcementLoading) "جارٍ التحميل…" else "📢 الإعلانات",
                     style = MaterialTheme.typography.labelMedium,
                     color = LunaPrimary
                 )
@@ -1279,7 +1279,7 @@ private fun HomeTab(
             ) {
                 Column(modifier = Modifier.padding(12.dp)) {
                     Text(
-                        "⚠️ Stellar 服务异常（多次唤醒失败），已停止自动重试。",
+                        "⚠️ خدمة Stellar غير مستقرة (فشل التنشيط عدة مرات)، تم إيقاف إعادة المحاولة التلقائية.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurface
                     )
@@ -1296,7 +1296,7 @@ private fun HomeTab(
             ) {
                 Column(modifier = Modifier.padding(12.dp)) {
                     Text(
-                        "Stellar 在此设备上持续不稳定，建议改用原版 Shizuku + 手动激活（放弃开机自启换稳定性）。",
+                        "خدمة Stellar غير مستقرة على هذا الجهاز؛ يوصى باستخدام Shizuku الأصلي وتفعيله يدوياً.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurface
                     )
@@ -1332,15 +1332,15 @@ private fun HomeTab(
                 Text("التنشيط الصوتي", style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = if (wakeEnabled) "✅ 已开启 · 说「$wakeWord」唤醒"
-                    else "说「$wakeWord」唤醒",
+                    text = if (wakeEnabled) "✅ مفعل · قل «$wakeWord» للتنشيط"
+                    else "قل «$wakeWord» للتنشيط",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 if (!asrModelReady) {
                     Spacer(modifier = Modifier.height(6.dp))
                     Text(
-                        "⚠️ 语音识别模型未安装：现在只能唤醒、不能识别。到下面「本地模型」导入 sensevoice.zip。",
+                        "⚠️ نموذج التعرف الصوتي غير مثبت. استورد sensevoice.zip من قسم النماذج المحلية.",
                         style = MaterialTheme.typography.labelSmall,
                         color = LunaErrFg
                     )
@@ -1475,7 +1475,7 @@ private fun HomeTab(
                 Text("جمع البيانات اليومي", style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = if (dailyCollecting) "✅ 采集中 · $dailyCount 张" else "后台静默截屏，训练全能识别",
+                    text = if (dailyCollecting) "✅ جارٍ الجمع · $dailyCount صور" else "التقاط لقطات في الخلفية لتدريب التعرف",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1601,7 +1601,7 @@ private fun TaskArchiveScreen(onBack: () -> Unit) {
         }
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            "执行入口已统一到首页「指挥台」与灵动岛，这里只做回看",
+            "يمكن بدء التنفيذ من لوحة الأوامر أو النافذة العائمة؛ هذه الصفحة لعرض السجل فقط.",
             style = MaterialTheme.typography.bodySmall,
             color = LunaOnSurfaceVariant
         )
@@ -1816,7 +1816,7 @@ private fun VersionNoteBlock(note: AnnouncementChecker.VersionNote) {
                 Spacer(modifier = Modifier.width(8.dp))
             }
             Text(
-                note.title.ifBlank { "更新说明" },
+                note.title.ifBlank { "ملاحظات التحديث" },
                 style = MaterialTheme.typography.titleSmall,
                 modifier = Modifier.weight(1f)
             )
