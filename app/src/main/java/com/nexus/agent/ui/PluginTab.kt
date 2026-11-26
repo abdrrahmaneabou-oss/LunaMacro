@@ -173,12 +173,12 @@ fun PluginTab() {
         }
         TouchDatasetCollector.onStepReady = { stepIndex, totalSteps, title, hint ->
             ThinkingOverlay.updateCollectStepReady(stepIndex, totalSteps, title, hint)
-            touchStepText = "الخطوة ${stepIndex + 1}/$totalSteps · $title"
+            touchStepText = "الخطوة ${stepIndex + 1}/$totalSteps · ${arabicCollectLabel(title)}"
             touchStepProgress = "اضغط «بدء» عندما تكون جاهزاً"
         }
         TouchDatasetCollector.onStepProgress = { stepIndex, totalSteps, title, hint, collected, target ->
             ThinkingOverlay.updateCollectStep(stepIndex, totalSteps, title, hint, collected, target)
-            touchStepText = "الخطوة ${stepIndex + 1}/$totalSteps · $title"
+            touchStepText = "الخطوة ${stepIndex + 1}/$totalSteps · ${arabicCollectLabel(title)}"
             touchStepProgress = "$collected/$target صور"
         }
         TouchDatasetCollector.onFlowComplete = {

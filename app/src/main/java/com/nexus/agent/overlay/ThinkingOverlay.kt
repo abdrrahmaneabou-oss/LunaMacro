@@ -1,5 +1,7 @@
 package com.nexus.agent.overlay
 
+import com.nexus.agent.ui.arabicCollectLabel
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
@@ -553,10 +555,10 @@ object ThinkingOverlay {
     ) {
         mainHandler.post {
             val stepNo = (stepIndex + 1).coerceAtLeast(1)
-            collectStepTitleText?.text = "الخطوة $stepNo/$totalSteps · $title"
+            collectStepTitleText?.text = "الخطوة $stepNo/$totalSteps · ${arabicCollectLabel(title)}"
             val percent = if (target > 0) (collected * 100 / target).coerceIn(0, 100) else 0
             collectStepProgressText?.text = "$collected/$target صور · $percent%"
-            collectStepHintText?.text = hint
+            collectStepHintText?.text = arabicCollectLabel(hint)
             setCollectButton(true)
         }
     }
@@ -567,9 +569,9 @@ object ThinkingOverlay {
     fun updateCollectStepReady(stepIndex: Int, totalSteps: Int, title: String, hint: String) {
         mainHandler.post {
             val stepNo = (stepIndex + 1).coerceAtLeast(1)
-            collectStepTitleText?.text = "الخطوة $stepNo/$totalSteps · $title"
+            collectStepTitleText?.text = "الخطوة $stepNo/$totalSteps · ${arabicCollectLabel(title)}"
             collectStepProgressText?.text = "اضغط «بدء» عندما تكون جاهزاً"
-            collectStepHintText?.text = hint
+            collectStepHintText?.text = arabicCollectLabel(hint)
             setCollectButton(false)
         }
     }
