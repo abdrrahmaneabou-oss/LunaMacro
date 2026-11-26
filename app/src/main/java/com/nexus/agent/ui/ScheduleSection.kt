@@ -86,7 +86,7 @@ fun ScheduleSection(modifier: Modifier = Modifier) {
                 modifier = Modifier.weight(1f)
             )
             LunaTextButton(onClick = { creating = true }) {
-                Text("+ 新建", style = MaterialTheme.typography.labelMedium, color = LunaPrimary)
+                Text("+ جديد", style = MaterialTheme.typography.labelMedium, color = LunaPrimary)
             }
         }
         Text(
@@ -105,7 +105,7 @@ fun ScheduleSection(modifier: Modifier = Modifier) {
                     modifier = Modifier.weight(1f)
                 )
                 LunaTextButton(onClick = { openExactAlarmSettings(context) }) {
-                    Text("去开启", style = MaterialTheme.typography.labelSmall, color = LunaPrimary)
+                    Text("تفعيل", style = MaterialTheme.typography.labelSmall, color = LunaPrimary)
                 }
             }
         }
@@ -180,7 +180,7 @@ fun ScheduleSection(modifier: Modifier = Modifier) {
     pendingDelete?.let { task ->
         AlertDialog(
             onDismissRequest = { pendingDelete = null },
-            title = { Text("删除定时任务") },
+            title = { Text("حذف مهمة مجدولة") },
             text = { Text("「${task.title}」会被删掉，之后不会再自动执行。") },
             confirmButton = {
                 LunaTextButton(onClick = {
@@ -188,10 +188,10 @@ fun ScheduleSection(modifier: Modifier = Modifier) {
                     ScheduleStore.delete(context, task.id)
                     pendingDelete = null
                     refresh()
-                }) { Text("删除", color = LunaErrFg) }
+                }) { Text("حذف", color = LunaErrFg) }
             },
             dismissButton = {
-                LunaTextButton(onClick = { pendingDelete = null }) { Text("取消") }
+                LunaTextButton(onClick = { pendingDelete = null }) { Text("إلغاء") }
             }
         )
     }
@@ -244,14 +244,14 @@ private fun TaskRow(
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             LunaTextButton(onClick = onEdit) {
-                Text("编辑", style = MaterialTheme.typography.labelSmall, color = LunaPrimary)
+                Text("تعديل", style = MaterialTheme.typography.labelSmall, color = LunaPrimary)
             }
             LunaTextButton(onClick = onRunNow) {
-                Text("试跑", style = MaterialTheme.typography.labelSmall, color = LunaPrimary)
+                Text("تشغيل تجريبي", style = MaterialTheme.typography.labelSmall, color = LunaPrimary)
             }
             Spacer(modifier = Modifier.weight(1f))
             LunaTextButton(onClick = onDelete) {
-                Text("删除", style = MaterialTheme.typography.labelSmall, color = LunaErrFg)
+                Text("حذف", style = MaterialTheme.typography.labelSmall, color = LunaErrFg)
             }
         }
         Spacer(modifier = Modifier.height(2.dp))
@@ -289,14 +289,14 @@ private fun ScheduleEditDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (initial == null) "新建定时任务" else "编辑定时任务") },
+        title = { Text(if (initial == null) "إنشاء مهمة مجدولة" else "تعديل مهمة مجدولة") },
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 OutlinedTextField(
                     value = prompt,
                     onValueChange = { prompt = it },
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text("要做什么", fontSize = 13.sp) },
+                    label = { Text("ما المطلوب تنفيذه؟", fontSize = 13.sp) },
                     placeholder = { Text("比如：打开微信签到领每日奖励", fontSize = 12.sp) },
                     minLines = 2,
                     maxLines = 4
@@ -306,27 +306,27 @@ private fun ScheduleEditDialog(
                     value = title,
                     onValueChange = { title = it },
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text("名字（可留空）", fontSize = 13.sp) },
+                    label = { Text("الاسم (اختياري)", fontSize = 13.sp) },
                     singleLine = true
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
-                Text("重复", style = MaterialTheme.typography.labelMedium, color = LunaOnSurfaceVariant)
+                Text("التكرار", style = MaterialTheme.typography.labelMedium, color = LunaOnSurfaceVariant)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     FilterChip(
                         selected = repeat == ScheduledTask.Repeat.DAILY,
                         onClick = { repeat = ScheduledTask.Repeat.DAILY },
-                        label = { Text("每天", fontSize = 12.sp) }
+                        label = { Text("يومياً", fontSize = 12.sp) }
                     )
                     FilterChip(
                         selected = repeat == ScheduledTask.Repeat.WEEKLY,
                         onClick = { repeat = ScheduledTask.Repeat.WEEKLY },
-                        label = { Text("每周", fontSize = 12.sp) }
+                        label = { Text("أسبوعياً", fontSize = 12.sp) }
                     )
                     FilterChip(
                         selected = repeat == ScheduledTask.Repeat.ONCE,
                         onClick = { repeat = ScheduledTask.Repeat.ONCE },
-                        label = { Text("只一次", fontSize = 12.sp) }
+                        label = { Text("مرة واحدة", fontSize = 12.sp) }
                     )
                 }
 
@@ -420,10 +420,10 @@ private fun ScheduleEditDialog(
                         lastSummary = initial?.lastSummary ?: ""
                     )
                 )
-            }) { Text("保存", fontSize = 14.sp) }
+            }) { Text("حفظ", fontSize = 14.sp) }
         },
         dismissButton = {
-            LunaTextButton(onClick = onDismiss) { Text("取消") }
+            LunaTextButton(onClick = onDismiss) { Text("إلغاء") }
         }
     )
 }

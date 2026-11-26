@@ -119,10 +119,10 @@ fun UpdatePromptDialog(
             }
         },
         confirmButton = {
-            LunaTextButton(onClick = onConfirm) { Text("立即更新") }
+            LunaTextButton(onClick = onConfirm) { Text("التحديث الآن") }
         },
         dismissButton = {
-            LunaTextButton(onClick = onDismiss) { Text("稍后") }
+            LunaTextButton(onClick = onDismiss) { Text("لاحقاً") }
         }
     )
 }
@@ -223,9 +223,9 @@ fun MandatoryUpdateOverlay(
                         if (info.apkUrl != null) onDownload() else onOpenReleases()
                     }
                 ) {
-                    Text(if (downloading) "下载中…" else if (info.apkUrl != null) "去下载" else "打开下载页")
+                    Text(if (downloading) "جارٍ التنزيل…" else if (info.apkUrl != null) "تنزيل" else "فتح صفحة التنزيل")
                 }
-                LunaTextButton(onClick = onRetry) { Text("重试") }
+                LunaTextButton(onClick = onRetry) { Text("إعادة المحاولة") }
             }
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -326,18 +326,18 @@ fun UpdateProgressDialog(
         },
         confirmButton = {
             when (state.phase) {
-                UpdatePhase.DOWNLOADING -> LunaTextButton(onClick = onCancel) { Text("取消下载") }
-                UpdatePhase.READY -> LunaTextButton(onClick = onInstall) { Text("立即安装") }
-                UpdatePhase.INSTALLING -> LunaTextButton(onClick = onCancel) { Text("知道了") }
-                UpdatePhase.ERROR -> LunaTextButton(onClick = onRetry) { Text("重试") }
+                UpdatePhase.DOWNLOADING -> LunaTextButton(onClick = onCancel) { Text("إلغاء التنزيل") }
+                UpdatePhase.READY -> LunaTextButton(onClick = onInstall) { Text("التثبيت الآن") }
+                UpdatePhase.INSTALLING -> LunaTextButton(onClick = onCancel) { Text("حسناً") }
+                UpdatePhase.ERROR -> LunaTextButton(onClick = onRetry) { Text("إعادة المحاولة") }
             }
         },
         dismissButton = when (state.phase) {
             UpdatePhase.READY -> {
-                { LunaTextButton(onClick = onCancel) { Text("稍后") } }
+                { LunaTextButton(onClick = onCancel) { Text("لاحقاً") } }
             }
             UpdatePhase.ERROR -> {
-                { LunaTextButton(onClick = onCancel) { Text("关闭") } }
+                { LunaTextButton(onClick = onCancel) { Text("إغلاق") } }
             }
             else -> null
         }

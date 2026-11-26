@@ -191,10 +191,10 @@ internal fun SettingsTab(
             .padding(24.dp)
     ) {
         // 助手身份
-        Text("助手身份", style = MaterialTheme.typography.titleMedium)
+        Text("هوية المساعد", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            "给它起个名字，聊天/弹幕里它就用这个名字自称",
+            "اختر اسماً يستخدمه المساعد في المحادثة والتعليقات.",
             style = MaterialTheme.typography.bodySmall,
             color = LunaOnSurfaceVariant
         )
@@ -213,7 +213,7 @@ internal fun SettingsTab(
                     ""
                 }
             },
-            label = { Text("助手名称", fontSize = 12.sp) },
+            label = { Text("اسم المساعد", fontSize = 12.sp) },
             placeholder = { Text(CopilotConfig.DEFAULT_ASSISTANT_NAME, fontSize = 13.sp) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
@@ -234,8 +234,8 @@ internal fun SettingsTab(
 
         // 灵动岛：开着才有顶部胶囊（0.7.11 支持拖动 + 左右吸附）
         SettingSwitchRow(
-            title = "灵动岛",
-            desc = "屏幕顶部的黑色胶囊，可以拖动、会自动贴边",
+            title = "الجزيرة العائمة",
+            desc = "شريط أسود أعلى الشاشة يمكن سحبه ويلتصق بالحافة تلقائياً",
             checked = islandEnabled,
             onCheckedChange = { on ->
                 islandEnabled = on
@@ -246,7 +246,7 @@ internal fun SettingsTab(
                         CopilotConfig.setIslandEnabled(context, false)
                         Toast.makeText(
                             context,
-                            "需要悬浮窗权限：设置 → 应用 → 宏月 → 悬浮窗",
+                            "يلزم إذن الظهور فوق التطبيقات: الإعدادات ← التطبيقات ← LunaMacro",
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -259,8 +259,8 @@ internal fun SettingsTab(
         Spacer(modifier = Modifier.height(12.dp))
 
         SettingSwitchRow(
-            title = "情绪陪玩",
-            desc = "画面突变（死亡 / 爆炸 / 秀操作）时自动发弹幕",
+            title = "المرافقة التفاعلية أثناء اللعب",
+            desc = "تعليقات تلقائية عند تغير المشهد فجأة",
             checked = companionEnabled,
             onCheckedChange = { on ->
                 companionEnabled = on
@@ -271,7 +271,7 @@ internal fun SettingsTab(
                     if (!NexusAccessibilityService.isServiceRunning(context)) {
                         Toast.makeText(
                             context,
-                            "提示：情绪陪玩靠无障碍截图，请先在首页开启无障碍",
+                            "تحتاج المرافقة إلى لقطات الشاشة؛ فعّل إمكانية الوصول من الرئيسية.",
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -288,8 +288,8 @@ internal fun SettingsTab(
         // 它只会用文字教用户自己点。默认开，老用户升级后行为不变。
         var automationEnabled by remember { mutableStateOf(AutomationPolicy.isEnabled(context)) }
         SettingSwitchRow(
-            title = "允许它操作手机",
-            desc = "关掉后只剩聊天：不注入工具、不执行任何点击，AI 只会用文字教你怎么点。" +
+            title = "السماح للمساعد بالتحكم في الهاتف",
+            desc = "عند الإيقاف يبقى الحوار فقط، دون تنفيذ اللمسات أو تشغيل الأدوات." +
                 "只想把它当数字生命养的时候关掉它。",
             checked = automationEnabled,
             onCheckedChange = { on ->
@@ -315,7 +315,7 @@ internal fun SettingsTab(
                 lineHeight = 17.sp
             )
             Spacer(modifier = Modifier.height(6.dp))
-            LunaOutlinedButton(onClick = { showMimuTips = true }) { Text("查看保活设置步骤") }
+            LunaOutlinedButton(onClick = { showMimuTips = true }) { Text("عرض خطوات إبقاء الخدمة قيد التشغيل") }
             if (showMimuTips) {
                 AlertDialog(
                     onDismissRequest = { showMimuTips = false },
@@ -342,7 +342,7 @@ internal fun SettingsTab(
                         }
                     },
                     confirmButton = {
-                        TextButton(onClick = { showMimuTips = false }) { Text("知道了") }
+                        TextButton(onClick = { showMimuTips = false }) { Text("حسناً") }
                     }
                 )
             }
@@ -360,7 +360,7 @@ internal fun SettingsTab(
         Spacer(modifier = Modifier.height(20.dp))
 
         // LLM 配置
-        Text("LLM 配置", style = MaterialTheme.typography.titleMedium)
+        Text("إعداد نموذج اللغة LLM", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(8.dp))
 
         // 0.9.1：按钮从「测试 LLM」改成「测试连通性 & 查余额」。
@@ -375,7 +375,7 @@ internal fun SettingsTab(
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             LunaOutlinedButton(enabled = !llmTesting, onClick = { showLlmDialog = true }) {
-                Text("配置 LLM")
+                Text("إعداد LLM")
             }
             Spacer(modifier = Modifier.width(12.dp))
             LunaButton(
@@ -391,7 +391,7 @@ internal fun SettingsTab(
                         routingTick++
                     }
                 }
-            ) { Text(if (llmTesting) "诊断中…" else "测试连通性 & 查余额") }
+            ) { Text(if (llmTesting) "جارٍ التشخيص…" else "اختبار الاتصال والتحقق من الرصيد") }
         }
         Spacer(modifier = Modifier.height(6.dp))
         Text(
@@ -410,7 +410,7 @@ internal fun SettingsTab(
         if (llmTesting) {
             Spacer(modifier = Modifier.height(6.dp))
             Text(
-                "正在探测接口，最多等 25 秒…",
+                "جارٍ اختبار الواجهة، حتى 25 ثانية…",
                 style = MaterialTheme.typography.labelSmall,
                 color = LunaOnSurfaceVariant
             )
@@ -420,7 +420,7 @@ internal fun SettingsTab(
             AlertDialog(
                 onDismissRequest = { llmReport = null },
                 title = {
-                    Text(if (report.ok) "连接正常" else "诊断结果")
+                    Text(if (report.ok) "الاتصال سليم" else "نتائج التشخيص")
                 },
                 text = {
                     Column(
@@ -449,13 +449,13 @@ internal fun SettingsTab(
                     }
                 },
                 confirmButton = {
-                    TextButton(onClick = { llmReport = null }) { Text("知道了") }
+                    TextButton(onClick = { llmReport = null }) { Text("حسناً") }
                 },
                 dismissButton = {
                     TextButton(onClick = {
                         llmReport = null
                         showLlmDialog = true
-                    }) { Text("去配置") }
+                    }) { Text("فتح الإعدادات") }
                 }
             )
         }
@@ -522,7 +522,7 @@ internal fun SettingsTab(
                 }
             },
             enabled = !visionTesting
-        ) { Text(if (visionTesting) "测试中…（首次要装载模型）" else "测试视觉模型（截图并描述）") }
+        ) { Text(if (visionTesting) "جارٍ الاختبار… (تحميل النموذج أول مرة)" else "اختبار نموذج الرؤية (لقطة ووصف)") }
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             "截一张当前屏幕直接喂给本地视觉模型，把模型原文原样给你看；" +
@@ -534,7 +534,7 @@ internal fun SettingsTab(
         visionInferResult?.let { text ->
             AlertDialog(
                 onDismissRequest = { visionInferResult = null },
-                title = { Text("测试视觉模型") },
+                title = { Text("اختبار نموذج الرؤية") },
                 text = {
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                         Text(
@@ -545,7 +545,7 @@ internal fun SettingsTab(
                     }
                 },
                 confirmButton = {
-                    TextButton(onClick = { visionInferResult = null }) { Text("知道了") }
+                    TextButton(onClick = { visionInferResult = null }) { Text("حسناً") }
                 }
             )
         }
@@ -558,7 +558,7 @@ internal fun SettingsTab(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box {
                 LunaOutlinedButton(onClick = { visionMenu = true }) {
-                    Text("读屏模型：$visionProvider")
+                    Text("نموذج قراءة الشاشة: $visionProvider")
                 }
                 DropdownMenu(
                     expanded = visionMenu,
@@ -593,7 +593,7 @@ internal fun SettingsTab(
         }
         Text(
             if (visionCapable) {
-                "副驾驶问答会带上当前屏幕截图"
+                "تتضمن إجابات المساعد لقطة الشاشة الحالية"
             } else {
                 "该模型不支持图片，副驾驶会以纯文本回答（不读屏）"
             },
@@ -604,7 +604,7 @@ internal fun SettingsTab(
         Spacer(modifier = Modifier.height(16.dp))
 
         // 0.9.7 批次二：独立的云端视觉模型（发图时优先用它提取描述，再喂给纯文本主模型）
-        Text("云端视觉模型（可选）", style = MaterialTheme.typography.titleMedium)
+        Text("نموذج الرؤية السحابي (اختياري)", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             "主模型是纯文本（如 deepseek-chat）时，你发图它看不来。这里配一个能看图的云端模型" +
@@ -642,7 +642,7 @@ internal fun SettingsTab(
         Spacer(modifier = Modifier.height(8.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             LunaOutlinedButton(onClick = { showVisionConfigDialog = true }) {
-                Text("配置云端视觉")
+                Text("إعداد الرؤية السحابية")
             }
             Spacer(modifier = Modifier.width(12.dp))
             Text(
@@ -664,7 +664,7 @@ internal fun SettingsTab(
 
         // 跨端接入（0.9.0 批次四）：给手表 / 鸿蒙 NEXT / PC 用的本地 HTTP 接口。
         // 默认关；打开时自动生成 12 位 Token，界面上看得到、能复制、能重置。
-        Text("跨端接入", style = MaterialTheme.typography.titleMedium)
+        Text("الاتصال عبر الأجهزة", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             "在同一 WiFi 下给手表、鸿蒙 NEXT、PC 用一个极小的 HTTP 接口。" +
@@ -678,8 +678,8 @@ internal fun SettingsTab(
         var crossToken by remember { mutableStateOf(LocalAgentServer.token(context)) }
         var crossResult by remember { mutableStateOf("") }
         SettingSwitchRow(
-            title = "允许外部设备连接",
-            desc = "打开后开始监听局域网端口，用 Token 才能调；关掉立即停止监听。",
+            title = "السماح باتصال الأجهزة الخارجية",
+            desc = "عند التفعيل يستمع التطبيق على الشبكة المحلية ويتطلب رمز Token؛ يتوقف عند الإغلاق.",
             checked = crossEnabled,
             onCheckedChange = { on ->
                 val ok = LocalAgentServer.setEnabled(context, on)
@@ -713,12 +713,12 @@ internal fun SettingsTab(
                     cm?.setPrimaryClip(
                         android.content.ClipData.newPlainText("宏月 Token", crossToken)
                     )
-                    Toast.makeText(context, "Token 已复制", Toast.LENGTH_SHORT).show()
-                }) { Text("复制 Token") }
+                    Toast.makeText(context, "تم نسخ Token", Toast.LENGTH_SHORT).show()
+                }) { Text("نسخ Token") }
                 LunaTextButton(onClick = {
                     crossToken = LocalAgentServer.regenerateToken(context)
                     Toast.makeText(context, "已换新 Token，旧设备需重新填", Toast.LENGTH_LONG).show()
-                }) { Text("重置 Token") }
+                }) { Text("إعادة تعيين Token") }
             }
             Text(
                 "调用示例：curl -H \"X-Auth-Token: $crossToken\" " +
@@ -741,10 +741,10 @@ internal fun SettingsTab(
         Spacer(modifier = Modifier.height(24.dp))
 
         // 语音识别（ASR）配置
-        Text("语音识别（ASR）", style = MaterialTheme.typography.titleMedium)
+        Text("التعرف على الصوت (ASR)", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(8.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
-            LunaOutlinedButton(onClick = { showAsrDialog = true }) { Text("配置 ASR Key") }
+            LunaOutlinedButton(onClick = { showAsrDialog = true }) { Text("إعداد مفتاح ASR") }
             Spacer(modifier = Modifier.width(12.dp))
             Text(
                 if (asrKeyConfigured) "✅ 已配置" else "⚠️ 未配置（回退 qwen Key）",
@@ -756,24 +756,24 @@ internal fun SettingsTab(
         Spacer(modifier = Modifier.height(24.dp))
 
         // 权限管理
-        Text("权限管理", style = MaterialTheme.typography.titleMedium)
+        Text("إدارة الأذونات", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(8.dp))
         Text(permissionText, style = MaterialTheme.typography.bodySmall, fontFamily = FontFamily.Monospace)
         Spacer(modifier = Modifier.height(8.dp))
         Row {
-            LunaTextButton(onClick = { onOpenOverlaySettings(); permissionText = onPermissionStatus() }) { Text("悬浮窗") }
-            LunaTextButton(onClick = { onOpenAccessibilitySettings(); permissionText = onPermissionStatus() }) { Text("无障碍") }
+            LunaTextButton(onClick = { onOpenOverlaySettings(); permissionText = onPermissionStatus() }) { Text("النافذة العائمة") }
+            LunaTextButton(onClick = { onOpenAccessibilitySettings(); permissionText = onPermissionStatus() }) { Text("إمكانية الوصول") }
         }
         Row {
-            LunaTextButton(onClick = { onOpenBatteryOptimization(); permissionText = onPermissionStatus() }) { Text("电池优化") }
-            LunaTextButton(onClick = onOpenAutoStart) { Text("自启动") }
-            LunaTextButton(onClick = onOpenBackgroundPower) { Text("后台耗电") }
+            LunaTextButton(onClick = { onOpenBatteryOptimization(); permissionText = onPermissionStatus() }) { Text("تحسين البطارية") }
+            LunaTextButton(onClick = onOpenAutoStart) { Text("التشغيل التلقائي") }
+            LunaTextButton(onClick = onOpenBackgroundPower) { Text("استهلاك الطاقة في الخلفية") }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
         // 安全策略
-        Text("安全策略", style = MaterialTheme.typography.titleMedium)
+        Text("سياسة الأمان", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(8.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             Switch(
@@ -825,11 +825,11 @@ internal fun SettingsTab(
         Spacer(modifier = Modifier.height(24.dp))
 
         // 日志导出
-        Text("日志", style = MaterialTheme.typography.titleMedium)
+        Text("السجلات", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(8.dp))
         Row {
             LunaButton(onClick = { LogExporter.export(context) }) {
-                Text("一键导出日志")
+                Text("تصدير السجلات")
             }
             Spacer(modifier = Modifier.width(12.dp))
             // 0.7.12：视觉模型单独一份现场报告（模型目录 / 6 个文件 / 4 个 so / 堆栈），
@@ -838,7 +838,7 @@ internal fun SettingsTab(
                 if (!LogExporter.exportVisionInit(context)) {
                     Toast.makeText(context, "模型初始化日志生成失败", Toast.LENGTH_SHORT).show()
                 }
-            }) { Text("导出模型初始化日志") }
+            }) { Text("تصدير سجل تهيئة النموذج") }
         }
         // 读屏自检（0.8.0-alpha2）：一口气查无障碍 → 截图 → 视觉模型，
         // 直接给结论。用户反馈「读不了屏」时不用装 adb 抓 logcat。
@@ -859,7 +859,7 @@ internal fun SettingsTab(
                     }
                 },
                 enabled = !checking
-            ) { Text(if (checking) "自检中…" else "读屏自检") }
+            ) { Text(if (checking) "جارٍ الفحص…" else "الفحص الذاتي لقراءة الشاشة") }
             Spacer(modifier = Modifier.width(12.dp))
             Text(
                 "查无障碍 / 截图 / 视觉模型，一条结论说明为什么读不了屏",
@@ -870,7 +870,7 @@ internal fun SettingsTab(
         visionCheck?.let { text ->
             AlertDialog(
                 onDismissRequest = { visionCheck = null },
-                title = { Text("读屏自检") },
+                title = { Text("الفحص الذاتي لقراءة الشاشة") },
                 text = {
                     Text(
                         text,
@@ -879,7 +879,7 @@ internal fun SettingsTab(
                     )
                 },
                 confirmButton = {
-                    TextButton(onClick = { visionCheck = null }) { Text("知道了") }
+                    TextButton(onClick = { visionCheck = null }) { Text("حسناً") }
                 }
             )
         }
@@ -894,11 +894,11 @@ internal fun SettingsTab(
                         putExtra(Intent.EXTRA_STREAM, uri)
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     }
-                    context.startActivity(Intent.createChooser(intent, "导出审计日志"))
+                    context.startActivity(Intent.createChooser(intent, "تصدير سجل التدقيق"))
                 } else {
-                    Toast.makeText(context, "暂无审计日志", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "لا توجد سجلات تدقيق", Toast.LENGTH_SHORT).show()
                 }
-            }) { Text("导出所有审计日志") }
+            }) { Text("تصدير جميع سجلات التدقيق") }
         }
 
         // 崩溃日志：全局 CrashHandler 落盘，闪退后靠这个拿现场
@@ -907,7 +907,7 @@ internal fun SettingsTab(
         Row(verticalAlignment = Alignment.CenterVertically) {
             LunaOutlinedButton(onClick = {
                 val ok = CrashHandler.share(context)
-                if (!ok) Toast.makeText(context, "暂无崩溃记录", Toast.LENGTH_SHORT).show()
+                if (!ok) Toast.makeText(context, "لا توجد سجلات أعطال", Toast.LENGTH_SHORT).show()
             }) { Text("导出崩溃日志（$crashCount）") }
             Spacer(modifier = Modifier.width(12.dp))
             LunaTextButton(onClick = {
@@ -918,7 +918,7 @@ internal fun SettingsTab(
                     if (n > 0) "已清空 $n 份崩溃记录" else "暂无崩溃记录",
                     Toast.LENGTH_SHORT
                 ).show()
-            }) { Text("清空") }
+            }) { Text("مسح الكل") }
         }
         Text(
             if (crashCount > 0) "上次崩溃现场已保存，反馈闪退时请点上面按钮导出" else "暂无崩溃记录",
@@ -934,7 +934,7 @@ internal fun SettingsTab(
         Spacer(modifier = Modifier.height(24.dp))
 
         // 关于
-        Text("关于", style = MaterialTheme.typography.titleMedium)
+        Text("حول التطبيق", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(8.dp))
         val versionName = try {
             context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "0.3.1"
@@ -944,7 +944,7 @@ internal fun SettingsTab(
         Spacer(modifier = Modifier.height(8.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             LunaOutlinedButton(onClick = onCheckUpdate) {
-                Text("检查更新")
+                Text("التحقق من التحديثات")
             }
         }
 
@@ -963,7 +963,7 @@ internal fun SettingsTab(
 
         Spacer(modifier = Modifier.height(8.dp))
         LunaOutlinedButton(onClick = onOpenTaskArchive) {
-            Text("任务记录与审计")
+            Text("سجل المهام والتدقيق")
         }
     }
 
@@ -1008,7 +1008,7 @@ internal fun SettingsTab(
     if (showSafetyConfirm) {
         AlertDialog(
             onDismissRequest = { showSafetyConfirm = false },
-            title = { Text("关闭安全策略？") },
+            title = { Text("تعطيل سياسة الأمان؟") },
             text = {
                 Text("关闭后，危险操作（卸载/删除/格式化/转账/打开银行、支付、证券类应用等）将不再拦截。\n仅建议高级用户关闭。")
             },
@@ -1017,10 +1017,10 @@ internal fun SettingsTab(
                     safetyEnabled = false
                     SafetyPolicy.setEnabled(context, false)
                     showSafetyConfirm = false
-                }) { Text("确认关闭") }
+                }) { Text("تأكيد التعطيل") }
             },
             dismissButton = {
-                LunaTextButton(onClick = { showSafetyConfirm = false }) { Text("取消") }
+                LunaTextButton(onClick = { showSafetyConfirm = false }) { Text("إلغاء") }
             }
         )
     }
@@ -1108,7 +1108,7 @@ private fun ModelDownloadSection() {
             refresh()
             fraction = if (ok) 1f else -1f
             if (ok) progress = "● 导入完成，本地模型已就绪"
-            Toast.makeText(context, if (ok) "模型导入完成" else progress, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, if (ok) "تم استيراد النموذج" else progress, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -1128,7 +1128,7 @@ private fun ModelDownloadSection() {
             refresh()
             fraction = if (ok) 1f else -1f
             if (ok) progress = "● 导入完成，本地模型已就绪"
-            Toast.makeText(context, if (ok) "模型导入完成" else progress, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, if (ok) "تم استيراد النموذج" else progress, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -1296,7 +1296,7 @@ private fun ModelDownloadSection() {
                         is ModelManager.InstallResult.Ok -> {
                             fraction = 1f
                             progress = "● 安装完成（" + r.replaced + " 个文件），去点「测试视觉模型」"
-                            Toast.makeText(context, "模型已安装", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "تم تثبيت النموذج", Toast.LENGTH_SHORT).show()
                         }
                         is ModelManager.InstallResult.Failed -> {
                             fraction = -1f
@@ -1308,7 +1308,7 @@ private fun ModelDownloadSection() {
             enabled = !busy && stagedReady,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("安装并生效")
+            Text("تثبيت وتفعيل")
         }
         backup?.let { name ->
             Spacer(modifier = Modifier.height(2.dp))
@@ -1351,13 +1351,13 @@ private fun ModelDownloadSection() {
                     onClick = { importZipLauncher.launch(arrayOf("*/*")) },
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text("导入 zip")
+                    Text("استيراد ZIP")
                 }
                 LunaOutlinedButton(
                     onClick = { importFolderLauncher.launch(null) },
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text("导入文件夹")
+                    Text("استيراد مجلد")
                 }
             }
             if (!senseVoiceReady) {
@@ -1380,7 +1380,7 @@ private fun ModelDownloadSection() {
                     },
                     enabled = !busy
                 ) {
-                    Text("下载语音模型（SenseVoice，约 229MB）")
+                    Text("تنزيل نموذج الصوت (SenseVoice، نحو 229MB)")
                 }
             }
         }
@@ -1394,7 +1394,7 @@ private fun ModelDownloadSection() {
         }
         Spacer(modifier = Modifier.height(4.dp))
         LunaTextButton(onClick = { showLinks = !showLinks }) {
-            Text(if (showLinks) "收起手动下载链接" else "手动下载链接（外部下载器更快）")
+            Text(if (showLinks) "إخفاء روابط التنزيل اليدوي" else "روابط التنزيل اليدوي")
         }
         if (showLinks) {
             Spacer(modifier = Modifier.height(4.dp))
@@ -1505,17 +1505,17 @@ private fun ManualLinkGroup(title: String, zipName: String) {
                     val cm = context.getSystemService(Context.CLIPBOARD_SERVICE)
                         as android.content.ClipboardManager
                     cm.setPrimaryClip(android.content.ClipData.newPlainText("url", url))
-                    Toast.makeText(context, "已复制链接", Toast.LENGTH_SHORT).show()
-                }) { Text("复制") }
+                    Toast.makeText(context, "تم نسخ الرابط", Toast.LENGTH_SHORT).show()
+                }) { Text("نسخ") }
                 LunaTextButton(onClick = {
                     try {
                         context.startActivity(
                             Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))
                         )
                     } catch (e: Throwable) {
-                        Toast.makeText(context, "没有可用的浏览器", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "لا يوجد متصفح متاح", Toast.LENGTH_SHORT).show()
                     }
-                }) { Text("打开") }
+                }) { Text("فتح") }
             }
         }
     }
@@ -1538,7 +1538,7 @@ fun LlmConfigDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("配置 LLM") },
+        title = { Text("إعداد LLM") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 LunaOutlinedButton(onClick = { providerMenu = true }) {
@@ -1598,12 +1598,12 @@ fun LlmConfigDialog(
         },
         confirmButton = {
             LunaTextButton(onClick = { onSave(provider, apiKey.trim(), baseUrl.trim(), model.trim()) }) {
-                Text("保存")
+                Text("حفظ")
             }
         },
         dismissButton = {
             LunaTextButton(onClick = onDismiss) {
-                Text("取消")
+                Text("إلغاء")
             }
         }
     )
@@ -1620,7 +1620,7 @@ fun AsrConfigDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("配置 ASR") },
+        title = { Text("إعداد ASR") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 OutlinedTextField(
@@ -1633,7 +1633,7 @@ fun AsrConfigDialog(
                 OutlinedTextField(
                     value = model,
                     onValueChange = { v -> model = v },
-                    label = { Text("ASR 模型") },
+                    label = { Text("نموذج ASR") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -1641,12 +1641,12 @@ fun AsrConfigDialog(
         },
         confirmButton = {
             LunaTextButton(onClick = { onSave(apiKey.trim(), model.trim()) }) {
-                Text("保存")
+                Text("حفظ")
             }
         },
         dismissButton = {
             LunaTextButton(onClick = onDismiss) {
-                Text("取消")
+                Text("إلغاء")
             }
         }
     )
@@ -1673,7 +1673,7 @@ fun VisionConfigDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("配置云端视觉模型") },
+        title = { Text("إعداد نموذج الرؤية السحابي") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Box {
@@ -1716,7 +1716,7 @@ fun VisionConfigDialog(
                 OutlinedTextField(
                     value = baseUrl,
                     onValueChange = { v -> baseUrl = v },
-                    label = { Text("视觉 Base URL") },
+                    label = { Text("عنوان Base URL للرؤية") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -1724,12 +1724,12 @@ fun VisionConfigDialog(
         },
         confirmButton = {
             LunaTextButton(onClick = { onSave(model.trim(), apiKey.trim(), baseUrl.trim()) }) {
-                Text("保存")
+                Text("حفظ")
             }
         },
         dismissButton = {
             LunaTextButton(onClick = onDismiss) {
-                Text("取消")
+                Text("إلغاء")
             }
         }
     )
@@ -1817,7 +1817,7 @@ private fun HabitLearningSection(context: Context) {
     }
     LaunchedEffect(Unit) { refresh() }
 
-    Text("自我学习", style = MaterialTheme.typography.titleMedium)
+    Text("التعلم الذاتي", style = MaterialTheme.typography.titleMedium)
     Spacer(modifier = Modifier.height(8.dp))
     Text(
         "让她自己留意你怎么用手机（打开过哪些应用、点了哪个按钮、大概几点），" +
@@ -1876,7 +1876,7 @@ private fun HabitLearningSection(context: Context) {
             } else {
                 showLearned = true
             }
-        }) { Text("看她学到了什么") }
+        }) { Text("عرض ما تعلمه المساعد") }
         LunaTextButton(onClick = {
             if (!busy) {
                 busy = true
@@ -1895,17 +1895,17 @@ private fun HabitLearningSection(context: Context) {
                     ).show()
                 }
             }
-        }) { Text(if (busy) "正在学…" else "现在学一下") }
+        }) { Text(if (busy) "جارٍ التعلم…" else "التعلم الآن") }
     }
     Row {
-        LunaTextButton(onClick = { showTerms = true }) { Text("查看免责声明") }
+        LunaTextButton(onClick = { showTerms = true }) { Text("عرض إخلاء المسؤولية") }
         LunaTextButton(onClick = {
             if (dayCount == 0 && brief.isBlank()) {
                 Toast.makeText(context, "本来就没有学习数据", Toast.LENGTH_SHORT).show()
             } else {
                 showClear = true
             }
-        }) { Text("清除学习数据") }
+        }) { Text("مسح بيانات التعلم") }
     }
 
     if (showConsent) {
@@ -1928,7 +1928,7 @@ private fun HabitLearningSection(context: Context) {
     if (showLearned) {
         AlertDialog(
             onDismissRequest = { showLearned = false },
-            title = { Text("她学到的") },
+            title = { Text("ما تعلمه المساعد") },
             text = {
                 Column(
                     modifier = Modifier
@@ -1945,14 +1945,14 @@ private fun HabitLearningSection(context: Context) {
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showLearned = false }) { Text("知道了") }
+                TextButton(onClick = { showLearned = false }) { Text("حسناً") }
             }
         )
     }
     if (showClear) {
         AlertDialog(
             onDismissRequest = { showClear = false },
-            title = { Text("清除学习数据？") },
+            title = { Text("مسح بيانات التعلم؟") },
             text = {
                 Text(
                     "已经采集的操作记录和她总结出来的习惯会一起删掉，无法恢复。" +
@@ -1970,10 +1970,10 @@ private fun HabitLearningSection(context: Context) {
                         refresh()
                         Toast.makeText(context, "已清除，什么都没有留下", Toast.LENGTH_SHORT).show()
                     }
-                }) { Text("确认清除", color = LunaErrFg) }
+                }) { Text("تأكيد المسح", color = LunaErrFg) }
             },
             dismissButton = {
-                TextButton(onClick = { showClear = false }) { Text("取消") }
+                TextButton(onClick = { showClear = false }) { Text("إلغاء") }
             }
         )
     }
@@ -2020,7 +2020,7 @@ private fun HabitSkillSection(context: Context) {
     val actives = all.filter { it.isActive }
 
     Spacer(modifier = Modifier.height(16.dp))
-    Text("她学会的动作", style = MaterialTheme.typography.titleMedium)
+    Text("الحركات التي تعلمها المساعد", style = MaterialTheme.typography.titleMedium)
     Spacer(modifier = Modifier.height(4.dp))
     Text(
         "她把你反复走的同一条路径记了下来。现在这些还只是候选——她一个都不会做。" +
@@ -2108,7 +2108,7 @@ private fun HabitSkillSection(context: Context) {
                     }
                     reload()
                 }
-            }) { Text("清掉这些记录") }
+            }) { Text("مسح هذه السجلات") }
         }
     }
 
@@ -2117,7 +2117,7 @@ private fun HabitSkillSection(context: Context) {
     if (pending != null) {
         AlertDialog(
             onDismissRequest = { if (runningId == null) confirming = null },
-            title = { Text("让我做这件事？") },
+            title = { Text("هل أنفذ هذه المهمة؟") },
             text = {
                 Column {
                     Text(pending.describe(), style = MaterialTheme.typography.bodyMedium, lineHeight = 21.sp)
@@ -2157,10 +2157,10 @@ private fun HabitSkillSection(context: Context) {
                             reload()
                         }
                     }
-                ) { Text("去做") }
+                ) { Text("تنفيذ") }
             },
             dismissButton = {
-                TextButton(onClick = { confirming = null }) { Text("算了") }
+                TextButton(onClick = { confirming = null }) { Text("إلغاء") }
             }
         )
     }
@@ -2169,10 +2169,10 @@ private fun HabitSkillSection(context: Context) {
     if (res != null) {
         AlertDialog(
             onDismissRequest = { resultText = null },
-            title = { Text("做完了") },
+            title = { Text("تم التنفيذ") },
             text = { Text(res, lineHeight = 21.sp) },
             confirmButton = {
-                TextButton(onClick = { resultText = null }) { Text("知道了") }
+                TextButton(onClick = { resultText = null }) { Text("حسناً") }
             }
         )
     }
@@ -2266,7 +2266,7 @@ private fun EmotionSection(context: Context) {
         }
     }
 
-    Text("情感", style = MaterialTheme.typography.titleMedium)
+    Text("المشاعر", style = MaterialTheme.typography.titleMedium)
     Spacer(modifier = Modifier.height(4.dp))
     Text(
         "她的情绪不是「开心/难过」两个标签，而是一个连续的三维坐标（愉悦、唤醒、支配）。" +
@@ -2279,7 +2279,7 @@ private fun EmotionSection(context: Context) {
     Spacer(modifier = Modifier.height(10.dp))
 
     SettingSwitchRow(
-        title = "连续情感（PAD）",
+        title = "المشاعر المستمرة (PAD)",
         desc = if (pad) {
             "开启中：她会有「强颜欢笑」这种表里不一，也会自己慢慢消气"
         } else {
@@ -2302,7 +2302,7 @@ private fun EmotionSection(context: Context) {
 
     Spacer(modifier = Modifier.height(12.dp))
     SettingSwitchRow(
-        title = "情绪调制的记忆召回",
+        title = "استدعاء الذاكرة حسب المشاعر",
         desc = if (recall) {
             "开启中：开心时更容易想起开心的事；只重排，不会凭空翻出不相干的事"
         } else {
@@ -2317,7 +2317,7 @@ private fun EmotionSection(context: Context) {
 
     Spacer(modifier = Modifier.height(12.dp))
     SettingSwitchRow(
-        title = "会话日记",
+        title = "يوميات المحادثة",
         desc = if (diary) {
             "开启中：每天凌晨写一句当天的心情，第二天开机只念一次"
         } else {
@@ -2396,7 +2396,7 @@ private fun MemorySection(context: Context) {
 
     LaunchedEffect(Unit) { refresh() }
 
-    Text("外挂记忆", style = MaterialTheme.typography.titleMedium)
+    Text("الذاكرة الإضافية", style = MaterialTheme.typography.titleMedium)
     Spacer(modifier = Modifier.height(4.dp))
     Text(
         "白天她只记账：每次任务结束记一行「界面 + 你要的事 + 点了什么 + 成没成」，不分析、不调模型。" +
@@ -2409,7 +2409,7 @@ private fun MemorySection(context: Context) {
     Spacer(modifier = Modifier.height(10.dp))
     Row(verticalAlignment = Alignment.CenterVertically) {
         Column(modifier = Modifier.weight(1f)) {
-            Text("启用外挂记忆", style = MaterialTheme.typography.bodyMedium)
+            Text("تفعيل الذاكرة الإضافية", style = MaterialTheme.typography.bodyMedium)
             Text(
                 if (enabled) "开启中：会记录成功/失败轨迹，并在下次复用它" else "已关闭：不采集、不拦截",
                 style = MaterialTheme.typography.labelSmall,
@@ -2432,7 +2432,7 @@ private fun MemorySection(context: Context) {
         Spacer(modifier = Modifier.height(8.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(modifier = Modifier.weight(1f)) {
-                Text("夜间自动整理", style = MaterialTheme.typography.bodyMedium)
+                Text("تنظيم تلقائي ليلاً", style = MaterialTheme.typography.bodyMedium)
                 Text(
                     if (auto) "每天凌晨 3 点后，电量不低时跑一次（攒够 3 条才跑）" else "已关闭：只在你自己点「现在整理」时跑",
                     style = MaterialTheme.typography.labelSmall,
@@ -2487,7 +2487,7 @@ private fun MemorySection(context: Context) {
         },
         enabled = enabled && !running
     ) {
-        Text(if (running) "整理中…" else "现在整理一次")
+        Text(if (running) "جارٍ التنظيم…" else "تنظيم الآن")
     }
     Spacer(modifier = Modifier.height(6.dp))
     Text(
@@ -2535,7 +2535,7 @@ private fun HabitConsentDialog(onDismiss: () -> Unit, onAgree: () -> Unit) {
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("开启前请先读一遍") },
+        title = { Text("اقرأ قبل التفعيل") },
         text = {
             Column {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -2571,11 +2571,11 @@ private fun HabitConsentDialog(onDismiss: () -> Unit, onAgree: () -> Unit) {
         },
         confirmButton = {
             TextButton(onClick = onAgree, enabled = left <= 0) {
-                Text(if (left > 0) "还需阅读 ${left}s" else "我已阅读并同意")
+                Text(if (left > 0) "还需阅读 ${left}s" else "قرأت وأوافق")
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("不同意") }
+            TextButton(onClick = onDismiss) { Text("لا أوافق") }
         }
     )
 }
@@ -2599,7 +2599,7 @@ private fun HabitTermsDialog(onDismiss: () -> Unit) {
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("关闭") }
+            TextButton(onClick = onDismiss) { Text("إغلاق") }
         }
     )
 }
@@ -2627,7 +2627,7 @@ private fun PresetSection(context: android.content.Context) {
     val calib = remember { mutableStateOf(com.nexus.agent.copilot.CopilotConfig.keyboardCalibrationPx(context)) }
 
     Column {
-        Text("预设", style = MaterialTheme.typography.titleMedium)
+        Text("الإعدادات المسبقة", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             "把名字、几个开关和键盘高度打包成一段文字带走。换手机、重装之后导回来，不用一项项重设。",
@@ -2644,7 +2644,7 @@ private fun PresetSection(context: android.content.Context) {
         Row {
             LunaButton(onClick = {
                 resultHint = PresetIO.exportToClipboard(context)
-            }) { Text("导出预设") }
+            }) { Text("تصدير الإعدادات المسبقة") }
             Spacer(modifier = Modifier.width(12.dp))
             LunaOutlinedButton(onClick = {
                 importText = PresetIO.readClipboard(context)
@@ -2653,7 +2653,7 @@ private fun PresetSection(context: android.content.Context) {
                 } else {
                     showImport = true
                 }
-            }) { Text("导入预设") }
+            }) { Text("استيراد الإعدادات المسبقة") }
         }
         resultHint?.let {
             Spacer(modifier = Modifier.height(8.dp))
@@ -2669,7 +2669,7 @@ private fun PresetSection(context: android.content.Context) {
     if (showImport) {
         AlertDialog(
             onDismissRequest = { showImport = false },
-            title = { Text("导入预设", fontSize = 16.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold) },
+            title = { Text("استيراد الإعدادات المسبقة", fontSize = 16.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold) },
             text = {
                 Column {
                     Text(
@@ -2693,10 +2693,10 @@ private fun PresetSection(context: android.content.Context) {
                     resultHint = PresetIO.import(context, importText)
                     calib.value = com.nexus.agent.copilot.CopilotConfig.keyboardCalibrationPx(context)
                     showImport = false
-                }) { Text("应用") }
+                }) { Text("تطبيق") }
             },
             dismissButton = {
-                LunaTextButton(onClick = { showImport = false }) { Text("取消") }
+                LunaTextButton(onClick = { showImport = false }) { Text("إلغاء") }
             }
         )
     }

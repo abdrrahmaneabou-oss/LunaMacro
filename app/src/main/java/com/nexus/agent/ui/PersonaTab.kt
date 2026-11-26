@@ -245,7 +245,7 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
         if (busy) {
             Log.w(VisionRouter.DEBUG_TAG, "UI层: 上一轮还没结束，${kind}被丢弃")
             bitmap.recycle()
-            Toast.makeText(context, "等我这一句说完再发", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "انتظر انتهاء الرد الحالي قبل الإرسال", Toast.LENGTH_SHORT).show()
             return
         }
         busy = true
@@ -486,7 +486,7 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
             ) {
                 Text("🚪", fontSize = 13.sp)
                 Spacer(modifier = Modifier.width(6.dp))
-                Text("她的房间", fontSize = 11.sp, color = LunaOnBackground)
+                Text("غرفة المساعد", fontSize = 11.sp, color = LunaOnBackground)
             }
             Spacer(modifier = Modifier.width(8.dp))
             // 键盘标尺（0.9.24）：键盘弹起后点它，拖一条红线到键盘上沿，量一次永久有效。
@@ -514,9 +514,9 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
                 LunaTextButton(onClick = {
                     PersonaEngine.clearAll(context)
                     refreshBond()
-                    Toast.makeText(context, "聊天记录与记忆已清空", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "تم مسح المحادثات والذاكرة", Toast.LENGTH_SHORT).show()
                 }) {
-                    Text("清空", fontSize = 12.sp, color = LunaOnSurfaceVariant)
+                    Text("مسح الكل", fontSize = 12.sp, color = LunaOnSurfaceVariant)
                 }
             }
             // 人格调教入口（0.8.0）：右上角齿轮
@@ -582,7 +582,7 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
                 value = input,
                 onValueChange = { input = it },
                 modifier = Modifier.weight(1f),
-                placeholder = { Text("说点什么…", fontSize = 13.sp) },
+                placeholder = { Text("اكتب شيئاً…", fontSize = 13.sp) },
                 maxLines = 4,
                 enabled = !busy,
                 // 0.9.22：默认的 OutlinedTextField 聚焦时用 primary(#1A1A1A) 画 2dp 边框，
@@ -603,7 +603,7 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
                 onClick = { send() },
                 enabled = input.isNotBlank() && !busy
             ) {
-                Text("发送", fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                Text("إرسال", fontSize = 13.sp, fontWeight = FontWeight.Bold)
             }
         }
     }
@@ -636,7 +636,7 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
     visionGate?.let { r ->
         AlertDialog(
             onDismissRequest = { visionGate = null },
-            title = { Text("她暂时看不了图", fontSize = 16.sp, fontWeight = FontWeight.Bold) },
+            title = { Text("عرض الصور غير متاح حالياً", fontSize = 16.sp, fontWeight = FontWeight.Bold) },
             text = {
                 Column {
                     Text(
@@ -664,7 +664,7 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
                 LunaTextButton(onClick = {
                     visionGate = null
                     onOpenSettings()
-                }) { Text("去设置", fontSize = 13.sp) }
+                }) { Text("فتح الإعدادات", fontSize = 13.sp) }
             },
             dismissButton = {
                 LunaTextButton(onClick = {
@@ -672,7 +672,7 @@ fun PersonaTab(onOpenSettings: () -> Unit = {}) {
                     // 真发出去之后解析失败会有红字系统气泡兜底，不会静默。
                     visionGate = null
                     attachMenu = true
-                }) { Text("仍然发图", fontSize = 13.sp) }
+                }) { Text("إرسال الصورة على أي حال", fontSize = 13.sp) }
             }
         )
     }
@@ -724,7 +724,7 @@ private fun AttachSheet(
 ) {
     androidx.compose.material3.AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("发点什么给她看", fontSize = 15.sp, color = LunaOnBackground) },
+        title = { Text("أرسل شيئاً للمساعد", fontSize = 15.sp, color = LunaOnBackground) },
         text = {
             Column {
                 AttachRow("🖼", "从相册选图片", "她能看懂画面里是什么", onPickImage)
@@ -736,7 +736,7 @@ private fun AttachSheet(
         },
         confirmButton = {
             LunaTextButton(onClick = onDismiss) {
-                Text("取消", fontSize = 13.sp, color = LunaOnSurfaceVariant)
+                Text("إلغاء", fontSize = 13.sp, color = LunaOnSurfaceVariant)
             }
         }
     )
@@ -828,7 +828,7 @@ private fun ChatImage(path: String) {
                 .background(LunaOutline.copy(alpha = 0.22f)),
             contentAlignment = Alignment.Center
         ) {
-            Text("图片已清理", fontSize = 9.sp, color = LunaOnSurfaceVariant)
+            Text("تم مسح الصورة", fontSize = 9.sp, color = LunaOnSurfaceVariant)
         }
     } else {
         Image(
@@ -981,6 +981,6 @@ private fun ThinkingRow() {
             color = LunaPrimary
         )
         Spacer(modifier = Modifier.width(8.dp))
-        Text("正在想…", style = MaterialTheme.typography.bodySmall, color = LunaOnSurfaceVariant)
+        Text("جارٍ التفكير…", style = MaterialTheme.typography.bodySmall, color = LunaOnSurfaceVariant)
     }
 }

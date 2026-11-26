@@ -56,8 +56,8 @@ fun StellarSetupGuide(onClose: () -> Unit) {
             .padding(16.dp)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Stellar 配置引导", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
-            LunaTextButton(onClick = onClose) { Text("关闭") }
+            Text("دليل إعداد Stellar", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+            LunaTextButton(onClick = onClose) { Text("إغلاق") }
         }
 
         Text("Step ${step + 1}/5", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
@@ -67,7 +67,7 @@ fun StellarSetupGuide(onClose: () -> Unit) {
 
         when (step) {
             0 -> GuideCard(
-                title = "① 电池白名单",
+                title = "① استثناءات البطارية",
                 desc = "vivo 需要在电池设置中允许 Stellar「后台高耗电」，否则系统会反复杀掉它。",
                 button = "打开电池设置"
             ) {
@@ -81,7 +81,7 @@ fun StellarSetupGuide(onClose: () -> Unit) {
                 }
             }
             1 -> GuideCard(
-                title = "② 自启动白名单",
+                title = "② السماح بالتشغيل التلقائي",
                 desc = "允许 Stellar 自启动，否则重启/杀进程后无法自动拉起。自动识别你的手机品牌并跳转到对应自启动管理页。",
                 button = "打开自启动管理"
             ) {
@@ -92,7 +92,7 @@ fun StellarSetupGuide(onClose: () -> Unit) {
                 }
             }
             2 -> GuideCard(
-                title = "③ 睡眠模式例外",
+                title = "③ استثناءات وضع السكون",
                 desc = "把 Stellar 加入睡眠模式白名单，避免息屏后被强制休眠。",
                 button = "打开电池更多设置"
             ) {
@@ -106,7 +106,7 @@ fun StellarSetupGuide(onClose: () -> Unit) {
                 }
             }
             3 -> GuideCard(
-                title = "④ Stellar 内开关",
+                title = "④ مفاتيح Stellar",
                 desc = "打开 Stellar，确保 Watchdog、Start on Boot、Follow Startup 三个开关都是开着的。",
                 button = "打开 Stellar"
             ) {
@@ -115,11 +115,11 @@ fun StellarSetupGuide(onClose: () -> Unit) {
                     launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context.startActivity(launch)
                 } else {
-                    Toast.makeText(context, "未找到 Stellar，请先安装", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "لم يتم العثور على Stellar؛ ثبّته أولاً", Toast.LENGTH_SHORT).show()
                 }
             }
             4 -> GuideCard(
-                title = "⑤ 验证",
+                title = "⑤ التحقق",
                 desc = "配置完成，点击验证检查 Stellar 是否真正可用。",
                 button = "验证"
             ) {
@@ -130,10 +130,10 @@ fun StellarSetupGuide(onClose: () -> Unit) {
         // 第 5 步的验证结果显示
         verifyResult?.let {
             Spacer(Modifier.height(12.dp))
-            Text(it, style = MaterialTheme.typography.bodyMedium, color = if (it.contains("成功")) Color(0xFF69F0AE) else Color(0xFFFF8A80))
+            Text(it, style = MaterialTheme.typography.bodyMedium, color = if (it.contains("نجاح")) Color(0xFF69F0AE) else Color(0xFFFF8A80))
             if (it.contains("成功")) {
                 Spacer(Modifier.height(8.dp))
-                Button(onClick = onClose) { Text("完成") }
+                Button(onClick = onClose) { Text("تم") }
             }
         }
 
@@ -141,10 +141,10 @@ fun StellarSetupGuide(onClose: () -> Unit) {
 
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             if (step > 0) {
-                LunaOutlinedButton(onClick = { step-- }, modifier = Modifier.weight(1f)) { Text("上一步") }
+                LunaOutlinedButton(onClick = { step-- }, modifier = Modifier.weight(1f)) { Text("السابق") }
             }
             if (step < 4) {
-                Button(onClick = { step++ }, modifier = Modifier.weight(1f)) { Text("下一步") }
+                Button(onClick = { step++ }, modifier = Modifier.weight(1f)) { Text("التالي") }
             }
         }
     }

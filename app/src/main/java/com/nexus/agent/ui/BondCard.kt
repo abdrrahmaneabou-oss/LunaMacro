@@ -100,7 +100,7 @@ fun BondCard(
             // 心情：大 Emoji + 文字，Emoji 单独放大，扫一眼就知道她现在什么状态
             Column(horizontalAlignment = Alignment.End) {
                 Text(BondState.emojiOf(mood), fontSize = 22.sp)
-                Text(mood.ifBlank { "平静" }, fontSize = 10.sp, color = LunaOnSurfaceVariant)
+                Text(mood.ifBlank { "هادئ" }, fontSize = 10.sp, color = LunaOnSurfaceVariant)
             }
         }
 
@@ -176,7 +176,7 @@ fun BondCard(
                 Text("她这会儿没在想事情", fontSize = 10.sp, color = LunaOnSurfaceVariant)
                 Spacer(modifier = Modifier.weight(1f))
                 LunaTextButton(onClick = onThinkNow) {
-                    Text("让她想一句", fontSize = 11.sp, color = LunaOnSurfaceVariant)
+                    Text("دع المساعد يفكر", fontSize = 11.sp, color = LunaOnSurfaceVariant)
                 }
             }
             Spacer(modifier = Modifier.height(6.dp))
@@ -211,7 +211,7 @@ fun BondCard(
             }
             if (heartbeatEnabled) {
                 LunaTextButton(onClick = onTryHeartbeat) {
-                    Text("现在试", fontSize = 11.sp, color = LunaOnSurfaceVariant)
+                    Text("جرّب الآن", fontSize = 11.sp, color = LunaOnSurfaceVariant)
                 }
             }
             Switch(

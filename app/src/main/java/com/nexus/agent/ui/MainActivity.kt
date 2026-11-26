@@ -853,10 +853,10 @@ fun NexusHome(
                 LunaNavigationBar(
                     selectedIndex = selectedTab,
                     tabs = listOf(
-                        "🏠" to "首页",
-                        "⚙️" to "设置",
-                        "🛸" to "对话",
-                        "🧩" to "插件"
+                        "🏠" to "الرئيسية",
+                        "⚙️" to "الإعدادات",
+                        "🛸" to "المحادثة",
+                        "🧩" to "الإضافات"
                     ),
                     onSelect = { idx ->
                         archiveOpen = false
@@ -1034,7 +1034,7 @@ private fun HomeTab(
     if (showAccessibilityGuide) {
         AlertDialog(
             onDismissRequest = { showAccessibilityGuide = false },
-            title = { Text(if (accessibilityLostMode) "无障碍服务掉了" else "无障碍服务未开启") },
+            title = { Text(if (accessibilityLostMode) "انقطع اتصال خدمة إمكانية الوصول" else "خدمة إمكانية الوصول غير مفعلة") },
             text = {
                 Text(
                     if (accessibilityLostMode) {
@@ -1050,10 +1050,10 @@ private fun HomeTab(
                 LunaTextButton(onClick = {
                     showAccessibilityGuide = false
                     onOpenAccessibilitySettings()
-                }) { Text(if (accessibilityLostMode) "去重新开启" else "去开启") }
+                }) { Text(if (accessibilityLostMode) "إعادة التفعيل" else "تفعيل") }
             },
             dismissButton = {
-                LunaTextButton(onClick = { showAccessibilityGuide = false }) { Text("稍后") }
+                LunaTextButton(onClick = { showAccessibilityGuide = false }) { Text("لاحقاً") }
             }
         )
     }
@@ -1068,7 +1068,7 @@ private fun HomeTab(
     if (showShizukuGuide) {
         AlertDialog(
             onDismissRequest = { showShizukuGuide = false },
-            title = { Text("如何手动激活 Shizuku") },
+            title = { Text("كيفية تفعيل Shizuku يدوياً") },
             text = {
                 Text("1. 手机开启「开发者选项 → 无线调试」\n2. 安装原版 Shizuku（rikka.app）\n3. 打开 Shizuku，选择「无线调试」配对\n4. 完成配对授权\n5. Shizuku 启动后即可使用（重启后需重新激活）")
             },
@@ -1076,10 +1076,10 @@ private fun HomeTab(
                 LunaTextButton(onClick = {
                     showShizukuGuide = false
                     StabilityHelper.openShizukuWebsite(context)
-                }) { Text("去官网") }
+                }) { Text("الموقع الرسمي") }
             },
             dismissButton = {
-                LunaTextButton(onClick = { showShizukuGuide = false }) { Text("知道了") }
+                LunaTextButton(onClick = { showShizukuGuide = false }) { Text("حسناً") }
             }
         )
     }
@@ -1102,7 +1102,7 @@ private fun HomeTab(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.Top
         ) {
-            GeometricTitle("宏月", modifier = Modifier.weight(1f))
+            GeometricTitle("LunaMacro", modifier = Modifier.weight(1f))
             Spacer(modifier = Modifier.width(8.dp))
             LunaTextButton(
                 onClick = onShowAnnouncement,
@@ -1124,10 +1124,10 @@ private fun HomeTab(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            PermissionPill("悬浮窗", overlayOk) { onOpenOverlaySettings() }
-            PermissionPill("无障碍", accessibilityEnabled) { onOpenAccessibilitySettings() }
+            PermissionPill("النافذة العائمة", overlayOk) { onOpenOverlaySettings() }
+            PermissionPill("إمكانية الوصول", accessibilityEnabled) { onOpenAccessibilitySettings() }
             PermissionPill("Shizuku", shizukuOk) { onOpenOverlaySettings() }
-            PermissionPill("省电", batteryOk) { onOpenBatteryOptimization() }
+            PermissionPill("توفير الطاقة", batteryOk) { onOpenBatteryOptimization() }
         }
 
         Spacer(modifier = Modifier.height(14.dp))
@@ -1135,13 +1135,13 @@ private fun HomeTab(
         // ---- 主控台：一个输入框，聊天和干活都走这里 ----
         LunaCard(modifier = Modifier.fillMaxWidth()) {
             Text(
-                "指挥台",
+                "لوحة الأوامر",
                 style = MaterialTheme.typography.titleMedium,
                 color = LunaOnBackground
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                "问它屏幕里是什么、让它打开应用或执行任务，都是这一句",
+                "اسأل عن محتوى الشاشة أو اطلب فتح تطبيق أو تنفيذ مهمة.",
                 style = MaterialTheme.typography.bodySmall,
                 color = LunaOnSurfaceVariant
             )
@@ -1153,7 +1153,7 @@ private fun HomeTab(
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = {
                     Text(
-                        "比如：我现在在什么软件里 / 帮我打开微信 / 这关怎么打",
+                        "مثلاً: ما التطبيق المفتوح؟ / افتح WeChat / كيف أتجاوز هذه المرحلة؟",
                         style = MaterialTheme.typography.bodySmall
                     )
                 },
@@ -1179,7 +1179,7 @@ private fun HomeTab(
                         )
                     }
                 ) {
-                    Text("🎤 说", fontSize = 13.sp)
+                    Text("🎤 تحدث", fontSize = 13.sp)
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 LunaButton(
@@ -1193,7 +1193,7 @@ private fun HomeTab(
                     },
                     enabled = cmdText.isNotBlank()
                 ) {
-                    Text("发送", fontSize = 14.sp)
+                    Text("إرسال", fontSize = 14.sp)
                 }
             }
 
@@ -1225,7 +1225,7 @@ private fun HomeTab(
             Spacer(modifier = Modifier.height(6.dp))
             LunaTextButton(onClick = onOpenArchive, modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    "任务记录与审计 →",
+                    "سجل المهام والتدقيق ←",
                     style = MaterialTheme.typography.labelMedium,
                     color = LunaOnSurfaceVariant
                 )
@@ -1244,9 +1244,9 @@ private fun HomeTab(
             title = "Stellar",
             ok = shizukuOk && runningProvider == "stellar",
             detail = when {
-                shizukuOk && runningProvider == "stellar" -> "已连接（支持开机自启）"
-                stellarInstalled -> "未运行 · 点击重连"
-                else -> "未安装 · 点击安装"
+                shizukuOk && runningProvider == "stellar" -> "متصل (يدعم التشغيل التلقائي)"
+                stellarInstalled -> "غير مشغّل · اضغط لإعادة الاتصال"
+                else -> "غير مثبت · اضغط للتثبيت"
             },
             onClick = if (!shizukuOk && stellarInstalled) {
                 {
@@ -1261,12 +1261,12 @@ private fun HomeTab(
         )
         Spacer(modifier = Modifier.height(8.dp))
         StatusCard(
-            title = "Shizuku（原版）",
+            title = "Shizuku (الأصلي)",
             ok = shizukuOk && runningProvider == "shizuku",
             detail = when {
-                shizukuOk && runningProvider == "shizuku" -> "已连接（重启后需手动激活）"
-                shizukuInstalled -> "未运行"
-                else -> "未安装"
+                shizukuOk && runningProvider == "shizuku" -> "متصل (يلزم تفعيله بعد إعادة التشغيل)"
+                shizukuInstalled -> "غير مشغّل"
+                else -> "غير مثبت"
             }
         )
         Spacer(modifier = Modifier.height(12.dp))
@@ -1284,7 +1284,7 @@ private fun HomeTab(
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    LunaTextButton(onClick = { showStellarGuide = true }) { Text("去配置") }
+                    LunaTextButton(onClick = { showStellarGuide = true }) { Text("فتح الإعدادات") }
                 }
             }
         }
@@ -1302,8 +1302,8 @@ private fun HomeTab(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Row {
-                        LunaTextButton(onClick = { showShizukuGuide = true }) { Text("了解手动激活") }
-                        LunaTextButton(onClick = { StabilityHelper.openShizukuWebsite(context) }) { Text("切换到原版 Shizuku") }
+                        LunaTextButton(onClick = { showShizukuGuide = true }) { Text("شرح التفعيل اليدوي") }
+                        LunaTextButton(onClick = { StabilityHelper.openShizukuWebsite(context) }) { Text("التبديل إلى Shizuku الأصلي") }
                     }
                 }
             }
@@ -1312,12 +1312,12 @@ private fun HomeTab(
 
         // 无障碍服务状态卡片（实时，未开启可点击跳转）
         StatusCard(
-            title = "无障碍服务",
+            title = "خدمة إمكانية الوصول",
             ok = accessibilityEnabled,
             detail = when {
-                !accessibilityEnabled -> "未开启 · 点击去开启"
-                accessibilityBound -> "已开启"
-                else -> "已开启 · 连接中…"
+                !accessibilityEnabled -> "غير مفعل · اضغط للتفعيل"
+                accessibilityBound -> "مفعل"
+                else -> "مفعل · جارٍ الاتصال…"
             },
             onClick = if (accessibilityEnabled) null else onOpenAccessibilitySettings
         )
@@ -1329,7 +1329,7 @@ private fun HomeTab(
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text("语音唤醒", style = MaterialTheme.typography.titleMedium)
+                Text("التنشيط الصوتي", style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = if (wakeEnabled) "✅ 已开启 · 说「$wakeWord」唤醒"
@@ -1363,13 +1363,13 @@ private fun HomeTab(
                     danger = wakeEnabled,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(if (wakeEnabled) "关闭唤醒" else "开启唤醒")
+                    Text(if (wakeEnabled) "إيقاف التنشيط" else "تفعيل التنشيط")
                 }
 
                 // 唤醒词选择
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    "唤醒词",
+                    "كلمة التنشيط",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1403,8 +1403,8 @@ private fun HomeTab(
                             customWakeMsg = ""
                         },
                         singleLine = true,
-                        label = { Text("自定义唤醒词", fontSize = 12.sp) },
-                        placeholder = { Text("如：你好宏月", fontSize = 12.sp) },
+                        label = { Text("كلمة تنشيط مخصصة", fontSize = 12.sp) },
+                        placeholder = { Text("مثال: 你好宏月", fontSize = 12.sp) },
                         modifier = Modifier.weight(1f)
                     )
                     LunaButton(onClick = {
@@ -1419,7 +1419,7 @@ private fun HomeTab(
 
                             is PinyinConverter.Result.Err -> customWakeMsg = "⚠️ ${r.message}"
                         }
-                    }) { Text("用这个", fontSize = 13.sp) }
+                    }) { Text("استخدام هذه الكلمة", fontSize = 13.sp) }
                 }
                 if (customWakeMsg.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(6.dp))
@@ -1434,7 +1434,7 @@ private fun HomeTab(
                 // 唤醒灵敏度（阈值）
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    "唤醒灵敏度（越右越严格，误触发越少）",
+                    "حساسية التنشيط (يميناً: أكثر صرامة وأقل أخطاء)",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1452,7 +1452,7 @@ private fun HomeTab(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    "修改唤醒词/灵敏度后，重新开启唤醒生效",
+                    "أعد تفعيل التنشيط لتطبيق التغييرات",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1472,7 +1472,7 @@ private fun HomeTab(
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text("日常收集", style = MaterialTheme.typography.titleMedium)
+                Text("جمع البيانات اليومي", style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = if (dailyCollecting) "✅ 采集中 · $dailyCount 张" else "后台静默截屏，训练全能识别",
@@ -1490,14 +1490,14 @@ private fun HomeTab(
                             val ok = DailyCollector.start()
                             dailyCollecting = ok
                             if (!ok) {
-                                android.widget.Toast.makeText(context, "开启失败：需先开启无障碍服务", android.widget.Toast.LENGTH_SHORT).show()
+                                android.widget.Toast.makeText(context, "فشل البدء: فعّل خدمة إمكانية الوصول أولاً", android.widget.Toast.LENGTH_SHORT).show()
                             }
                         }
                     },
                     danger = dailyCollecting,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(if (dailyCollecting) "停止收集" else "开启收集")
+                    Text(if (dailyCollecting) "إيقاف الجمع" else "بدء الجمع")
                 }
             }
         }
@@ -1593,11 +1593,11 @@ private fun TaskArchiveScreen(onBack: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                "任务记录",
+                "سجل المهام",
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.weight(1f)
             )
-            LunaTextButton(onClick = onBack) { Text("← 返回") }
+            LunaTextButton(onClick = onBack) { Text("← رجوع") }
         }
         Spacer(modifier = Modifier.height(8.dp))
         Text(
@@ -1609,10 +1609,10 @@ private fun TaskArchiveScreen(onBack: () -> Unit) {
         Spacer(modifier = Modifier.height(24.dp))
 
         // 历史任务
-        Text("历史任务", style = MaterialTheme.typography.titleMedium)
+        Text("المهام السابقة", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(8.dp))
         if (history.isEmpty()) {
-            Text("暂无历史任务", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("لا توجد مهام سابقة", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         } else {
             history.forEachIndexed { i, task ->
                 Card(
@@ -1633,10 +1633,10 @@ private fun TaskArchiveScreen(onBack: () -> Unit) {
         Spacer(modifier = Modifier.height(24.dp))
 
         // 审计记录（结构化操作日志）
-        Text("审计记录", style = MaterialTheme.typography.titleMedium)
+        Text("سجل التدقيق", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(8.dp))
         if (auditTasks.isEmpty()) {
-            Text("暂无审计记录", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("لا توجد سجلات تدقيق", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         } else {
             auditTasks.forEach { t ->
                 Card(
@@ -1671,11 +1671,11 @@ private fun TaskArchiveScreen(onBack: () -> Unit) {
                         Text("状态：${task.status} · 规划 ${task.plannedSteps.size} 步 · 动作 ${task.entries.size} 个")
                         Spacer(modifier = Modifier.height(8.dp))
                         if (task.plannedSteps.isNotEmpty()) {
-                            Text("规划步骤：", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
+                            Text("خطوات التخطيط:", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
                             task.plannedSteps.forEachIndexed { i, s -> Text("${i + 1}. $s", fontSize = 12.sp) }
                             Spacer(modifier = Modifier.height(8.dp))
                         }
-                        Text("执行记录：", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
+                        Text("سجل التنفيذ:", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
                         task.entries.take(20).forEach { e ->
                             Text(
                                 "${e.actionType}(${e.actionParams.values.joinToString(",")}) → ${e.result}",
@@ -1687,8 +1687,8 @@ private fun TaskArchiveScreen(onBack: () -> Unit) {
                 },
                 confirmButton = {
                     Row {
-                        LunaTextButton(onClick = { exportAudit(context, id) }) { Text("导出") }
-                        LunaTextButton(onClick = { selectedAuditId = null }) { Text("关闭") }
+                        LunaTextButton(onClick = { exportAudit(context, id) }) { Text("تصدير") }
+                        LunaTextButton(onClick = { selectedAuditId = null }) { Text("إغلاق") }
                     }
                 }
             )
@@ -1697,9 +1697,9 @@ private fun TaskArchiveScreen(onBack: () -> Unit) {
 }
 
 private fun auditStatusLabel(s: String) = when (s) {
-    "completed" -> "✅ 完成"
-    "failed" -> "❌ 失败"
-    "cancelled" -> "⏹️ 取消"
+    "completed" -> "✅ اكتمل"
+    "failed" -> "❌ فشل"
+    "cancelled" -> "⏹️ ألغي"
     else -> s
 }
 
@@ -1711,7 +1711,7 @@ private fun exportAudit(context: android.content.Context, taskId: String) {
         putExtra(Intent.EXTRA_STREAM, uri)
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
-    context.startActivity(Intent.createChooser(intent, "导出审计日志"))
+    context.startActivity(Intent.createChooser(intent, "تصدير سجل التدقيق"))
 }
 
 
@@ -1785,7 +1785,7 @@ private fun AnnouncementDialog(
         },
         confirmButton = {
             LunaTextButton(onClick = onConfirm) {
-                Text("确定")
+                Text("تأكيد")
             }
         }
     )

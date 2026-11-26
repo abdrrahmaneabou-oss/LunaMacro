@@ -80,11 +80,11 @@ fun DatasetAnnotatorScreen(onBack: () -> Unit) {
 
     if (images.isEmpty()) {
         Column(Modifier.fillMaxSize().padding(16.dp)) {
-            Text("没有未标注的截图", style = MaterialTheme.typography.titleMedium)
+            Text("لا توجد لقطات غير موسومة", style = MaterialTheme.typography.titleMedium)
             Spacer(Modifier.height(8.dp))
             Text("先开启「训练数据采集」跑一会儿采集截图，再来标注。", color = Color.Gray, style = MaterialTheme.typography.bodySmall)
             Spacer(Modifier.height(12.dp))
-            Button(onClick = onBack) { Text("返回") }
+            Button(onClick = onBack) { Text("رجوع") }
         }
         return
     }
@@ -92,10 +92,10 @@ fun DatasetAnnotatorScreen(onBack: () -> Unit) {
     Column(Modifier.fillMaxSize().padding(12.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text("标注 ${index + 1}/${images.size}", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
-            LunaTextButton(onClick = onBack) { Text("返回") }
+            LunaTextButton(onClick = onBack) { Text("رجوع") }
         }
 
-        Text("界面类型", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+        Text("نوع الواجهة", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
             SCREEN_TYPES.forEach { t ->
                 val sel = screenType == t
@@ -140,13 +140,13 @@ fun DatasetAnnotatorScreen(onBack: () -> Unit) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("${b.text} (${"%.2f".format(b.x)}, ${"%.2f".format(b.y)})", fontSize = 12.sp, modifier = Modifier.weight(1f))
                     LunaTextButton(onClick = { buttons = buttons.filterIndexed { j, _ -> j != i } }) {
-                        Text("删除", color = Color(0xFFFF8A80), fontSize = 12.sp)
+                        Text("حذف", color = Color(0xFFFF8A80), fontSize = 12.sp)
                     }
                 }
             }
         }
 
-        OutlinedTextField(description, { description = it }, label = { Text("描述（可选）") }, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(description, { description = it }, label = { Text("الوصف (اختياري)") }, modifier = Modifier.fillMaxWidth())
 
         Spacer(Modifier.height(8.dp))
 
@@ -154,35 +154,35 @@ fun DatasetAnnotatorScreen(onBack: () -> Unit) {
             OutlinedButton(
                 onClick = { if (index < images.size - 1) index++ },
                 modifier = Modifier.weight(1f)
-            ) { Text("跳过") }
+            ) { Text("تخطي") }
             Button(
                 onClick = {
                     DatasetAnnotator.saveAnalysis(context, images[index], ScreenAnalysis(screenType, buttons, description))
                     if (index < images.size - 1) index++ else images = DatasetAnnotator.listUnannotated(context)
                 },
                 modifier = Modifier.weight(1f)
-            ) { Text("保存") }
+            ) { Text("حفظ") }
         }
     }
 
     if (showAddBtn) {
         AlertDialog(
             onDismissRequest = { showAddBtn = false },
-            title = { Text("标记按钮") },
+            title = { Text("وسم زر") },
             text = {
                 Column {
                     Text("坐标 (${"%.2f".format(pendingX)}, ${"%.2f".format(pendingY)})", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
                     Spacer(Modifier.height(8.dp))
-                    OutlinedTextField(btnText, { btnText = it }, label = { Text("按钮文本") }, singleLine = true)
+                    OutlinedTextField(btnText, { btnText = it }, label = { Text("نص الزر") }, singleLine = true)
                 }
             },
             confirmButton = {
                 LunaTextButton(onClick = {
                     buttons = buttons + ButtonInfo(btnText.ifBlank { "按钮" }, pendingX, pendingY)
                     showAddBtn = false
-                }) { Text("添加") }
+                }) { Text("إضافة") }
             },
-            dismissButton = { LunaTextButton(onClick = { showAddBtn = false }) { Text("取消") } }
+            dismissButton = { LunaTextButton(onClick = { showAddBtn = false }) { Text("إلغاء") } }
         )
     }
 }

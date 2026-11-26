@@ -232,7 +232,7 @@ fun OnboardingScreen(onFinish: () -> Unit) {
                 if (pagerState.currentPage > 0) {
                     LunaOutlinedButton(onClick = {
                         scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) }
-                    }) { Text("上一步") }
+                    }) { Text("السابق") }
                 } else {
                     Spacer(modifier = Modifier.weight(1f))
                 }
@@ -242,9 +242,9 @@ fun OnboardingScreen(onFinish: () -> Unit) {
                         onClick = {
                             scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) }
                         }
-                    ) { Text("下一步") }
+                    ) { Text("التالي") }
                 } else {
-                    Button(onClick = onFinish) { Text("开始使用") }
+                    Button(onClick = onFinish) { Text("بدء الاستخدام") }
                 }
             }
             Spacer(modifier = Modifier.height(20.dp))
@@ -341,10 +341,10 @@ private fun MimTipsDialog(onDismiss: () -> Unit, onOpenAppInfo: () -> Unit) {
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("知道了") }
+            TextButton(onClick = onDismiss) { Text("حسناً") }
         },
         dismissButton = {
-            TextButton(onClick = onOpenAppInfo) { Text("去应用信息") }
+            TextButton(onClick = onOpenAppInfo) { Text("فتح معلومات التطبيق") }
         }
     )
 }
@@ -354,7 +354,7 @@ private fun MimTipsDialog(onDismiss: () -> Unit, onOpenAppInfo: () -> Unit) {
 @Composable
 private fun WelcomePage() {
     StepLayout(
-        title = "欢迎",
+        title = "مرحباً",
         icon = "👋",
         desc = "跟着引导点几下，宏月就能用了。全程无需技术背景。",
         action = null,
@@ -365,10 +365,10 @@ private fun WelcomePage() {
 @Composable
 private fun StellarInstallPage(ok: Boolean, onInstall: () -> Unit) {
     StepLayout(
-        title = "第一步：安装 Stellar",
+        title = "الخطوة الأولى: تثبيت Stellar",
         icon = if (ok) "✅" else "📦",
-        desc = if (ok) "Stellar 已安装" else "Stellar 是获取系统权限的核心组件，已内置于本 App。\n点「一键安装」后，在弹出的系统界面点「安装」即可。",
-        action = if (!ok) "一键安装 Stellar" else null,
+        desc = if (ok) "تم تثبيت Stellar" else "Stellar 是获取系统权限的核心组件，已内置于本 App。\n点「一键安装」后，在弹出的系统界面点「安装」即可。",
+        action = if (!ok) "تثبيت Stellar" else null,
         onAction = onInstall
     )
 }
@@ -382,7 +382,7 @@ private fun ActivatePage(ok: Boolean, onOpenStellar: () -> Unit, onOpenWirelessD
     ) {
         Text(if (ok) "✅" else "🔑", fontSize = 48.sp)
         Spacer(modifier = Modifier.height(16.dp))
-        Text("第二步：激活服务", style = MaterialTheme.typography.titleLarge)
+        Text("الخطوة الثانية: تفعيل الخدمة", style = MaterialTheme.typography.titleLarge)
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             if (ok) "服务已激活" else "需要输一次 6 位配对码（安卓安全机制，无法自动）。\n\n① 点「开启无线调试」，进去打开「无线调试」开关\n② 点「打开 Stellar」\n③ 在 Stellar 里点「无线调试 → 启动」\n④ 下拉通知栏，在 Stellar 通知里输入屏幕上的 6 位码",
@@ -394,8 +394,8 @@ private fun ActivatePage(ok: Boolean, onOpenStellar: () -> Unit, onOpenWirelessD
         if (!ok) {
             Spacer(modifier = Modifier.height(24.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                LunaOutlinedButton(onClick = onOpenWirelessDebug) { Text("开启无线调试") }
-                Button(onClick = onOpenStellar) { Text("打开 Stellar") }
+                LunaOutlinedButton(onClick = onOpenWirelessDebug) { Text("تفعيل التصحيح اللاسلكي") }
+                Button(onClick = onOpenStellar) { Text("فتح Stellar") }
             }
         }
     }
@@ -404,10 +404,10 @@ private fun ActivatePage(ok: Boolean, onOpenStellar: () -> Unit, onOpenWirelessD
 @Composable
 private fun GrantPage(ok: Boolean, onGrant: () -> Unit) {
     StepLayout(
-        title = "第三步：授权",
+        title = "الخطوة الثالثة: منح الإذن",
         icon = if (ok) "✅" else "🔓",
-        desc = if (ok) "已授权宏月" else "让宏月获得操作权限。\n点「授权」，在弹出的界面点「允许」。",
-        action = if (!ok) "去授权" else null,
+        desc = if (ok) "تم منح الإذن لـ LunaMacro" else "让宏月获得操作权限。\n点「授权」，在弹出的界面点「允许」。",
+        action = if (!ok) "منح الإذن" else null,
         onAction = onGrant
     )
 }
@@ -415,10 +415,10 @@ private fun GrantPage(ok: Boolean, onGrant: () -> Unit) {
 @Composable
 private fun AccessibilityPage(ok: Boolean, onOpen: () -> Unit) {
     StepLayout(
-        title = "第四步：开启无障碍",
+        title = "الخطوة الرابعة: تفعيل إمكانية الوصول",
         icon = if (ok) "✅" else "👁",
-        desc = if (ok) "无障碍服务已开启" else "让 Agent 能「看到」屏幕。\n点「去开启」，在列表找到「宏月」并打开开关。",
-        action = if (!ok) "去开启" else null,
+        desc = if (ok) "خدمة إمكانية الوصول مفعلة" else "让 Agent 能「看到」屏幕。\n点「去开启」，在列表找到「宏月」并打开开关。",
+        action = if (!ok) "تفعيل" else null,
         onAction = onOpen
     )
 }
@@ -426,10 +426,10 @@ private fun AccessibilityPage(ok: Boolean, onOpen: () -> Unit) {
 @Composable
 private fun OverlayPage(ok: Boolean, onOpen: () -> Unit) {
     StepLayout(
-        title = "第五步：开启悬浮窗",
+        title = "الخطوة الخامسة: تفعيل النافذة العائمة",
         icon = if (ok) "✅" else "🪟",
-        desc = if (ok) "悬浮窗已开启" else "让 Agent 能显示思考过程和运行灯。\n点「去开启」，允许「显示在其他应用上层」。",
-        action = if (!ok) "去开启" else null,
+        desc = if (ok) "النافذة العائمة مفعلة" else "让 Agent 能显示思考过程和运行灯。\n点「去开启」，允许「显示在其他应用上层」。",
+        action = if (!ok) "تفعيل" else null,
         onAction = onOpen
     )
 }
@@ -437,10 +437,10 @@ private fun OverlayPage(ok: Boolean, onOpen: () -> Unit) {
 @Composable
 private fun RecordPage(ok: Boolean, onRequest: () -> Unit) {
     StepLayout(
-        title = "第六步：开启麦克风",
+        title = "الخطوة السادسة: تفعيل الميكروفون",
         icon = if (ok) "✅" else "🎤",
-        desc = if (ok) "录音权限已开启" else "让 Agent 能听「你好高总」唤醒。\n点「去开启」，在弹窗点「允许」。",
-        action = if (!ok) "去开启" else null,
+        desc = if (ok) "إذن التسجيل مفعل" else "让 Agent 能听「你好高总」唤醒。\n点「去开启」，在弹窗点「允许」。",
+        action = if (!ok) "تفعيل" else null,
         onAction = onRequest
     )
 }
@@ -454,7 +454,7 @@ private fun DonePage(onFinish: () -> Unit, onRegisterDeepSeek: () -> Unit, onReg
     ) {
         Text("🎉", fontSize = 48.sp)
         Spacer(modifier = Modifier.height(16.dp))
-        Text("部署完成", style = MaterialTheme.typography.titleLarge)
+        Text("اكتمل الإعداد", style = MaterialTheme.typography.titleLarge)
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             "环境已就绪！\n\n最后还需一个 LLM API Key（让 Agent 思考和看图）：\n· DeepSeek（推荐）\n· 通义千问 DashScope\n\n没账号的话点下面去注册，注册后把 Key 填进 App 的「设置」页即可。",
@@ -465,8 +465,8 @@ private fun DonePage(onFinish: () -> Unit, onRegisterDeepSeek: () -> Unit, onReg
         )
         Spacer(modifier = Modifier.height(20.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            LunaOutlinedButton(onClick = onRegisterDeepSeek) { Text("注册 DeepSeek") }
-            LunaOutlinedButton(onClick = onRegisterDashScope) { Text("注册通义千问") }
+            LunaOutlinedButton(onClick = onRegisterDeepSeek) { Text("التسجيل في DeepSeek") }
+            LunaOutlinedButton(onClick = onRegisterDashScope) { Text("التسجيل في Qwen") }
         }
     }
 }

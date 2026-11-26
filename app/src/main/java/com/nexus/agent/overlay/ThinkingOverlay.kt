@@ -209,13 +209,13 @@ object ThinkingOverlay {
                 setTextColor(android.graphics.Color.parseColor("#FF5252"))
             }
             val title = TextView(appContext).apply {
-                text = " 录制中"
+                text = " جارٍ التسجيل"
                 textSize = 13f
                 setTextColor(android.graphics.Color.WHITE)
                 typeface = android.graphics.Typeface.DEFAULT_BOLD
             }
             val count = TextView(appContext).apply {
-                text = "0 步"
+                text = "0 خطوات"
                 textSize = 13f
                 setTextColor(android.graphics.Color.parseColor("#8AB4F8"))
                 setPadding(dp(appContext, 12), 0, 0, 0)
@@ -232,14 +232,14 @@ object ThinkingOverlay {
                 setPadding(0, dp(appContext, 6), 0, 0)
             }
             val manualBtn = TextView(appContext).apply {
-                text = "标记坐标"
+                text = "تحديد الإحداثيات"
                 textSize = 12f
                 setTextColor(android.graphics.Color.parseColor("#8AB4F8"))
                 setPadding(0, 0, dp(appContext, 14), 0)
                 setOnClickListener { showCrosshair(appContext) }
             }
             val stopBtn = TextView(appContext).apply {
-                text = "停止"
+                text = "إيقاف"
                 textSize = 12f
                 setTextColor(android.graphics.Color.parseColor("#69F0AE"))
                 setPadding(0, 0, dp(appContext, 14), 0)
@@ -247,7 +247,7 @@ object ThinkingOverlay {
                 setOnClickListener { onRecordStop?.invoke() }
             }
             val cancelBtn = TextView(appContext).apply {
-                text = "取消"
+                text = "إلغاء"
                 textSize = 12f
                 setTextColor(android.graphics.Color.parseColor("#FF8A80"))
                 setOnClickListener { onRecordCancel?.invoke() }
@@ -332,7 +332,7 @@ object ThinkingOverlay {
      * 更新录制模式步骤数。
      */
     fun updateRecordingCount(count: Int) {
-        mainHandler.post { recordCountText?.text = "$count 步" }
+        mainHandler.post { recordCountText?.text = "$count خطوات" }
     }
 
     /**
@@ -397,7 +397,7 @@ object ThinkingOverlay {
                 setTextColor(android.graphics.Color.parseColor("#8AB4F8"))
             }
             val title = TextView(appContext).apply {
-                text = " 采集中"
+                text = " جارٍ الجمع"
                 textSize = 13f
                 setTextColor(android.graphics.Color.WHITE)
                 typeface = android.graphics.Typeface.DEFAULT_BOLD
@@ -410,7 +410,7 @@ object ThinkingOverlay {
                 typeface = android.graphics.Typeface.DEFAULT_BOLD
             }
             val actionBtn = TextView(appContext).apply {
-                text = "开始"
+                text = "بدء"
                 textSize = 12f
                 setTextColor(android.graphics.Color.parseColor("#69F0AE"))
                 setPadding(dp(appContext, 14), 0, 0, 0)
@@ -436,13 +436,13 @@ object ThinkingOverlay {
             var stepHint: TextView? = null
             if (withScene) {
                 val st = TextView(appContext).apply {
-                    text = "第 1 步"
+                    text = "الخطوة 1"
                     textSize = 14f
                     setTextColor(android.graphics.Color.parseColor("#FFD54F"))
                     typeface = android.graphics.Typeface.DEFAULT_BOLD
                 }
                 val sp = TextView(appContext).apply {
-                    text = "0 张 · 0%"
+                    text = "0 صور · 0%"
                     textSize = 12f
                     setTextColor(android.graphics.Color.parseColor("#8AB4F8"))
                     typeface = android.graphics.Typeface.DEFAULT_BOLD
@@ -456,7 +456,7 @@ object ThinkingOverlay {
                 stepRow.addView(sp)
 
                 val sh = TextView(appContext).apply {
-                    text = "请按引导操作"
+                    text = "اتبع الإرشادات"
                     textSize = 12f
                     setTextColor(android.graphics.Color.parseColor("#E0E0E0"))
                     setPadding(0, dp(appContext, 6), 0, 0)
@@ -553,9 +553,9 @@ object ThinkingOverlay {
     ) {
         mainHandler.post {
             val stepNo = (stepIndex + 1).coerceAtLeast(1)
-            collectStepTitleText?.text = "第 $stepNo/$totalSteps 步 · $title"
+            collectStepTitleText?.text = "الخطوة $stepNo/$totalSteps · $title"
             val percent = if (target > 0) (collected * 100 / target).coerceIn(0, 100) else 0
-            collectStepProgressText?.text = "$collected/$target 张 · $percent%"
+            collectStepProgressText?.text = "$collected/$target صور · $percent%"
             collectStepHintText?.text = hint
             setCollectButton(true)
         }
@@ -567,8 +567,8 @@ object ThinkingOverlay {
     fun updateCollectStepReady(stepIndex: Int, totalSteps: Int, title: String, hint: String) {
         mainHandler.post {
             val stepNo = (stepIndex + 1).coerceAtLeast(1)
-            collectStepTitleText?.text = "第 $stepNo/$totalSteps 步 · $title"
-            collectStepProgressText?.text = "准备好了点「开始」"
+            collectStepTitleText?.text = "الخطوة $stepNo/$totalSteps · $title"
+            collectStepProgressText?.text = "اضغط «بدء» عندما تكون جاهزاً"
             collectStepHintText?.text = hint
             setCollectButton(false)
         }
@@ -581,10 +581,10 @@ object ThinkingOverlay {
         collectActionCollecting = collecting
         val btn = collectActionBtn ?: return
         if (collecting) {
-            btn.text = "停止"
+            btn.text = "إيقاف"
             btn.setTextColor(android.graphics.Color.parseColor("#FF8A80"))
         } else {
-            btn.text = "开始"
+            btn.text = "بدء"
             btn.setTextColor(android.graphics.Color.parseColor("#69F0AE"))
         }
     }
@@ -627,7 +627,7 @@ object ThinkingOverlay {
                 setPadding(0, 0, 0, dp(appContext, 40))
             }
             val confirmBtn = TextView(appContext).apply {
-                text = "确认坐标"
+                text = "تأكيد الإحداثيات"
                 textSize = 14f
                 setTextColor(android.graphics.Color.WHITE)
                 setPadding(dp(appContext, 18), dp(appContext, 10), dp(appContext, 18), dp(appContext, 10))
@@ -645,7 +645,7 @@ object ThinkingOverlay {
                 }
             }
             val cancelBtn = TextView(appContext).apply {
-                text = "取消"
+                text = "إلغاء"
                 textSize = 14f
                 setTextColor(android.graphics.Color.WHITE)
                 setPadding(dp(appContext, 18), dp(appContext, 10), dp(appContext, 18), dp(appContext, 10))

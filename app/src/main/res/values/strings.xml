@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">宏月</string>
-    <string name="accessibility_service_label">宏月无障碍服务</string>
-    <string name="accessibility_service_description">用于系统级界面读取与操作自动化</string>
-    <string name="accessibility_label">宏月无障碍服务</string>
-    <string name="accessibility_description">宏月需要无障碍服务来读取屏幕内容并执行自动化操作</string>
+    <string name="app_name">LunaMacro</string>
+    <string name="accessibility_service_label">خدمة إمكانية الوصول لـ LunaMacro</string>
+    <string name="accessibility_service_description">لقراءة واجهة النظام وتنفيذ الأتمتة</string>
+    <string name="accessibility_label">خدمة إمكانية الوصول لـ LunaMacro</string>
+    <string name="accessibility_description">يحتاج LunaMacro إلى خدمة إمكانية الوصول لقراءة الشاشة وتنفيذ الإجراءات الآلية</string>
 
     <!-- 前台常驻服务通知 -->
-    <string name="fg_channel_name">宏月常驻</string>
-    <string name="fg_channel_description">保持无障碍读屏服务稳定运行</string>
-    <string name="fg_notification_title">宏月运行中</string>
-    <string name="fg_notification_text">无障碍读屏服务常驻，保持稳定</string>
+    <string name="fg_channel_name">LunaMacro في الخلفية</string>
+    <string name="fg_channel_description">الحفاظ على استقرار خدمة قراءة الشاشة</string>
+    <string name="fg_notification_title">LunaMacro قيد التشغيل</string>
+    <string name="fg_notification_text">خدمة قراءة الشاشة تعمل في الخلفية</string>
 
     <!-- 思考悬浮窗 -->
-    <string name="overlay_title">宏月思考中…</string>
-    <string name="overlay_stop">取消</string>
+    <string name="overlay_title">LunaMacro يفكر…</string>
+    <string name="overlay_stop">إلغاء</string>
 </resources>

@@ -123,7 +123,7 @@ fun PersonaSettingsScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             LunaTextButton(onClick = onBack) {
-                Text("‹ 返回", fontSize = 14.sp, color = LunaOnSurfaceVariant)
+                Text("‹ رجوع", fontSize = 14.sp, color = LunaOnSurfaceVariant)
             }
             Text(
                 "人格设置",
@@ -132,7 +132,7 @@ fun PersonaSettingsScreen(
                 color = LunaOnBackground
             )
             LunaButton(onClick = { save() }) {
-                Text("保存", fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                Text("حفظ", fontSize = 13.sp, fontWeight = FontWeight.Bold)
             }
         }
         Box(
@@ -172,7 +172,7 @@ fun PersonaSettingsScreen(
                     name = raw.replace("\n", "").replace("\r", "")
                     nameError = ""
                 },
-                label = { Text("助手名称", fontSize = 12.sp) },
+                label = { Text("اسم المساعد", fontSize = 12.sp) },
                 placeholder = { Text(CopilotConfig.DEFAULT_ASSISTANT_NAME, fontSize = 13.sp) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
@@ -185,7 +185,7 @@ fun PersonaSettingsScreen(
             OutlinedTextField(
                 value = identity,
                 onValueChange = { if (it.length <= IDENTITY_MAX) identity = it },
-                label = { Text("身份设定", fontSize = 12.sp) },
+                label = { Text("إعداد الهوية", fontSize = 12.sp) },
                 placeholder = { Text("例：赛博黑客 / 青梅竹马 / 私人管家", fontSize = 13.sp) },
                 minLines = 2,
                 maxLines = 3,
@@ -199,7 +199,7 @@ fun PersonaSettingsScreen(
                     catchphrase = it.replace("\n", "").replace("\r", "")
                         .take(PersonaProfile.CATCHPHRASE_MAX)
                 },
-                label = { Text("专属口癖", fontSize = 12.sp) },
+                label = { Text("عبارة مميزة", fontSize = 12.sp) },
                 placeholder = { Text("例：喵 / 哼 / ……（可留空）", fontSize = 13.sp) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
@@ -217,7 +217,7 @@ fun PersonaSettingsScreen(
             SectionTitle("性格", "拖动滑块，数值会变成提示词里的一句自然语言")
             Spacer(modifier = Modifier.height(6.dp))
             TraitSlider(
-                title = "内向 · 外向",
+                title = "انطوائي · اجتماعي",
                 value = extroversion,
                 onValueChange = { extroversion = it },
                 leftLabel = "内向",
@@ -225,7 +225,7 @@ fun PersonaSettingsScreen(
                 describe = PersonaEngine.describeExtroversion(extroversion.toInt())
             )
             TraitSlider(
-                title = "理性 · 感性",
+                title = "عقلاني · عاطفي",
                 value = sensibility,
                 onValueChange = { sensibility = it },
                 leftLabel = "理性",
@@ -233,7 +233,7 @@ fun PersonaSettingsScreen(
                 describe = PersonaEngine.describeSensibility(sensibility.toInt())
             )
             TraitSlider(
-                title = "顺从 · 叛逆",
+                title = "مطيع · متمرد",
                 value = rebelliousness,
                 onValueChange = { rebelliousness = it },
                 leftLabel = "顺从",
@@ -308,7 +308,7 @@ private fun TemplateRow(
                 )
                 if (selected) {
                     Spacer(modifier = Modifier.height(6.dp))
-                    Text("✓ 已选", fontSize = 11.sp, color = LunaOnBackground)
+                    Text("✓ محدد", fontSize = 11.sp, color = LunaOnBackground)
                 }
             }
         }

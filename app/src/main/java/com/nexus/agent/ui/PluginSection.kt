@@ -110,7 +110,7 @@ fun PluginSection(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("插件", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            Text("الإضافات", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             Text(
                 "${plugins.size} 个",
                 style = MaterialTheme.typography.labelSmall,
@@ -120,12 +120,12 @@ fun PluginSection(
             LunaOutlinedButton(
                 onClick = {
                     if (installing) {
-                        Toast.makeText(context, "正在安装，请稍候", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "جارٍ التثبيت…", Toast.LENGTH_SHORT).show()
                     } else {
                         importLauncher.launch(arrayOf("application/zip", "application/octet-stream", "*/*"))
                     }
                 }
-            ) { Text(if (installing) "安装中…" else "导入插件") }
+            ) { Text(if (installing) "جارٍ التثبيت…" else "استيراد إضافة") }
         }
         Text(
             "插件 = plugin.json 声明 + 参数表单，不含可执行代码；二创只需改 JSON",
@@ -142,10 +142,10 @@ fun PluginSection(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             LunaOutlinedButton(onClick = { onScrollToDaily() }, modifier = Modifier.weight(1f)) {
-                Text("日常收集")
+                Text("جمع البيانات اليومي")
             }
             LunaOutlinedButton(onClick = { onScrollToTouch() }, modifier = Modifier.weight(1f)) {
-                Text("触摸采集")
+                Text("جمع اللمسات")
             }
         }
 
@@ -155,7 +155,7 @@ fun PluginSection(
         if (plugins.isEmpty()) {
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(12.dp)) {
-                    Text("还没有插件", style = MaterialTheme.typography.bodyMedium)
+                    Text("لا توجد إضافات", style = MaterialTheme.typography.bodyMedium)
                     Text(
                         "点右上「导入插件」选一个 zip，或把 plugin.json 放进 " +
                             "Android/data/${context.packageName}/files/plugins/",
@@ -304,12 +304,12 @@ private fun PluginCard(
             }
             Spacer(modifier = Modifier.height(8.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
-                LunaButton(onClick = onRun) { Text(if (running) "运行中…" else "运行") }
+                LunaButton(onClick = onRun) { Text(if (running) "جارٍ التشغيل…" else "تشغيل") }
                 Spacer(modifier = Modifier.width(8.dp))
-                LunaOutlinedButton(onClick = onDetail) { Text("配置") }
+                LunaOutlinedButton(onClick = onDetail) { Text("إعداد") }
                 Spacer(modifier = Modifier.weight(1f))
                 LunaTextButton(onClick = onDelete) {
-                    Text("删除", color = Color(0xFFFF8A80))
+                    Text("حذف", color = Color(0xFFFF8A80))
                 }
             }
         }
@@ -350,7 +350,7 @@ private fun PluginDetailDialog(
                 }
 
                 // ---------- 模型选择 ----------
-                Text("使用模型", style = MaterialTheme.typography.labelLarge)
+                Text("استخدام النموذج", style = MaterialTheme.typography.labelLarge)
                 Spacer(modifier = Modifier.height(4.dp))
                 Box {
                     LunaOutlinedButton(onClick = { modelMenu = true }) {
@@ -385,7 +385,7 @@ private fun PluginDetailDialog(
                 // ---------- 工具白名单（0.8.12，只读）----------
                 manifest.allowedTools?.let { tools ->
                     Spacer(modifier = Modifier.height(10.dp))
-                    Text("可用工具", style = MaterialTheme.typography.labelLarge)
+                    Text("الأدوات المتاحة", style = MaterialTheme.typography.labelLarge)
                     Text(
                         if (tools.isEmpty()) {
                             "未授权任何动作（插件只能说话，不能操作手机）"
@@ -399,7 +399,7 @@ private fun PluginDetailDialog(
 
                 if (manifest.settingsSchema.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(14.dp))
-                    Text("参数", style = MaterialTheme.typography.labelLarge)
+                    Text("المعلمات", style = MaterialTheme.typography.labelLarge)
                     Spacer(modifier = Modifier.height(4.dp))
                     manifest.settingsSchema.forEach { field ->
                         PluginFieldRow(
@@ -413,12 +413,12 @@ private fun PluginDetailDialog(
             }
         },
         confirmButton = {
-            LunaTextButton(onClick = { onSaveAndRun(model, values) }) { Text("保存并运行") }
+            LunaTextButton(onClick = { onSaveAndRun(model, values) }) { Text("حفظ وتشغيل") }
         },
         dismissButton = {
             Row {
-                LunaTextButton(onClick = onDismiss) { Text("取消") }
-                LunaTextButton(onClick = { onSave(model, values) }) { Text("保存") }
+                LunaTextButton(onClick = onDismiss) { Text("إلغاء") }
+                LunaTextButton(onClick = { onSave(model, values) }) { Text("حفظ") }
             }
         }
     )
@@ -449,7 +449,7 @@ private fun PluginFieldRow(
                 Text(field.label, style = MaterialTheme.typography.labelSmall)
                 Box {
                     LunaOutlinedButton(onClick = { expanded = true }) {
-                        Text(value.ifBlank { field.options.firstOrNull() ?: "请选择" })
+                        Text(value.ifBlank { field.options.firstOrNull() ?: "يرجى الاختيار" })
                     }
                     DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                         field.options.forEach { opt ->

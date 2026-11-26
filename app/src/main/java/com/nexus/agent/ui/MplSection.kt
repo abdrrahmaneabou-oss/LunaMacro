@@ -70,7 +70,7 @@ internal fun MplSection(context: Context) {
         }
     }
 
-    Text("MPL 桥", style = MaterialTheme.typography.titleMedium)
+    Text("جسر MPL", style = MaterialTheme.typography.titleMedium)
     Spacer(Modifier.height(4.dp))
     Text(
         "让同一台手机上的 MPL 把「手」交给宏月：她读屏、开应用，都由宏月执行。" +
@@ -102,7 +102,7 @@ internal fun MplSection(context: Context) {
 
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f)) {
-            Text("开启 MPL 桥", style = MaterialTheme.typography.titleSmall)
+            Text("تفعيل جسر MPL", style = MaterialTheme.typography.titleSmall)
             Spacer(Modifier.height(3.dp))
             Text(
                 if (enabled) {
@@ -149,12 +149,12 @@ internal fun MplSection(context: Context) {
                 containerColor = MaterialTheme.colorScheme.errorContainer,
                 contentColor = MaterialTheme.colorScheme.onErrorContainer
             )
-        ) { Text("去设置电池不限制") }
+        ) { Text("فتح إعدادات البطارية غير المقيدة") }
     }
 
     Spacer(Modifier.height(14.dp))
 
-    Text("监听端口", style = MaterialTheme.typography.titleSmall)
+    Text("منفذ الاستماع", style = MaterialTheme.typography.titleSmall)
     Spacer(Modifier.height(6.dp))
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         OutlinedTextField(
@@ -179,12 +179,12 @@ internal fun MplSection(context: Context) {
                 }
             },
             colors = ButtonDefaults.buttonColors()
-        ) { Text("应用") }
+        ) { Text("تطبيق") }
     }
 
     Spacer(Modifier.height(14.dp))
 
-    Text("配对码", style = MaterialTheme.typography.titleSmall)
+    Text("رمز الاقتران", style = MaterialTheme.typography.titleSmall)
     Spacer(Modifier.height(3.dp))
     Text(
         "MPL 生成一串 64 位十六进制，复制过来粘在这里。当前：${MplServer.maskedToken(context)}",
@@ -196,7 +196,7 @@ internal fun MplSection(context: Context) {
     OutlinedTextField(
         value = tokenInput,
         onValueChange = { tokenInput = it },
-        label = { Text("粘贴配对码") },
+        label = { Text("لصق رمز الاقتران") },
         singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
         modifier = Modifier.fillMaxWidth()
@@ -212,7 +212,7 @@ internal fun MplSection(context: Context) {
                     "格式不对：应该是 32–128 位十六进制"
                 }
             }
-        ) { Text("保存") }
+        ) { Text("حفظ") }
         Spacer(Modifier.width(8.dp))
         Button(
             onClick = {
@@ -223,7 +223,7 @@ internal fun MplSection(context: Context) {
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant
             )
-        ) { Text("清除") }
+        ) { Text("مسح") }
     }
 
     if (hint.isNotBlank()) {
@@ -238,7 +238,7 @@ internal fun MplSection(context: Context) {
 
     Spacer(Modifier.height(14.dp))
 
-    Text("最近一次连接", style = MaterialTheme.typography.titleSmall)
+    Text("آخر اتصال", style = MaterialTheme.typography.titleSmall)
     Spacer(Modifier.height(3.dp))
     Text(
         "所有请求都算，包括 ping / health / 配对码不对。用来回答“到底有没有人来敲过门”——" +
@@ -270,7 +270,7 @@ internal fun MplSection(context: Context) {
 
     Spacer(Modifier.height(14.dp))
 
-    Text("最近调用", style = MaterialTheme.typography.titleSmall)
+    Text("آخر استدعاء", style = MaterialTheme.typography.titleSmall)
     Spacer(Modifier.height(4.dp))
     if (recent.isEmpty()) {
         Text(
